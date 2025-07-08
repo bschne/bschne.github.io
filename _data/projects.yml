@@ -1,13 +1,17 @@
 - title: Remote Student Exchange
-  timeframe: 2021
-  description: A website connecting students from low- and middle income countries to courses at  international universities for remote participation.
-  link: /rse/
+  timeframe: "2021"
+  description: Built a web portal enabling 5,000+ students to join 100 courses at top international universities remotely.
+  link: https://x.com/jhaushofer/status/1483667178234990592
+- title: HackZurich
+  timeframe: "2018–2023"
+  description: Helped organize one of Europe's largest hackathons, uniting 500–1','200 participants annually to develop innovative tech solutions.
+  link: https://hackzurich.com
+- title: Digital Festival Zurich
+  timeframe: "2018–2023"
+  description: Helped organize a conference bringing together pioneers and decision makers interested in digitalization and technology for two days of inspiration and interactive learning.
+  link: https://digitalfestival.ch
 - title: TICKETINO
-  timeframe: 2012–2018
-  description: Lorem ipsum dolor sit amet.
-  link: /ticketino/
-- title: HackZurich & Digital Festival
-  timeframe: 2018–2023
-  description: Lorem ipsum dolor sit amet.
-  link: /hack-dife/
+  timeframe: "2014–2018"
+  description: Led software engineering and product for a ticketing platform, rebuilt the online shop, and delivered registartion &amp; ticket sales solutions for large business- and public events.
+  link: https://ticketino.com/
 # Add more projects below following the same structure 
