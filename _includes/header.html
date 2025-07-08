@@ -13,30 +13,15 @@
             have a question I might be able to answer, or just want to chat!
         </p>
     </div>
-    <div class="wrapper">
-        <h2><span class="heading-emoji">💬</span> Find Me Elsewhere</h2>
-        <ul class="link-list">
-            <li><a href="mailto:mail@benjaminschneider.ch"><span class="link-caret"></span>Email</a></li>
-            <li><a href="https://x.com/bschne"><span class="link-caret"></span>Twitter</a></li>
-            <li><a href="http://bsky.app/profile/benjaminschneider.ch"><span class="link-caret"></span>Bluesky</a></li>
-            <li><a href="https://linkedin.com/in/schneiderbenjamin/"><span class="link-caret"></span>LinkedIn</a></li>
-        </ul>
+    <div style="margin: 0.5em 0 1.5em 0; font-size: 1rem;">
+        <a href="mailto:mail@benjaminschneider.ch">Email</a>
+        &nbsp;·&nbsp;
+        <a href="https://x.com/bschne">Twitter</a>
+        &nbsp;·&nbsp;
+        <a href="http://bsky.app/profile/benjaminschneider.ch">Bluesky</a>
+        &nbsp;·&nbsp;
+        <a href="https://linkedin.com/in/schneiderbenjamin/">LinkedIn</a>
     </div>
-    <!--
-    <div class="wrapper">
-        {%- assign default_paths = site.pages | map: "path" -%} {%- assign
-        page_paths = site.header_pages | default: default_paths -%} {%- if
-        page_paths -%}
-        <h2><span class="heading-emoji">👍</span> Recommendations</h2>
-        <ul class="link-list">
-            {%- assign nav_pages = site.pages | where_exp: "page", "page.page_category == 'recommendations'" -%}
-            {%- for page in nav_pages -%}
-              <li><a class="page-link" href="{{ page.url | relative_url }}"><span class="link-caret"></span>{{ page.title | escape }}</a></li>
-            {%- endfor -%}
-        </ul>
-        {%- endif -%}
-    </div>
--->
     <div class="wrapper">
         <h2><span class="heading-emoji">🏗️</span> Work</h2>
         {%- for project in site.data.projects -%}
