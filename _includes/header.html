@@ -38,21 +38,18 @@
     </div>
 -->
     <div class="wrapper">
-        {%- assign default_paths = site.pages | map: "path" -%} {%- assign
-            page_paths = site.header_pages | default: default_paths -%} {%- if
-            page_paths -%}
-            <h2><span class="heading-emoji">🏗️</span> Work</h2>
-            {%- assign projects = site.pages | where_exp: "page", "page.page_category == 'projects'" -%}
-            {%- for project in projects -%}
-            <div class="post-item">
-                <a class="post-link" href="{{ project.url | relative_url }}">
-                    {{ project.title | escape }} ({{ project.displaydate }})
-                </a><br>
-                {%- if site.show_excerpts -%}
-                <span class="post-excerpt">{{ project.excerpt }}</span>
-                {%- endif -%}
-            </div>
-            {%- endfor -%}
-        {%- endif -%}
+        <h2><span class="heading-emoji">🏗️</span> Work</h2>
+        {%- for project in site.data.projects -%}
+        <div class="post-item">
+            {%- if project.link -%}
+            <a class="post-link" href="{{ project.link }}" target="_blank" rel="noopener">
+                {{ project.title | escape }} ({{ project.timeframe }})
+            </a>
+            {%- else -%}
+            <span class="post-link">{{ project.title | escape }} ({{ project.timeframe }})</span>
+            {%- endif -%}<br>
+            <span class="post-excerpt">{{ project.description }}</span>
+        </div>
+        {%- endfor -%}
     </div>
 </header>
