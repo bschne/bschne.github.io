@@ -9,21 +9,43 @@ layout: default
 
     {{ content }}
 
-    {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading"><span class="heading-emoji">📝</span> {{ page.list_title | default: "Writing" }} <span class="rss-subscribe"><a href="{{ " /feed.xml" | relative_url }}">RSS</a></span></h2>
-    <!-- <ul class="post-list"> -->
-        {%- for post in site.posts -%}
-        <!-- <li> -->
-            {%- assign date_format = site.minima.date_format | default: "%B %d, %Y" -%}
-            <a class="post-link" href="{{ post.url | relative_url }}">
-                {{ post.title | escape }} ({{ post.date | date: date_format }})
-            </a>
-            {%- if site.show_excerpts -%}
-            <span class="post-excerpt">{{ post.excerpt }}</span>
-            {%- endif -%}
-        <!-- </li> -->
-        {%- endfor -%}
-    <!-- </ul> -->
+    {%- assign pinned_posts = site.posts | where: "pinned", true -%}
+    {%- assign unpinned_posts = site.posts | where_exp: "post", "post.pinned != true" -%}
+
+    {%- if pinned_posts.size > 0 -%}
+    <h2 class="post-list-heading"><span class="heading-emoji">📌</span> Pinned Posts</h2>
+    <ul class="post-list">
+      {%- for post in pinned_posts -%}
+        {%- assign date_format = site.minima.date_format | default: "%B %d, %Y" -%}
+        <li>
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            {{ post.title | escape }} ({{ post.date | date: date_format }})
+          </a>
+          {%- if site.show_excerpts -%}
+          <span class="post-excerpt">{{ post.excerpt }}</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
     {%- endif -%}
+
+    {%- if unpinned_posts.size > 0 -%}
+    <h2 class="post-list-heading"><span class="heading-emoji">📝</span> Recent Posts</h2>
+    <ul class="post-list">
+      {%- for post in unpinned_posts limit:5 -%}
+        {%- assign date_format = site.minima.date_format | default: "%B %d, %Y" -%}
+        <li>
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            {{ post.title | escape }} ({{ post.date | date: date_format }})
+          </a>
+          {%- if site.show_excerpts -%}
+          <span class="post-excerpt">{{ post.excerpt }}</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- endif -%}
+
+    <p><a href="/archive.html">View all posts →</a></p>
 
 </div>

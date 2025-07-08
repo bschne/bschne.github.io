@@ -1,0 +1,24 @@
+---
+layout: single
+permalink: /archive.html
+---
+
+<article class="archive">
+  <header class="post-header">
+    <a class="home-link" href="{{ site.baseurl }}/">&larr; back to home</a>
+    <h1 class="post-title">All Posts</h1>
+  </header>
+  <ul class="post-list">
+    {%- for post in site.posts -%}
+      {%- assign date_format = site.minima.date_format | default: "%B %d, %Y" -%}
+      <li>
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          {{ post.title | escape }} ({{ post.date | date: date_format }})
+        </a>
+        {%- if site.show_excerpts -%}
+        <span class="post-excerpt">{{ post.excerpt }}</span>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</article> 
