@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+* {
+    font-size: 1.1rem;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-top: 5px solid rgb(255, 77, 6);
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        avenir next,
+        avenir,
+        segoe ui,
+        helvetica neue,
+        helvetica,
+        Cantarell,
+        Ubuntu,
+        roboto,
+        noto,
+        arial,
+        sans-serif;
+    font-size: 1rem;
+    color: #212427;
+}
+
+p,
+a,
+span,
+time,
+li,
+em,
+b,
+strong,
+i {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+    margin-bottom: 0.75em;
+}
+
+li {
+    margin-bottom: 0.25em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+    font-size: 2rem;
+    font-family: VT323;
+    word-spacing: -.6ch;
+}
+
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 1.25em;
+    margin-bottom: 0.25em;
+}
+
+h1.post-title {
+    margin-top: 0.5em;
+}
+
+a.home-link {
+    display: inline-block;
+    margin-top: 2em;
+}
+
+.heading-emoji {
+    font-size: 1.5rem;
+    padding-right: 0.5rem;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-top: 1.25em;
+    margin-bottom: 0.25em;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1.25em;
+    margin-bottom: 0.25em;
+}
+h4 {
+    display: block;
+    font-size: 1em;
+    margin-top: 1.25em;
+    margin-bottom: 0.25em;
+}
+h5 {
+    display: block;
+    font-size: 0.83em;
+    margin-top: 1.25em;
+    margin-bottom: 0.25em;
+}
+h6 {
+    display: block;
+    font-size: 0.67em;
+    margin-top: 1.25em;
+    margin-bottom: 0.25em;
+}
+
+header > h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+main {
+    max-width: 30rem;
+    padding: 0 2rem 2rem 2rem;
+    margin: 0 auto;
+}
+
+code {
+    padding: 2rem;
+    overflow: auto;
+}
+
+code,
+code span {
+    font-size: 0.8rem !important;
+}
+
+a,
+a:link,
+a:visited,
+a:active,
+a:hover {
+    color: rgb(255, 77, 6);
+    text-decoration: none;
+}
+
+a:hover {
+    border-bottom: 2px dotted rgb(255, 77, 6);
+}
+
+#contact-links {
+    list-style: none;
+    padding: 0;
+}
+
+#contact-links > li {
+    display: inline;
+    margin-right: 0.5em;
+}
+
+.post-meta,
+.post-meta * {
+    font-size: 0.9rem;
+    font-family: "Roboto", sans-serif;
+}
+
+.post-title {
+    margin-bottom: 0.5rem;
+}
+
+img + em {
+    color: #777;
+    margin-bottom: 1.5em;
+    display: block;
+}
+
+.project-image {
+    float: left;
+    max-width: 240px;
+    margin-right: 1em;
+}
+
+.project-container {
+    margin-top: 1em;
+}
+
+.post-content img {
+    width: 100%;
+}
+
+.post-meta time {
+    color: #777;
+}
+
+a.post-link {
+    font-weight: 500;
+}
+
+.link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.link-list li {
+    margin: 0;
+}
+
+.link-caret::before {
+    content: '»';
+    font-family: VT323;
+    font-size: 1.25rem;
+    padding-right: .2em;
+}
+
+.post-excerpt {
+    color: #777;
+}
+
+.footnote {
+    font-size: 0.65rem;
+}
+
+sup {
+    line-height: 0;    
+}
+
+ul {
+    padding-left: 20px;
+}
+
+.rss-subscribe a:link, 
+.rss-subscribe a:visited,
+.rss-subscribe a:active,
+.rss-subscribe a:hover,
+.rss-subscribe a {
+    font-weight: 400;
+}
+
+.intro-flex {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.intro-text {
+    flex: 1;
+}
+
+.home-portrait {
+    width: 8rem;
+    min-width: 0;
+    margin: 0;
+    border-radius: 10%;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .intro-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .home-portrait {
+        width: 60vw;
+        max-width: 10rem;
+    }
+    .intro-text {
+        width: 100%;
+    }
+}
+
+.post-item {
+    margin-bottom: .75em;
+}
