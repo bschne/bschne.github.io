@@ -5,7 +5,7 @@ permalink: /bookshelf/
 page_category: recommendations
 ---
 
-The following is a list of books and papers I enjoyed reading.
+A list of books and papers I enjoyed reading.
 
 ## Textbooks
 
