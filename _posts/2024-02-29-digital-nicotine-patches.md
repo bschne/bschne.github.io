@@ -3,11 +3,8 @@ layout: post
 title:  "Digital Nicotine Patches"
 date:   2024-02-29 20:00:00 +0100
 categories:
+excerpt: You can replace digital habits with less harmful versions, much like using nicotine patches for smoking cessation.
 ---
-
-You can replace digital habits with less harmful versions, much like using nicotine patches for smoking cessation.
-
-# Digital Nicotine Patches
 
 People who try to stop smoking will sometimes use nicotine patches or lozenges to slowly taper the addictive substance while stopping the harmful habit, i.e. smoking cigarettes, instantly. Some try finding another habit like chewing (non-nicotine) gum every time they crave a cigarette.
 
