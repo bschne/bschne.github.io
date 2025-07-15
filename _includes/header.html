@@ -23,10 +23,11 @@
         <a href="https://linkedin.com/in/schneiderbenjamin/">LinkedIn</a>
     </div>
     <div class="wrapper">
+        <h2><span class="heading-emoji">📁</span> Pages</h2>
         <ul class="post-list">
             {%- assign static_pages = site.pages | where_exp: "page", "page.layout == 'page' and page.url != '/' and page.title != null" -%}
             {%- for page in static_pages -%}
-                <li class="post-item">
+                <li>
                     <a class="post-link" href="{{ page.url | relative_url }}">{{ page.title }}</a>
                     <br>
                     <span class="post-excerpt">{% if page.excerpt %}{{ page.excerpt }}{% endif %}</span>
