@@ -1,0 +1,26 @@
+---
+layout: post
+title:  "Paper: Algorithmic Nuggets in Content Delivery"
+date:   2024-02-18 20:00:00 +0100
+categories:
+---
+
+Brief review of a paper outlining the algorithmic problems encountered in building a CDN.
+
+# Algorithmic Nuggets in Content Delivery
+
+I might do a better write-up of this at some point, but for now here's a quick note about a fun paper I came across recently. It's by Bruce Maggs & Ramesh Sitaraman and titled [Algorithmic Nuggets in Content Delivery (2016)](https://sci-hub.se/https://doi.org/10.1145/2805789.2805800).
+
+In it, the authors look at a range of problems that arise over the lifecycle of a single request to a content delivery network (CDN), specifically [Akamai](https://en.m.wikipedia.org/wiki/Akamai_Technologies). For each one, they formalize the problem, outline the theory of the algorithm used ot solve it, and point to some practical considerations beyond the theory that arise in the real world.
+
+First up is **load balancing** between clusters of CDN servers and clusters of end users. Unexpectedly (to me), this is solved using an extension of the [Gale-Shapley (deferred acceptance)](https://en.wikipedia.org/wiki/Gale–Shapley_algorithm) Algorithm, which comes from economics/market design. Both server- and user clusters have (partial) preferences over which counterparties they'd "like" to serve, so this is a nice fit. Capacity constraints and the partialness of preferences necessitate the extension.
+
+Next is within-cluster load balancing, via **allocating served objects to servers**. For this, they introduce [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing), which reduces remappings of objects as servers get added to and removed from clusters.
+
+Deciding which objects to cache in the first place (**cache filtering**) is another interesting problem. It turns out around three quarters of objects are only ever accessed once, so caching them introduces extra disk IO load on servers and takes up storage space while not providing any subsequent benefit. Akamai uses [bloom filters](https://en.wikipedia.org/wiki/Bloom_filter) to keep track of which objects have previously been requested, and only caches objects on the second request. This about doubles hit rates (because there's more free storage for popular content) and halves disk IO load in practice (which also speeds up reads for previously cached content). Aside: The authors show a cdf of how many objects are requested less than a given number of times, but I wonder what the difference in probability of subsequent requests occurring is between the first and second request.
+
+**Overlay routing**, that is routing within the CDN between content origins and edge nodes serving clients, is modelled as a [multi-commodity flow problem](https://en.wikipedia.org/wiki/Multi-commodity_flow_problem). That is, the content objects are commodities that have to be transported from upstream origins to edge servers. Interestingly, the problem is solved differently for different content types: Dynamic websites are more sensitive to latency, so the algorithms search for shortest paths. Live video, on the other hand, is more sensitive to throughput, so capacity constraints become more important and there are benefits to having multiple routes in parallel to recover lost packets. An interesting detail is that this leads to a *mixed integer program*, which is hard to solve, but can be "relaxed" to a *linear program*, which then gets rounded to the nearest integer solution. This may not be optimal, but often gets close at substantially lower computational cost.
+
+The final problem considered is **leader election**, i.e. how to pick a master node among a cluster from which to replicate state to other nodes. Some constraints are common among use cases, e.g. the assumption that no server acts maliciously (byzantine), and that only servers of good health may be elected as new leaders. Others differ, e.g. in some contexts it is desirable to end up with at *least* one new leader, in others, it can be at *most* one. Akamai has its own library of protocols for these cases. For cases where strict consensus is required, such as replicating user session data, established but more complex algorithms such as [Paxos](https://en.wikipedia.org/wiki/Paxos_(computer_science)) are used.
+
+All in all, the paper gives a nice high-level overview of where algorithms theory and practical considerations meet and how a CDN functions. Algorithms and especially their extensions are usually not covered in full, but for most there are references mentioned which provide more details.
