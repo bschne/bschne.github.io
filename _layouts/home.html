@@ -17,11 +17,12 @@ layout: default
     <ul class="post-list">
       {%- for post in pinned_posts -%}
         {%- assign date_format = site.minima.date_format | default: "%B %d, %Y" -%}
-        <li>
+        <li class="post-item">
           <a class="post-link" href="{{ post.url | relative_url }}">
             {{ post.title | escape }} ({{ post.date | date: date_format }})
           </a>
           {%- if site.show_excerpts -%}
+          <br>
           <span class="post-excerpt">{{ post.excerpt }}</span>
           {%- endif -%}
         </li>
@@ -34,11 +35,12 @@ layout: default
     <ul class="post-list">
       {%- for post in unpinned_posts limit:5 -%}
         {%- assign date_format = site.minima.date_format | default: "%B %d, %Y" -%}
-        <li>
+        <li class="post-item">
           <a class="post-link" href="{{ post.url | relative_url }}">
             {{ post.title | escape }} ({{ post.date | date: date_format }})
           </a>
           {%- if site.show_excerpts -%}
+          <br>
           <span class="post-excerpt">{{ post.excerpt }}</span>
           {%- endif -%}
         </li>
