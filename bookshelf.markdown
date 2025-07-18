@@ -28,7 +28,7 @@ Particularly great ones are marked with an asterisk.
 * <a href="https://www.goodreads.com/book/show/31850765-energy-and-civilization" target="_blank">\* Energy and Civilization: A History</a>
 * <a href="https://www.goodreads.com/book/show/38315.Fooled_by_Randomness" target="_blank">Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets</a>
 * <a href="https://www.goodreads.com/book/show/12703074-genentech" target="_blank">Genentech: The Beginnings of Biotech</a>
-* <a href="https://www.goodreads.com/book/show/22359734-gottlieb-duttweiler" target="_blank">Gottlibe Duttweiler</a>
+* <a href="https://www.goodreads.com/book/show/22359734-gottlieb-duttweiler" target="_blank">Gottlieb Duttweiler</a>
 * <a href="https://www.goodreads.com/book/show/18176747-the-hard-thing-about-hard-things" target="_blank">The Hard Thing About Hard Things: Building a Business When There Are No Easy Answers</a>
 * <a href="https://www.goodreads.com/book/show/33275382-henri-cartier-bresson" target="_blank">Henri Cartier-Bresson: Interviews and Conversations</a>
 * <a href="https://www.goodreads.com/book/show/18693884-how-not-to-be-wrong" target="_blank">How Not to Be Wrong: The Hidden Maths of Everyday Life</a>
