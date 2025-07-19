@@ -56,3 +56,6 @@ plugins:
 
 paginate: 10
 paginate_path: "/archive/page:num/"
+
+sass:
+  style: compressed

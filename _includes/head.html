@@ -10,7 +10,10 @@
       onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=VT323&display=swap"></noscript>
-    <link rel="stylesheet" href="{{ '/assets/bschne.css' | relative_url }}" />
+    
+    {% capture raw %}{% include bschne.scss %}{% endcapture %}
+    <style>{{ raw | scssify }}</style>
+
     {%- feed_meta -%} {%- if jekyll.environment == 'production' and
     site.google_analytics -%} {%- include google-analytics.html -%} {%- endif
     -%}
