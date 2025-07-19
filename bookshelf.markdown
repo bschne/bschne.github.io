@@ -88,3 +88,4 @@ but some maintain interesting lists on their own websites:
 * <a href="https://patrickcollison.com/bookshelf" target="_blank">Patrick Collison</a>
 * <a href="https://marginalrevolution.com/?s=been+reading" target="_blank">Tyler Cowen</a>
 * Gavin Leech's list of <a href="https://www.gleech.org/books" target="_blank">books</a> and <a href="https://www.gleech.org/technicalities/" target="_blank">technical books</a>
+* <a href="https://jacobkimmel.notion.site/Bookshelf-016329fb5d194ded9ae325e072eff685">Jacob Kimmel</a>
