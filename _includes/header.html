@@ -1,6 +1,5 @@
 <header>
     <h1>{{ site.title | escape }}</h1>
-    <!-- <h2><span class="heading-emoji">📍</span> Currently</h2> -->
     <div class="intro-text">
         <p>
             Living in Zurich, Switzerland.
@@ -23,7 +22,7 @@
         <a href="https://linkedin.com/in/schneiderbenjamin/">LinkedIn</a>
     </div>
     <div class="wrapper">
-        <h2><span class="heading-emoji">📁</span> Pages</h2>
+        <h2>Pages</h2>
         <ul class="post-list">
             {%- assign static_pages = site.pages | where_exp: "page", "page.layout == 'page' and page.url != '/' and page.title != null" -%}
             {%- for page in static_pages -%}
@@ -36,7 +35,7 @@
         </ul>
         </div>
     <div class="wrapper">
-        <h2><span class="heading-emoji">🏗️</span> Work</h2>
+        <h2>Work</h2>
         {%- for project in site.data.projects -%}
         <div class="post-item">
             {%- if project.link -%}

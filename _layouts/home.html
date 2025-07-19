@@ -13,7 +13,7 @@ layout: default
     {%- assign unpinned_posts = site.posts | where_exp: "post", "post.pinned != true" -%}
 
     {%- if pinned_posts.size > 0 -%}
-    <h2 class="post-list-heading"><span class="heading-emoji">📌</span> Pinned Posts</h2>
+    <h2 class="post-list-heading">Pinned Posts</h2>
     <ul class="post-list">
       {%- for post in pinned_posts -%}
         {%- assign date_format = site.minima.date_format | default: "%B %d, %Y" -%}
@@ -31,7 +31,7 @@ layout: default
     {%- endif -%}
 
     {%- if unpinned_posts.size > 0 -%}
-    <h2 class="post-list-heading"><span class="heading-emoji">📝</span> Recent Posts</h2>
+    <h2 class="post-list-heading">Recent Posts</h2>
     <ul class="post-list">
       {%- for post in unpinned_posts limit:5 -%}
         {%- assign date_format = site.minima.date_format | default: "%B %d, %Y" -%}
