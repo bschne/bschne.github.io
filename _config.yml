@@ -23,8 +23,7 @@ show_excerpts: true
 title: Benjamin Schneider
 email: mail@benjaminschneider.ch
 description: >- # this means to ignore newlines until "baseurl:"
-  TODO write description
-  in here.
+  
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://benjaminschneider.ch" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: bschne
