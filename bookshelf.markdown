@@ -8,6 +8,9 @@ page_category: recommendations
 A list of books I enjoyed reading and would rate anywhere from "worth checking out" to "completely changed how I view the world".
 Particularly great ones are marked with an asterisk.
 
+I also track most of my reading on goodreads,
+so feel free to [follow me](https://www.goodreads.com/user/show/99747247-benjamin-schneider) over there.
+
 ## Textbooks
 
 * <a href="https://www.goodreads.com/book/show/13400.Molecular_Biology_of_the_Cell" target="_blank">\* Molecular Biology of the Cell</a>
