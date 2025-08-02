@@ -5,7 +5,7 @@ permalink: /bookshelf/
 page_category: recommendations
 ---
 
-A list of books I enjoyed reading and would rate anywhere from "worth checking out" to "completely changed how I view the world".
+A list of books (and other pieces) I enjoyed reading and would rate anywhere from "worth checking out" to "completely changed how I view the world".
 Particularly great ones are marked with an asterisk.
 
 I also track most of my reading on goodreads,
@@ -78,6 +78,25 @@ so feel free to [follow me](https://www.goodreads.com/user/show/99747247-benjami
 * <a href="https://www.goodreads.com/book/show/223380.Stories_of_Your_Life_and_Others" target="_blank">\* Stories of Your Life and Others</a>
 * <a href="https://www.goodreads.com/book/show/17690.The_Trial" target="_blank">The Trial</a>
 
+
+## Blog Posts, Essays, Papers
+
+* <a href="https://www.jstor.org/stable/1827159#metadata_info_tab_contents" target="_blank">Uncertainty, Evolution, and Economic Theory</a>
+* <a href="https://stackoverflow.blog/2022/03/03/stop-aggregating-away-the-signal-in-your-data/" target="_blank">Stop aggregating away the signal in your data</a>
+* <a href="http://www.covingtoninnovations.com/mc/WriteThinkLearn.pdf" target="_blank">How to Write More Clearly, Think More Clearly, and Learn Complex Material More Easily</a>
+* <a href="https://www.ssrn.com/abstract=3760631" target="_blank">Four Ways to Scale Up: Smart, Dumb, Forced, and Fumbled</a>
+* <a href="https://www.bloomberg.com/graphics/2015-paul-ford-what-is-code/" target="_blank">What Is Code?</a>
+* <a href="https://okbjgm.weebly.com/uploads/3/1/5/0/31506003/11_laws_of_showrunning.pdf" target="_blank">The Eleven Laws of Showrunning</a>
+* <a href="https://www.stephenhicks.org/wp-content/uploads/2013/03/hayekf-use-of-knowledge-in-society.pdf" target="_blank">The Use of Knowledge in Society</a>
+* <a href="https://dl.acm.org/doi/10.1145/2814228.2814248" target="_blank">Towards a theory of conceptual design for software</a>
+* <a href="http://ericmjonas.github.io/neuroproc/" target="_blank">Could a Neuroscientist Understand a Microprocessor?</a>
+* <a href="https://donellameadows.org/wp-content/userfiles/Leverage_Points.pdf" target="_blank">Leverage Points: Places to Intervene in a System</a>
+* <a href="https://www.ribbonfarm.com/2013/05/21/schleps-puzzles-and-packages-solving-complex-problems-the-iron-man-way/" target="_blank">Schleps, Puzzles, and Packages: Solving Complex Problems the Iron Man Way</a>
+* <a href="http://johnsalvatier.org/blog/2017/reality-has-a-surprising-amount-of-detail" target="_blank">Reality has a surprising amount of detail</a>
+* <a href="https://arxiv.org/pdf/0812.4360.pdf">Driven by Compression Progress</a>
+* <a href="https://ansuz.sooke.bc.ca/entry/23" target="_blank">What Colour are your bits?</a>
+* <a href="https://jsomers.net/i-should-have-loved-biology/" target="_blank">I should have loved biology</a>
+* <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank">The Bitter Lesson</a>
 
 
 ## Other People's Shelves
