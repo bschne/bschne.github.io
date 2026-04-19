@@ -85,7 +85,7 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
         <ul class="reading-list">
           {nowReading.map(item => (
             <li>
-              <a href={`/library/${item.id.replace(/\.mdx?$/, '')}`}>{item.data.title}</a>
+              <span class="reading-title">{item.data.title}</span>
               <span class="reading-creator"> · {item.data.creator.split(';')[0]}</span>
             </li>
           ))}
@@ -231,6 +231,10 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
     gap: 0.375rem;
     margin-bottom: 0.375rem;
     font-size: var(--text-meta);
+  }
+
+  .reading-title {
+    color: var(--color-text-primary);
   }
 
   .reading-list a {
