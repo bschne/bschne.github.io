@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { item, hasNote } = Astro.props;
-const { type, title, creator, status, starred, date, url, inline } = item.data;
+const { type, title, creator, status, starred, date, url, blurb, inline } = item.data;
 const slug = item.id.replace(/\.mdx?$/, '');
 const sourceHostname = url ? new URL(url).hostname.replace(/^www\./, '') : null;
 const noteHref = hasNote ? `/library/${slug}` : null;
@@ -30,16 +30,17 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
         {sourceHostname && (
           <a href={url} class="row-source" target="_blank" rel="noopener">↗ {sourceHostname}</a>
         )}
-        {noteHref && (
-          <a href={noteHref} class="row-note-link">notes</a>
-        )}
         {dateLabel && <span class="row-date">{dateLabel}</span>}
       </span>
     </div>
+    {blurb && <p class="row-inline-note row-blurb">{blurb}</p>}
     {Content && (
       <div class="row-inline-note">
         <Content />
       </div>
+    )}
+    {noteHref && (
+      <a href={noteHref} class="row-note-link">my notes →</a>
     )}
   </div>
 </li>
@@ -114,7 +115,8 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
   .row-note-link:hover { color: var(--color-accent); }
 
   .row-inline-note {
-    margin-top: 0.25rem;
+    margin-top: 0.6rem;
+    max-width: 72ch;
     font-size: 0.8rem;
     color: var(--color-text-secondary);
     line-height: 1.55;

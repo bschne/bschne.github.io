@@ -1,6 +1,5 @@
 ---
 import Editorial from '../layouts/Editorial.astro';
-import TopicList from '../components/TopicList.astro';
 import { getCollection } from 'astro:content';
 import { jekyllPath, formatDate } from '../lib/dates';
 
@@ -12,8 +11,6 @@ const featuredPosts = selectedPosts.length >= 4 ? selectedPosts.slice(0, 4) : po
 
 const projects = await getCollection('projects');
 projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-const allTopics = [...new Set(posts.flatMap(p => p.data.topics))].sort();
 
 const library = await getCollection('library');
 const nowReading = library.filter(i => i.data.status === 'now' || i.data.status === 'ongoing');
@@ -94,12 +91,6 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
       </section>
     )}
 
-    {allTopics.length > 0 && (
-      <section class="rail-section">
-        <h3>topics</h3>
-        <TopicList topics={allTopics} />
-      </section>
-    )}
   </div>
 </Editorial>
 
@@ -138,6 +129,8 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
   /* Main column */
   .home-section {
     margin-bottom: var(--space-2-5);
+    border-top: 1px solid var(--color-accent);
+    padding-top: var(--space-1);
   }
 
   .home-section h2 {
@@ -196,6 +189,11 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
   /* Rail */
   .rail-section {
     margin-bottom: var(--space-2);
+  }
+
+  .rail-section:first-child {
+    border-top: 1px solid var(--color-accent);
+    padding-top: var(--space-1);
   }
 
   .rail-section h3 {

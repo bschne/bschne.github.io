@@ -37,8 +37,7 @@ const items = allItems
     if (!a.data.starred && b.data.starred) return 1;
     if (a.data.status === 'ongoing' && b.data.status !== 'ongoing') return -1;
     if (b.data.status === 'ongoing' && a.data.status !== 'ongoing') return 1;
-    if (a.data.date && b.data.date) return b.data.date.getTime() - a.data.date.getTime();
-    return a.data.title.localeCompare(b.data.title);
+    return a.data.creator.localeCompare(b.data.creator);
   });
 
 const itemsWithNotes = new Set(
@@ -57,7 +56,7 @@ const bookGenres = ['fiction', 'non-fiction', 'textbooks'] as const;
   <main class="page-wrap">
     <header class="library-header">
       <h1>Library</h1>
-      <p class="library-desc">Books, papers, podcasts, films, courses — things I've spent real time with.</p>
+      <p class="library-desc">Books and other pieces I enjoyed — from worth checking out to completely changed how I view the world. Particularly impactful titles are marked with a star.</p>
       <nav class="type-nav">
         <a href="/library">all</a>
         {mainTypes.map(t => (

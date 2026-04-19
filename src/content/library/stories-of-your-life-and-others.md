@@ -5,6 +5,7 @@ genre: fiction
 title: "Stories of Your Life and Others"
 creator: "Chiang, Ted"
 status: done
+url: "https://www.goodreads.com/book/show/223380.Stories_of_Your_Life_and_Others"
 topics: []
 image: /covers/stories-of-your-life-and-others.jpg
 ---
