@@ -1,0 +1,25 @@
+---
+import Prose from '../layouts/Prose.astro';
+
+const lastUpdated = new Date('2026-04-19');
+---
+
+<Prose title="Now" description="What Benjamin Schneider is up to these days.">
+  <p>
+    <em>Last updated {lastUpdated.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}.</em>
+  </p>
+
+  <p>
+    Getting set up in a new role at Vivenu, working on solution architecture for event ticketing at scale.
+  </p>
+
+  <p>
+    Re-reading <em>Molecular Biology of the Cell</em> (Alberts et al.) from the beginning, more carefully this time.
+    Filling in gaps from university that I never quite closed.
+  </p>
+
+  <p>
+    Continuing to map the Pfannenstiel region in OpenStreetMap.
+    Also running command support exercises with the civil protection unit — radio procedures and incident coordination.
+  </p>
+</Prose>

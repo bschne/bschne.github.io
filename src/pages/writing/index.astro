@@ -1,0 +1,106 @@
+---
+import Base from '../../layouts/Base.astro';
+import TopicList from '../../components/TopicList.astro';
+import { getCollection } from 'astro:content';
+import { jekyllPath, formatDateShort } from '../../lib/dates';
+
+const posts = await getCollection('writing', ({ data }) => !data.draft);
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Base title="Writing" description="Essays and notes by Benjamin Schneider.">
+  <main class="page-wrap">
+    <header class="page-header">
+      <h1>Writing</h1>
+    </header>
+
+    <ul class="post-list">
+      {posts.map(post => (
+        <li class="post-row">
+          <time class="post-date" datetime={post.data.date.toISOString()}>
+            {formatDateShort(post.data.date)}
+          </time>
+          <div class="post-content">
+            <a href={jekyllPath(post.data.date, post.id)} class="post-title">
+              {post.data.title}
+            </a>
+            {post.data.description && (
+              <span class="post-desc"> — {post.data.description}</span>
+            )}
+            {post.data.topics.length > 0 && (
+              <div class="post-topics">
+                <TopicList topics={post.data.topics} />
+              </div>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>
+
+<style>
+  .page-wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2) var(--content-padding) var(--space-3);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-2);
+    padding-bottom: var(--space-1);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .page-header h1 {
+    font-size: var(--text-h1);
+    font-weight: 500;
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .post-row {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .post-date {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    padding-top: 0.1em;
+    white-space: nowrap;
+  }
+
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    text-decoration: none;
+  }
+
+  .post-title:hover {
+    color: var(--color-accent);
+  }
+
+  .post-desc {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+  }
+
+  .post-topics {
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 480px) {
+    .post-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

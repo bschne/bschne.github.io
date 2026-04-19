@@ -1,6 +1,7 @@
-_site
-.sass-cache
-.jekyll-cache
-.jekyll-metadata
+dist/
+node_modules/
+.astro/
+.env
+.env.*
+!.env.example
 .DS_Store
-vendor

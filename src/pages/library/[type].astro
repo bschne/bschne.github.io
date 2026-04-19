@@ -1,0 +1,128 @@
+---
+import Base from '../../layouts/Base.astro';
+import LibraryTile from '../../components/LibraryTile.astro';
+import { getCollection } from 'astro:content';
+
+const ALL_ROUTES = ['books', 'fiction', 'non-fiction', 'textbooks', 'papers', 'podcasts', 'films', 'courses'] as const;
+type TypeRoute = typeof ALL_ROUTES[number];
+
+type RouteConfig = { type: string; genre?: string };
+const routeMap: Record<TypeRoute, RouteConfig> = {
+  books:        { type: 'book' },
+  fiction:      { type: 'book', genre: 'fiction' },
+  'non-fiction': { type: 'book', genre: 'non-fiction' },
+  textbooks:    { type: 'book', genre: 'textbook' },
+  papers:       { type: 'paper' },
+  podcasts:     { type: 'podcast' },
+  films:        { type: 'film' },
+  courses:      { type: 'course' },
+};
+
+export async function getStaticPaths() {
+  return ['books', 'fiction', 'non-fiction', 'textbooks', 'papers', 'podcasts', 'films', 'courses'].map(type => ({ params: { type } }));
+}
+
+const { type } = Astro.params as { type: TypeRoute };
+const { type: collectionType, genre: collectionGenre } = routeMap[type];
+
+const allItems = await getCollection('library');
+const items = allItems
+  .filter(i => {
+    if (i.data.type !== collectionType) return false;
+    if (collectionGenre) return i.data.genre === collectionGenre;
+    return true;
+  })
+  .sort((a, b) => {
+    if (a.data.starred && !b.data.starred) return -1;
+    if (!a.data.starred && b.data.starred) return 1;
+    if (a.data.status === 'now' && b.data.status !== 'now') return -1;
+    if (b.data.status === 'now' && a.data.status !== 'now') return 1;
+    if (a.data.date && b.data.date) return b.data.date.getTime() - a.data.date.getTime();
+    return a.data.title.localeCompare(b.data.title);
+  });
+
+const itemsWithNotes = new Set(
+  allItems.filter(i => i.body && i.body.trim().length > 0).map(i => i.id)
+);
+
+const isBookRoute = type === 'books' || type === 'fiction' || type === 'non-fiction' || type === 'textbooks';
+const mainTypes = ['books', 'papers', 'podcasts', 'films', 'courses'] as const;
+const bookGenres = ['fiction', 'non-fiction', 'textbooks'] as const;
+---
+
+<Base title={`Library — ${type}`}>
+  <main class="page-wrap">
+    <header class="library-header">
+      <div class="library-title-row">
+        <h1>Library</h1>
+        <div class="view-toggle">
+          <span class="view-active">grid</span>
+          <span>·</span>
+          <a href="/library/list">list</a>
+        </div>
+      </div>
+      <p class="library-desc">Books, papers, podcasts, films, courses — things I've spent real time with.</p>
+      <nav class="type-nav">
+        <a href="/library">all</a>
+        {mainTypes.map(t => (
+          <a href={`/library/${t}`} class:list={{ 'type-active': t === type || (t === 'books' && isBookRoute && type !== 'books') }}>{t}</a>
+        ))}
+      </nav>
+      {isBookRoute && (
+        <nav class="genre-nav">
+          <a href="/library/books" class:list={{ 'type-active': type === 'books' }}>all books</a>
+          {bookGenres.map(g => (
+            <a href={`/library/${g}`} class:list={{ 'type-active': g === type }}>{g}</a>
+          ))}
+        </nav>
+      )}
+    </header>
+
+    {items.length > 0 ? (
+      <div class="tile-grid">
+        {items.map(item => <LibraryTile item={item} hasNote={itemsWithNotes.has(item.id)} />)}
+      </div>
+    ) : (
+      <p class="empty">Nothing here yet.</p>
+    )}
+  </main>
+</Base>
+
+<style>
+  .page-wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2) var(--content-padding) var(--space-3);
+  }
+  .library-header { margin-bottom: var(--space-2); }
+  .library-title-row {
+    display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.5rem;
+  }
+  h1 { font-size: var(--text-h1); font-weight: 500; }
+  .view-toggle { font-size: var(--text-meta); color: var(--color-text-secondary); display: flex; gap: 0.375rem; }
+  .view-toggle a { text-decoration: none; }
+  .view-toggle a:hover { color: var(--color-accent); }
+  .view-active { color: var(--color-text-primary); }
+  .library-desc { font-size: var(--text-meta); color: var(--color-text-secondary); margin-bottom: 1rem; }
+  .type-nav {
+    display: flex; flex-wrap: wrap; gap: 0 1.25rem;
+    font-size: var(--text-meta); color: var(--color-text-secondary);
+    padding-bottom: var(--space-1); border-bottom: 0.5px solid var(--color-border);
+  }
+  .genre-nav {
+    display: flex; flex-wrap: wrap; gap: 0 1.25rem;
+    font-size: var(--text-meta); color: var(--color-text-secondary);
+    padding-top: 0.625rem;
+    padding-bottom: var(--space-1); border-bottom: 0.5px solid var(--color-border);
+    margin-bottom: calc(-1 * var(--space-1));
+  }
+  .type-nav a, .genre-nav a { text-decoration: none; }
+  .type-nav a:hover, .genre-nav a:hover { color: var(--color-accent); }
+  .type-active { color: var(--color-text-primary); font-weight: 500; }
+  .tile-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem 1rem;
+  }
+  @media (max-width: 900px) { .tile-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 600px) { .tile-grid { grid-template-columns: repeat(2, 1fr); } }
+  .empty { font-size: var(--text-meta); color: var(--color-text-secondary); }
+</style>

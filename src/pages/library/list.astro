@@ -1,0 +1,106 @@
+---
+import Base from '../../layouts/Base.astro';
+import LibraryRow from '../../components/LibraryRow.astro';
+import { getCollection } from 'astro:content';
+
+const allItems = await getCollection('library');
+allItems.sort((a, b) => {
+  if (a.data.status === 'now' && b.data.status !== 'now') return -1;
+  if (b.data.status === 'now' && a.data.status !== 'now') return 1;
+  if (a.data.status === 'ongoing' && b.data.status !== 'ongoing') return -1;
+  if (b.data.status === 'ongoing' && a.data.status !== 'ongoing') return 1;
+  if (a.data.date && b.data.date) return b.data.date.getTime() - a.data.date.getTime();
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const itemsWithNotes = new Set(
+  allItems.filter(i => i.body && i.body.trim().length > 0).map(i => i.id)
+);
+
+const types = ['books', 'papers', 'podcasts', 'films', 'courses'] as const;
+---
+
+<Base title="Library — list" description="Everything in the library, as a list.">
+  <main class="page-wrap">
+    <header class="library-header">
+      <div class="library-title-row">
+        <h1>Library</h1>
+        <div class="view-toggle">
+          <a href="/library">grid</a>
+          <span class="view-sep">·</span>
+          <span class="view-active">list</span>
+        </div>
+      </div>
+      <p class="library-desc">Books, papers, podcasts, films, courses — things I've spent real time with.</p>
+      <nav class="type-nav">
+        <a href="/library" class="type-active">all</a>
+        {types.map(t => <a href={`/library/${t}`}>{t}</a>)}
+      </nav>
+    </header>
+
+    <ul class="row-list">
+      {allItems.map(item => (
+        <LibraryRow item={item} hasNote={itemsWithNotes.has(item.id)} />
+      ))}
+    </ul>
+    <p class="list-note">Underlined titles have notes. Everything else is inventory.</p>
+  </main>
+</Base>
+
+<style>
+  .page-wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2) var(--content-padding) var(--space-3);
+  }
+
+  .library-header {
+    margin-bottom: var(--space-2);
+  }
+
+  .library-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 { font-size: var(--text-h1); font-weight: 500; }
+
+  .view-toggle {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    display: flex;
+    gap: 0.375rem;
+  }
+  .view-toggle a { text-decoration: none; }
+  .view-toggle a:hover { color: var(--color-accent); }
+  .view-active { color: var(--color-text-primary); }
+
+  .library-desc {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .type-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.25rem;
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    padding-bottom: var(--space-1);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+  .type-nav a { text-decoration: none; }
+  .type-nav a:hover { color: var(--color-accent); }
+  .type-active { color: var(--color-text-primary); font-weight: 500; }
+
+  .row-list { list-style: none; }
+
+  .list-note {
+    font-size: var(--text-meta);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-1);
+  }
+</style>

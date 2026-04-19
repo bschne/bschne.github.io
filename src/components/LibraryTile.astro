@@ -1,0 +1,247 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  item: CollectionEntry<'library'>;
+  hasNote?: boolean;
+}
+
+const { item, hasNote = false } = Astro.props;
+const { type, title, creator, status, starred, image, imageColor, year, edition, url } = item.data;
+const slug = item.id.replace(/\.mdx?$/, '');
+const href = hasNote ? `/library/${slug}` : (url ?? null);
+const isExternal = !hasNote && !!url;
+
+const typeLabel: Record<string, string> = {
+  book: 'book', paper: 'paper', podcast: 'pod', film: 'film', course: 'course',
+};
+
+const tileClasses = ['tile', `tile--${type}`, status === 'now' && 'tile--now', status === 'ongoing' && 'tile--ongoing'].filter(Boolean).join(' ');
+---
+
+<Fragment>
+{href ? (
+  <a href={href}
+     class={tileClasses}
+     target={isExternal ? '_blank' : undefined}
+     rel={isExternal ? 'noopener' : undefined}>
+    <div class="tile-cover">
+      {image ? (
+        <img src={image} alt={title} loading="lazy" />
+      ) : type === 'paper' ? (
+        <div class="tile-paper">
+          <div class="tile-paper-meta">{edition || year || ''}</div>
+          <div class="tile-paper-title">{title}</div>
+          <div class="tile-paper-creator">{creator}</div>
+          <div class="tile-paper-rule"></div>
+          <div class="tile-paper-abstract">abstract</div>
+          <div class="tile-paper-lines">
+            <div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+      ) : type === 'film' ? (
+        <div class="tile-text" style={imageColor ? `background:${imageColor}` : ''}>
+          <span class="tile-text-title">{title}</span>
+          <span class="tile-text-sub">{creator.split(',')[0]}</span>
+        </div>
+      ) : (
+        <div class="tile-text" style={imageColor ? `background:${imageColor}` : ''}>
+          <span class="tile-text-title">{title}</span>
+          <span class="tile-text-sub">{creator}</span>
+        </div>
+      )}
+    </div>
+    <div class="tile-meta">
+      <span class="tile-title">{title}{starred && <span class="tile-star" aria-label="recommended"> ★</span>}</span>
+      <span class="tile-info">{typeLabel[type]} · {status === 'now' ? 'now' : status === 'ongoing' ? 'ongoing' : creator.split(';')[0].split(',').slice(0, 2).join(',')}</span>
+    </div>
+  </a>
+) : (
+  <div class={tileClasses}>
+    <div class="tile-cover">
+      {image ? (
+        <img src={image} alt={title} loading="lazy" />
+      ) : type === 'paper' ? (
+        <div class="tile-paper">
+          <div class="tile-paper-meta">{edition || year || ''}</div>
+          <div class="tile-paper-title">{title}</div>
+          <div class="tile-paper-creator">{creator}</div>
+          <div class="tile-paper-rule"></div>
+          <div class="tile-paper-abstract">abstract</div>
+          <div class="tile-paper-lines">
+            <div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+      ) : type === 'film' ? (
+        <div class="tile-text" style={imageColor ? `background:${imageColor}` : ''}>
+          <span class="tile-text-title">{title}</span>
+          <span class="tile-text-sub">{creator.split(',')[0]}</span>
+        </div>
+      ) : (
+        <div class="tile-text" style={imageColor ? `background:${imageColor}` : ''}>
+          <span class="tile-text-title">{title}</span>
+          <span class="tile-text-sub">{creator}</span>
+        </div>
+      )}
+    </div>
+    <div class="tile-meta">
+      <span class="tile-title">{title}{starred && <span class="tile-star" aria-label="recommended"> ★</span>}</span>
+      <span class="tile-info">{typeLabel[type]} · {status === 'now' ? 'now' : status === 'ongoing' ? 'ongoing' : creator.split(';')[0].split(',').slice(0, 2).join(',')}</span>
+    </div>
+  </div>
+)}
+</Fragment>
+
+<style>
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .tile-cover {
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--color-bg-secondary);
+    position: relative;
+  }
+
+  .tile--now .tile-cover,
+  .tile--ongoing .tile-cover {
+    outline: 1.5px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+
+  .tile-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Books: show full cover without cropping, with even padding */
+  .tile--book .tile-cover {
+    padding: 0.5rem;
+  }
+
+  .tile--book .tile-cover img {
+    object-fit: contain;
+  }
+
+  /* ── paper tile ── */
+  .tile-paper {
+    width: 100%;
+    height: 100%;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    background: var(--color-bg-secondary);
+  }
+
+  .tile-paper-meta {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-tertiary);
+  }
+
+  .tile-paper-title {
+    font-family: var(--font-serif);
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-text-primary);
+  }
+
+  .tile-paper-creator {
+    font-size: 0.6rem;
+    color: var(--color-text-secondary);
+    margin-bottom: auto;
+  }
+
+  .tile-paper-rule {
+    height: 0.5px;
+    background: var(--color-border);
+    margin: 0.25rem 0;
+  }
+
+  .tile-paper-abstract {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0.25rem;
+  }
+
+  .tile-paper-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+  }
+
+  .tile-paper-lines > div {
+    height: 0.5px;
+    background: var(--color-border);
+    border-radius: 1px;
+  }
+
+  /* ── text tile (film, no-cover) ── */
+  .tile-text {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    background: var(--color-bg-secondary);
+  }
+
+  .tile-text-title {
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-text-primary);
+  }
+
+  .tile-text-sub {
+    font-size: 0.65rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* ── metadata below tile ── */
+  .tile-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .tile-title {
+    font-size: var(--text-meta);
+    line-height: 1.3;
+    color: var(--color-text-primary);
+  }
+
+  a.tile:hover .tile-title {
+    color: var(--color-accent);
+  }
+
+  .tile-star {
+    color: var(--color-accent);
+    font-size: 0.65rem;
+    vertical-align: 0.05em;
+  }
+
+  .tile-info {
+    font-size: 0.7rem;
+    color: var(--color-text-tertiary);
+    text-transform: lowercase;
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+import Base from '../../../layouts/Base.astro';
+import TopicList from '../../../components/TopicList.astro';
+import { getCollection } from 'astro:content';
+import { jekyllPath, formatDateShort } from '../../../lib/dates';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('writing', ({ data }) => !data.draft);
+  const allTopics = [...new Set(posts.flatMap(p => p.data.topics))];
+  return allTopics.map(tag => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+const allPosts = await getCollection('writing', ({ data }) => !data.draft);
+const posts = allPosts
+  .filter(p => p.data.topics.includes(tag))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Base title={`${tag.replace(/-/g, '\u00a0')} — Writing`}>
+  <main class="page-wrap">
+    <header class="page-header">
+      <p class="back-link"><a href="/writing">← writing</a></p>
+      <h1>{tag.replace(/-/g, '\u00a0')}</h1>
+      <p class="tag-count">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+    </header>
+
+    <ul class="post-list">
+      {posts.map(post => (
+        <li class="post-row">
+          <time class="post-date" datetime={post.data.date.toISOString()}>
+            {formatDateShort(post.data.date)}
+          </time>
+          <div class="post-content">
+            <a href={jekyllPath(post.data.date, post.id)} class="post-title">
+              {post.data.title}
+            </a>
+            {post.data.description && (
+              <span class="post-desc"> — {post.data.description}</span>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>
+
+<style>
+  .page-wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2) var(--content-padding) var(--space-3);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-2);
+    padding-bottom: var(--space-1);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .back-link {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .back-link a {
+    text-decoration: none;
+  }
+
+  .back-link a:hover {
+    color: var(--color-accent);
+  }
+
+  .page-header h1 {
+    font-size: var(--text-h1);
+    font-weight: 500;
+    text-transform: lowercase;
+  }
+
+  .tag-count {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    margin-top: 0.25rem;
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-row {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .post-date {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    padding-top: 0.1em;
+    white-space: nowrap;
+  }
+
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    text-decoration: none;
+  }
+
+  .post-title:hover {
+    color: var(--color-accent);
+  }
+
+  .post-desc {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 480px) {
+    .post-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

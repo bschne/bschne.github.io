@@ -1,0 +1,64 @@
+/* ─── light mode (default) ─────────────────────────────────────── */
+:root {
+  --color-bg: #fdfcf9;
+  --color-bg-secondary: #f5f2ea;
+  --color-text-primary: #1a1817;
+  --color-text-secondary: #5a564e;
+  --color-text-tertiary: #8a867c;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-accent: rgb(255, 77, 6);
+
+  --font-serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, serif;
+  --font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
+
+  --text-h1: 1.375rem;
+  --text-h2: 1.125rem;
+  --text-h3: 1rem;
+  --text-body: 1rem;
+  --text-meta: 0.8125rem;
+  --text-label: 0.6875rem;
+
+  --space-1: 1rem;
+  --space-1-5: 1.5rem;
+  --space-2: 2rem;
+  --space-2-5: 2.5rem;
+  --space-3: 3rem;
+
+  --max-width: 72rem;
+  --content-padding: 1.5rem;
+}
+
+/* ─── dark mode tokens ──────────────────────────────────────────── */
+.dark-vars {
+  --color-bg: #17161a;
+  --color-bg-secondary: #1f1e22;
+  --color-text-primary: #ebe8e0;
+  --color-text-secondary: #a5a096;
+  --color-text-tertiary: #6e6a60;
+  --color-border: rgba(255, 255, 255, 0.10);
+  --color-accent: rgb(255, 105, 48);
+}
+
+/* system preference (no explicit choice) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #17161a;
+    --color-bg-secondary: #1f1e22;
+    --color-text-primary: #ebe8e0;
+    --color-text-secondary: #a5a096;
+    --color-text-tertiary: #6e6a60;
+    --color-border: rgba(255, 255, 255, 0.10);
+    --color-accent: rgb(255, 105, 48);
+  }
+}
+
+/* explicit dark override */
+:root[data-theme="dark"] {
+  --color-bg: #17161a;
+  --color-bg-secondary: #1f1e22;
+  --color-text-primary: #ebe8e0;
+  --color-text-secondary: #a5a096;
+  --color-text-tertiary: #6e6a60;
+  --color-border: rgba(255, 255, 255, 0.10);
+  --color-accent: rgb(255, 105, 48);
+}

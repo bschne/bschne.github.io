@@ -1,0 +1,25 @@
+{
+  "name": "benjaminschneider-ch",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "fetch-covers": "tsx scripts/fetch-covers.ts",
+    "new:post": "tsx scripts/new-post.ts",
+    "add:library": "tsx scripts/add-library.ts"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/rss": "^4.0.18",
+    "@fontsource-variable/inter": "*",
+    "@fontsource-variable/source-serif-4": "*",
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@clack/prompts": "^1.2.0",
+    "tsx": "^4.21.0"
+  }
+}

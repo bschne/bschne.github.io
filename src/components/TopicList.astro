@@ -1,0 +1,34 @@
+---
+interface Props {
+  topics: string[];
+  baseUrl?: string;
+}
+
+const { topics, baseUrl = '/writing/tag' } = Astro.props;
+---
+
+<ul class="topic-list">
+  {topics.map(topic => (
+    <li>
+      <a href={`${baseUrl}/${topic}`}>{topic.replace(/-/g, '\u00a0')}</a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+  }
+
+  .topic-list a {
+    text-decoration: none;
+  }
+
+  .topic-list a:hover {
+    color: var(--color-accent);
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <div class="editorial-wrap">
+    <header class="editorial-header">
+      <slot name="header" />
+    </header>
+    <div class="editorial-grid">
+      <main class="editorial-main">
+        <slot name="main" />
+      </main>
+      <aside class="editorial-rail">
+        <slot name="rail" />
+      </aside>
+    </div>
+    <slot name="below" />
+  </div>
+</Base>
+
+<style>
+  .editorial-wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2) var(--content-padding) var(--space-3);
+  }
+
+  .editorial-header {
+    margin-bottom: var(--space-2-5);
+    padding-bottom: var(--space-2);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 720px) {
+    .editorial-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+  }
+</style>

@@ -1,0 +1,93 @@
+---
+import Prose from '../layouts/Prose.astro';
+---
+
+<Prose title="About" description="Benjamin Schneider — bio, background, and contact.">
+  <p>
+    Solution architect at <a href="https://vivenu.com">Vivenu</a> in Zurich, working on event ticketing infrastructure.
+    Previously built and led engineering teams at TICKETINO, and helped organize HackZurich and Digital Festival Zurich
+    for several years.
+  </p>
+
+  <p>
+    I studied informatics at the University of Zurich (BSc). Outside work, I lead command support for a civil protection
+    unit in the Pfannenstiel region, contribute to OpenStreetMap, and read too much about molecular biology,
+    information design, and Central European history.
+  </p>
+
+  <p>
+    The best way to reach me is by email: <a href="mailto:mail@benjaminschneider.ch">mail@benjaminschneider.ch</a>.<br />
+    Also on <a href="https://twitter.com/bschne">Twitter</a>,
+    <a href="https://bsky.app/profile/bschne.bsky.social">Bluesky</a>, and
+    <a href="https://linkedin.com/in/schneiderbenjamin">LinkedIn</a>.
+  </p>
+
+  <h2>Work history</h2>
+
+  <dl class="work-list">
+    <dt>Vivenu <span class="work-period">2023–present</span></dt>
+    <dd>Solution architect. Ticketing infrastructure and enterprise integrations.</dd>
+
+    <dt>HackZurich <span class="work-period">2018–2023</span></dt>
+    <dd>
+      Helped organize one of Europe's largest hackathons, bringing together 500–1,200
+      participants annually.
+    </dd>
+
+    <dt>Digital Festival Zurich <span class="work-period">2018–2023</span></dt>
+    <dd>
+      Co-organized a conference on digitalization and technology in Zurich.
+    </dd>
+
+    <dt>Remote Student Exchange <span class="work-period">2021</span></dt>
+    <dd>
+      Built a web portal enabling 5,000+ students to enroll in courses at international
+      universities during the pandemic.
+    </dd>
+
+    <dt>TICKETINO <span class="work-period">2014–2018</span></dt>
+    <dd>
+      Led software engineering and product. Built a ground-up rebuild of the online shop
+      and delivered registration & ticket sales solutions for large events.
+    </dd>
+  </dl>
+
+  <h2>Education</h2>
+
+  <dl class="work-list">
+    <dt>University of Zurich <span class="work-period">2016–2021</span></dt>
+    <dd>BSc Informatics.</dd>
+  </dl>
+</Prose>
+
+<style>
+  .work-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+  }
+
+  .work-list dt {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    font-weight: 500;
+    margin-top: 1.25em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .work-period {
+    font-weight: 400;
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+  }
+
+  .work-list dd {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    margin-top: 0.2em;
+    line-height: 1.5;
+  }
+</style>

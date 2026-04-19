@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found">
+  <main class="page-wrap">
+    <h1>404</h1>
+    <p>Page not found. <a href="/">Back home →</a></p>
+  </main>
+</Base>
+
+<style>
+  .page-wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2) var(--content-padding);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+  }
+</style>
