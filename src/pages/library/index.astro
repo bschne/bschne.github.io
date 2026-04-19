@@ -1,13 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
-import LibraryTile from '../../components/LibraryTile.astro';
 import LibraryRow from '../../components/LibraryRow.astro';
 import { getCollection } from 'astro:content';
 
 const allItems = await getCollection('library');
 allItems.sort((a, b) => {
-  if (a.data.status === 'now' && b.data.status !== 'now') return -1;
-  if (b.data.status === 'now' && a.data.status !== 'now') return 1;
   if (a.data.status === 'ongoing' && b.data.status !== 'ongoing') return -1;
   if (b.data.status === 'ongoing' && a.data.status !== 'ongoing') return 1;
   if (a.data.date && b.data.date) return b.data.date.getTime() - a.data.date.getTime();
@@ -15,26 +12,19 @@ allItems.sort((a, b) => {
 });
 
 const itemsWithNotes = new Set(
-  allItems.filter(i => i.body && i.body.trim().length > 0).map(i => i.id)
+  allItems.filter(i => i.body && i.body.trim().length > 0 && !i.data.inline).map(i => i.id)
 );
 
+const nowItems = allItems.filter(i => i.data.status === 'now');
+const restItems = allItems.filter(i => i.data.status !== 'now');
+
 const types = ['books', 'papers', 'podcasts', 'films', 'courses'] as const;
-const typeMap: Record<string, string> = {
-  books: 'book', papers: 'paper', podcasts: 'podcast', films: 'film', courses: 'course',
-};
 ---
 
 <Base title="Library" description="Books, papers, podcasts, films, and courses — things Benjamin Schneider has spent real time with.">
   <main class="page-wrap">
     <header class="library-header">
-      <div class="library-title-row">
-        <h1>Library</h1>
-        <div class="view-toggle">
-          <span class="view-active">grid</span>
-          <span class="view-sep">·</span>
-          <a href="/library/list">list</a>
-        </div>
-      </div>
+      <h1>Library</h1>
       <p class="library-desc">Books, papers, podcasts, films, courses — things I've spent real time with.</p>
       <nav class="type-nav">
         <a href="/library" class="type-active">all</a>
@@ -42,11 +32,22 @@ const typeMap: Record<string, string> = {
       </nav>
     </header>
 
-    <div class="tile-grid">
-      {allItems.map(item => (
-        <LibraryTile item={item} hasNote={itemsWithNotes.has(item.id)} />
+    {nowItems.length > 0 && (
+      <section class="now-section">
+        <h2 class="now-heading">Now</h2>
+        <ul class="row-list">
+          {nowItems.map(item => (
+            <LibraryRow item={item} hasNote={itemsWithNotes.has(item.id)} />
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <ul class="row-list">
+      {restItems.map(item => (
+        <LibraryRow item={item} hasNote={itemsWithNotes.has(item.id)} />
       ))}
-    </div>
+    </ul>
   </main>
 </Base>
 
@@ -61,28 +62,11 @@ const typeMap: Record<string, string> = {
     margin-bottom: var(--space-2);
   }
 
-  .library-title-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
-
   h1 {
     font-size: var(--text-h1);
     font-weight: 500;
+    margin-bottom: 0.5rem;
   }
-
-  .view-toggle {
-    font-size: var(--text-meta);
-    color: var(--color-text-secondary);
-    display: flex;
-    gap: 0.375rem;
-  }
-
-  .view-toggle a { text-decoration: none; }
-  .view-toggle a:hover { color: var(--color-accent); }
-  .view-active { color: var(--color-text-primary); }
 
   .library-desc {
     font-size: var(--text-meta);
@@ -99,21 +83,25 @@ const typeMap: Record<string, string> = {
     padding-bottom: var(--space-1);
     border-bottom: 0.5px solid var(--color-border);
   }
-
   .type-nav a { text-decoration: none; }
   .type-nav a:hover { color: var(--color-accent); }
   .type-active { color: var(--color-text-primary); font-weight: 500; }
 
-  .tile-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem 1rem;
+  .now-section {
+    border-left: 2px solid var(--color-accent);
+    margin-left: -1rem;
+    padding-left: 1rem;
+    margin-bottom: var(--space-2);
   }
 
-  @media (max-width: 900px) {
-    .tile-grid { grid-template-columns: repeat(3, 1fr); }
+  .now-heading {
+    font-size: var(--text-meta);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
   }
-  @media (max-width: 600px) {
-    .tile-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+
+  .row-list { list-style: none; }
 </style>

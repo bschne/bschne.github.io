@@ -30,6 +30,7 @@ const library = defineCollection({
     imdb: z.string().optional(),
     itunesId: z.string().optional(),
     url: z.string().url().optional(),
+    inline: z.boolean().default(false),
     image: z.string().optional(),
     imageColor: z.string().optional(),
     edition: z.string().optional(),

@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   return items
     .filter(item => {
       const slug = item.id.replace(/\.mdx?$/, '');
-      return !RESERVED.has(slug) && item.body && item.body.trim().length > 0;
+      return !RESERVED.has(slug) && item.body && item.body.trim().length > 0 && !item.data.inline;
     })
     .map(item => ({
       params: { slug: item.id.replace(/\.mdx?$/, '') },

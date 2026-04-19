@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
 import { formatDateShort } from '../lib/dates';
 
 interface Props {
@@ -8,34 +9,45 @@ interface Props {
 }
 
 const { item, hasNote } = Astro.props;
-const { type, title, creator, status, starred, date, url } = item.data;
+const { type, title, creator, status, starred, date, url, inline } = item.data;
 const slug = item.id.replace(/\.mdx?$/, '');
-const href = hasNote ? `/library/${slug}` : (url ?? null);
+const sourceHostname = url ? new URL(url).hostname.replace(/^www\./, '') : null;
+const noteHref = hasNote ? `/library/${slug}` : null;
+const dateLabel = status === 'ongoing' ? 'ongoing' : date ? formatDateShort(date) : '';
+
+const { Content } = inline && item.body ? await render(item) : { Content: null };
 ---
 
 <li class="row">
   <span class="row-type">{type === 'podcast' ? 'pod' : type}</span>
-  <span class="row-title">
-    {href ? (
-      <a href={href} class:list={{ 'row-note-link': hasNote }}>
-        {title}
-      </a>
-    ) : title}
-    {starred && <span class="row-star" aria-label="recommended"> ★</span>}
-    <span class="row-creator"> · {creator.split(';')[0]}</span>
-  </span>
-  <span class="row-status">
-    {status === 'now' ? 'now'
-      : status === 'ongoing' ? 'ongoing'
-      : date ? formatDateShort(date)
-      : ''}
-  </span>
+  <div class="row-body">
+    <div class="row-main">
+      <span class="row-title">
+        {title}{starred && <span class="row-star" aria-label="recommended"> ★</span>}
+        <span class="row-creator"> · {creator.split(';')[0]}</span>
+      </span>
+      <span class="row-right">
+        {sourceHostname && (
+          <a href={url} class="row-source" target="_blank" rel="noopener">↗ {sourceHostname}</a>
+        )}
+        {noteHref && (
+          <a href={noteHref} class="row-note-link">notes</a>
+        )}
+        {dateLabel && <span class="row-date">{dateLabel}</span>}
+      </span>
+    </div>
+    {Content && (
+      <div class="row-inline-note">
+        <Content />
+      </div>
+    )}
+  </div>
 </li>
 
 <style>
   .row {
     display: grid;
-    grid-template-columns: 4.5rem 1fr 5rem;
+    grid-template-columns: 4.5rem 1fr;
     gap: 0.75rem;
     padding: 0.5rem 0;
     border-bottom: 0.5px solid var(--color-border);
@@ -45,26 +57,24 @@ const href = hasNote ? `/library/${slug}` : (url ?? null);
 
   .row-type {
     color: var(--color-text-tertiary);
-    font-variant-numeric: tabular-nums;
+  }
+
+  .row-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .row-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
   }
 
   .row-title {
     color: var(--color-text-primary);
     line-height: 1.4;
-  }
-
-  .row-title a {
-    text-decoration: none;
-  }
-
-  .row-title a:hover {
-    color: var(--color-accent);
-  }
-
-  .row-note-link {
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
-    text-decoration-color: var(--color-border);
   }
 
   .row-star {
@@ -76,9 +86,51 @@ const href = hasNote ? `/library/${slug}` : (url ?? null);
     color: var(--color-text-secondary);
   }
 
-  .row-status {
-    color: var(--color-text-tertiary);
-    text-align: right;
+  .row-right {
+    display: flex;
+    align-items: baseline;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    font-size: 0.75rem;
     white-space: nowrap;
+  }
+
+  .row-date {
+    color: var(--color-text-tertiary);
+  }
+
+  .row-source {
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+  }
+  .row-source:hover { color: var(--color-accent); }
+
+  .row-note-link {
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-color: var(--color-border);
+  }
+  .row-note-link:hover { color: var(--color-accent); }
+
+  .row-inline-note {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+
+  .row-inline-note :global(p) {
+    margin: 0 0 0.5em;
+  }
+  .row-inline-note :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .row-inline-note :global(a) {
+    color: var(--color-text-secondary);
+    text-underline-offset: 0.15em;
+  }
+  .row-inline-note :global(a:hover) {
+    color: var(--color-accent);
   }
 </style>
