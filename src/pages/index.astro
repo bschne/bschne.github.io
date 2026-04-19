@@ -80,9 +80,9 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
       <a href="/now" class="rail-link">more →</a>
     </section>
 
-    {nowReading.length > 0 && (
-      <section class="rail-section">
-        <h3>reading</h3>
+    <section class="rail-section">
+      <h3>reading</h3>
+      {nowReading.length > 0 && (
         <ul class="reading-list">
           {nowReading.map(item => (
             <li>
@@ -91,9 +91,10 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
             </li>
           ))}
         </ul>
-        <a href="/library" class="rail-link">library →</a>
-      </section>
-    )}
+      )}
+      <p class="rail-text">A list of books, papers, and other pieces I enjoyed with occasional reading notes.</p>
+      <a href="/library" class="rail-link">library →</a>
+    </section>
 
   </div>
 </Editorial>
