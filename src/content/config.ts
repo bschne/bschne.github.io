@@ -40,7 +40,7 @@ const library = defineCollection({
   }),
 });
 
-const projects = defineCollection({
+const work = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
@@ -66,4 +66,4 @@ const photos = defineCollection({
   }),
 });
 
-export const collections = { writing, library, projects, photos };
+export const collections = { writing, library, work, photos };

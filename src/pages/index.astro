@@ -9,7 +9,7 @@ posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const selectedPosts = posts.filter(p => p.data.selected);
 const featuredPosts = selectedPosts.length >= 4 ? selectedPosts.slice(0, 4) : posts.slice(0, 4);
 
-const projects = await getCollection('projects');
+const projects = await getCollection('work');
 projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const library = await getCollection('library');
@@ -20,14 +20,19 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
   <div slot="header" class="site-header">
     <h1>Benjamin Schneider</h1>
     <p class="bio">
-      Solution architect at Vivenu in Zurich. I contribute to OpenStreetMap, lead
-      command support for a civil protection unit in the Pfannenstiel region, and
-      read too much about hemoglobin, information design, and Central European history.
+      Swiss guy with a background in computer science and economics.
+      Currently working as a solution architect at vivenu, a ticket sales software company, in Zurich.
+    </p>
+    <p class="bio">
+      I like cooking curry from scratch, 
+      going down rabbit holes by casually reading textbooks,
+      and walking in nature taking pictures of the same views over and over again.
     </p>
     <nav class="contact-links">
       <a href="mailto:mail@benjaminschneider.ch">mail</a>
       <a href="https://twitter.com/bschne">twitter</a>
-      <a href="https://bsky.app/profile/bschne.bsky.social">bluesky</a>
+      <a href="https://bsky.app/profile/benjaminschneider.ch">bluesky</a>
+      <a href="https://instagram.com/benjaminschneider">instagram</a>
       <a href="https://linkedin.com/in/schneiderbenjamin">linkedin</a>
     </nav>
   </div>
@@ -45,11 +50,11 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
           </li>
         ))}
       </ul>
-      <a href="/writing" class="more-link">all writing, by topic →</a>
+      <a href="/writing" class="more-link">all writing →</a>
     </section>
 
     <section class="home-section">
-      <h2>Projects</h2>
+      <h2>Work</h2>
       <ul class="writing-list">
         {projects.slice(0, 4).map(project => (
           <li>
@@ -62,7 +67,7 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
           </li>
         ))}
       </ul>
-      <a href="/projects" class="more-link">all projects →</a>
+      <a href="/work" class="more-link">all →</a>
     </section>
   </div>
 
@@ -70,8 +75,7 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
     <section class="rail-section">
       <h3>now</h3>
       <p class="rail-text">
-        Getting set up at Vivenu, re-learning molecular biology from the bottom up,
-        and mapping the Pfannenstiel.
+        Settling into my new role at vivenu, trying to write more and meet interesting people.
       </p>
       <a href="/now" class="rail-link">more →</a>
     </section>

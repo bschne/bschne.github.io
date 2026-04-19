@@ -2,14 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 
-const projects = await getCollection('projects');
+const projects = await getCollection('work');
 projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
-<Base title="Projects" description="Things Benjamin Schneider has built and organized.">
+<Base title="Work" description="Things Benjamin Schneider has built and organized.">
   <main class="page-wrap">
     <header class="page-header">
-      <h1>Projects</h1>
+      <h1>Work</h1>
     </header>
 
     <ul class="project-list">
