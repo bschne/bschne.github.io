@@ -1,6 +1,6 @@
 ---
 type: book
-starred: true
+starred: false
 genre: non-fiction
 title: "An Elegant Puzzle: Systems of Engineering Management"
 creator: "Larson, Will"
