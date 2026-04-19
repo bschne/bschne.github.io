@@ -3,6 +3,7 @@ title: "How To Teach Programming Badly"
 date: 2024-08-03
 description: "A list of principles that will help you teach programming badly and ensure your students learn as little as possible."
 topics: [teaching, engineering]
+selected: true
 ---
 
 Much has been written about how to teach programming — or any other topic — well.

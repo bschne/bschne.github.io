@@ -2,7 +2,8 @@
 title: "Shared Curiosity"
 date: 2020-10-26
 description: "Why the best educational content starts with the creator's own curiosity."
-topics: [teaching, reading]
+topics: [teaching]
+selected: true
 ---
 
 Some of the most engaging educational content starts with the author's own curiosity.

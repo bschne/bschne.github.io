@@ -3,6 +3,7 @@ title: "Playing With The Basics"
 date: 2024-03-01
 description: "Top practitioners surprisingly often play around with extremely basic approaches."
 topics: [teaching, tools]
+selected: true
 ---
 
 A recurring thing I've seen is that people at the top of their field often continue "playing with the basics" in a surprisingly simple manner. People doing political data science make their own spreadsheets painstakingly collating polling data. People working in macroeconomics have a separate copy of the official statistics on which they run some basic analysis of their own. Finance people pull together quarterly reports of public companies and do some rather straightforward modelling on them.

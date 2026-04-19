@@ -2,7 +2,7 @@
 title: "Error Page Redirects Should Not Lose Information"
 date: 2024-03-04
 description: "When showing an error page, make sure you don't drop more information from the request than you have to."
-topics: [engineering, tools]
+topics: [engineering]
 ---
 
 Many web applications will implement some kind of redirect on error responses in order to improve how the error is handled for the user (e.g. by displaying a friendly error page with some further information and means of contacting support) or for the business running the website or both (e.g. redirecting obsolete product links in a shop to some related category page with other products the user might be interested in buying).

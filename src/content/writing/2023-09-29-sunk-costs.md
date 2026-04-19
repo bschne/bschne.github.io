@@ -2,7 +2,7 @@
 title: "The Much-Maligned Sunk Cost Fallacy"
 date: 2023-09-29
 description: "Some common misinterpretations of the sunk cost fallacy."
-topics: []
+topics: [economics]
 ---
 
 Some common misinterpretations of the sunk cost fallacy.
