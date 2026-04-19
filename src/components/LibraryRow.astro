@@ -56,6 +56,10 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
     font-size: var(--text-meta);
   }
 
+  .row:has(.row-inline-note) {
+    padding-bottom: 1rem;
+  }
+
   .row-type {
     color: var(--color-text-tertiary);
   }
@@ -115,7 +119,7 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
   .row-note-link:hover { color: var(--color-accent); }
 
   .row-inline-note {
-    margin-top: 0.6rem;
+    margin-top: 0.1rem;
     max-width: 72ch;
     font-size: 0.8rem;
     color: var(--color-text-secondary);

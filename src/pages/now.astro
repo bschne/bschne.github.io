@@ -4,11 +4,7 @@ import Prose from '../layouts/Prose.astro';
 const lastUpdated = new Date('2026-04-19');
 ---
 
-<Prose title="Now" description="What Benjamin Schneider is up to these days.">
-  <p>
-    <em>Last updated {lastUpdated.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}.</em>
-  </p>
-
+<Prose title="Now" date={lastUpdated} description="What Benjamin Schneider is up to these days.">
   <p>What I've been up to lately:</p>
 
   <p>
