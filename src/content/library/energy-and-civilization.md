@@ -6,7 +6,7 @@ title: "Energy and Civilization: A History"
 creator: "Smil, Vaclav"
 status: done
 url: "https://www.goodreads.com/book/show/31850765-energy-and-civilization"
-blurb: "Felt like reading a spreadsheet at times. Also made want to read more spreadsheets. I forgot most of the facts and num,bers, but what remains is a pretty substantial shift in awareness of how fundamental energy flows shape life and society, and how much fossil fuels have subsidized a lot of what's good about modernity."
+blurb: "Felt like reading a spreadsheet at times. Also made want to read more spreadsheets. I forgot most of the facts and numbers, but what remains is a pretty substantial shift in awareness of how fundamental energy flows shape life and society, and how much fossil fuels have subsidized a lot of what's good about modernity."
 topics: [civic-infrastructure]
 image: /covers/energy-and-civilization.jpg
 ---
