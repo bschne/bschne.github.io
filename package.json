@@ -16,7 +16,7 @@
     "@astrojs/rss": "^4.0.18",
     "@fontsource-variable/inter": "*",
     "@fontsource-variable/source-serif-4": "*",
-    "astro": "^5.0.0"
+    "astro": "^6.1.6"
   },
   "devDependencies": {
     "@clack/prompts": "^1.2.0",
