@@ -1,7 +1,8 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const writing = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/writing' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -13,7 +14,7 @@ const writing = defineCollection({
 });
 
 const library = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/library' }),
   schema: z.object({
     type: z.enum(['book', 'paper', 'podcast', 'film', 'course']),
     title: z.string(),
@@ -41,7 +42,7 @@ const library = defineCollection({
 });
 
 const work = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/work' }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),
@@ -55,7 +56,7 @@ const work = defineCollection({
 });
 
 const photos = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/photos' }),
   schema: z.object({
     file: z.string(),
     date: z.coerce.date(),
