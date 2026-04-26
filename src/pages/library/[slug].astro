@@ -25,9 +25,11 @@ const hasBody = item.body && item.body.trim().length > 0;
 const typeLabel: Record<string, string> = {
   book: 'book', paper: 'paper', podcast: 'podcast', film: 'film', course: 'course',
 };
+
+const description = `Notes on ${title} by ${creator}.`;
 ---
 
-<Base title={title}>
+<Base title={title} description={description}>
   <main class="page-wrap">
     <header class="item-header">
       <p class="item-back"><a href="/library">← library</a></p>

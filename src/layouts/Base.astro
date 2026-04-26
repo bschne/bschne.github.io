@@ -24,6 +24,15 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+    <link rel="canonical" href={Astro.url} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="alternate" type="application/rss+xml" title="Benjamin Schneider" href="/rss.xml" />
     <!-- apply stored theme before first paint to avoid flash -->
