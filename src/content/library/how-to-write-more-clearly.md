@@ -4,5 +4,5 @@ title: "How to Write More Clearly, Think More Clearly, and Learn Complex Materia
 creator: "Covington, Michael A."
 status: done
 topics: [teaching, tools]
-url: "http://www.covingtoninnovations.com/mc/WriteThinkLearn.pdf"
+url: "https://web.archive.org/web/20220417170742/https://www.covingtoninnovations.com/mc/WriteThinkLearn.pdf"
 ---
