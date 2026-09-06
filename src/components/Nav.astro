@@ -2,8 +2,16 @@
 const isHome = Astro.url.pathname === '/';
 ---
 
-<nav class:list={['site-nav', { 'site-nav--home': isHome }]}>
-  {!isHome && <a href="/" class="site-nav-home">Benjamin Schneider</a>}
+<nav class="site-nav">
+  <div class="site-nav-left">
+    <a href="/" class="site-nav-name">Benjamin Schneider</a>
+    <div class="site-nav-links">
+      <a href="/writing">writing</a>
+      <a href="/library">library</a>
+      <a href="/now">now</a>
+      <a href="/about">about</a>
+    </div>
+  </div>
   <button id="theme-toggle" class="theme-toggle" aria-label="Toggle colour theme">
     <span class="theme-icon" aria-hidden="true">◑</span>
   </button>
@@ -46,15 +54,36 @@ const isHome = Astro.url.pathname === '/';
     color: var(--color-text-secondary);
   }
 
-  .site-nav--home {
-    justify-content: flex-end;
+
+  .site-nav-left {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
   }
 
-  .site-nav-home {
+  .site-nav-name {
+    font-size: 1.125rem;
+    font-weight: 500;
     text-decoration: none;
+    color: var(--color-text-primary);
   }
 
-  .site-nav-home:hover {
+  .site-nav-name:hover {
+    color: var(--color-accent);
+  }
+
+  .site-nav-links {
+    display: flex;
+    gap: 1rem;
+    font-size: var(--text-meta);
+  }
+
+  .site-nav-links a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+  }
+
+  .site-nav-links a:hover {
     color: var(--color-accent);
   }
 
