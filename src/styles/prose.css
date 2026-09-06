@@ -88,15 +88,29 @@
 .prose img {
   max-width: 100%;
   height: auto;
-  margin: 1.5em 0;
+  margin: 1.5em 0 0.5em 0;
 }
 
 .prose img + em {
   display: block;
-  font-size: var(--text-meta);
+  font-size: 0.75rem;
   color: var(--color-text-secondary);
-  margin-top: -1em;
+  margin-top: 0.5em;
   margin-bottom: 1.5em;
+}
+
+.prose > p > img:only-child {
+  max-width: 120%;
+  margin-left: -10%;
+  margin-right: -10%;
+}
+
+@media (max-width: 680px) {
+  .prose > p > img:only-child {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .prose strong {
@@ -114,4 +128,39 @@
   border-top: 0.5px solid var(--color-border);
   font-size: var(--text-meta);
   color: var(--color-text-secondary);
+}
+
+.prose .img-pair {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5em 0 0.5em 0;
+  align-items: flex-start;
+}
+
+.prose .img-pair p {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  width: 100%;
+}
+
+.prose .img-pair img {
+  margin: 0;
+  width: 50%;
+  flex-shrink: 0;
+  height: auto;
+}
+
+.prose .img-pair + p > em {
+  margin-top: 0.5em;
+}
+
+@media (max-width: 640px) {
+  .prose .img-pair p {
+    flex-direction: column;
+  }
+
+  .prose .img-pair img {
+    width: 100%;
+  }
 }
