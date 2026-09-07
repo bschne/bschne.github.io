@@ -1,11 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
 import TopicList from '../../components/TopicList.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import { jekyllPath, formatDateShort } from '../../lib/dates';
+import { getWordCount, formatReadingTime, getReadingTime } from '../../lib/reading-time';
 
 const posts = await getCollection('writing', ({ data }) => !data.draft);
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Calculate word counts and reading times
+const postsWithMeta = await Promise.all(
+  posts.map(async (post) => {
+    const { remarkPluginFrontmatter } = await render(post);
+    const wordCount = getWordCount(post.body);
+    const readingTime = getReadingTime(wordCount);
+    return { post, wordCount, readingTime };
+  })
+);
 ---
 
 <Base title="Writing" description="Essays and notes by Benjamin Schneider.">
@@ -15,22 +26,24 @@ posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     </header>
 
     <ul class="post-list">
-      {posts.map(post => (
+      {postsWithMeta.map(({ post, wordCount, readingTime }) => (
         <li class="post-row">
           <time class="post-date" datetime={post.data.date.toISOString()}>
             {formatDateShort(post.data.date)}
           </time>
           <div class="post-content">
-            <a href={jekyllPath(post.data.date, post.id)} class="post-title">
-              {post.data.title}
-            </a>
-            {post.data.description && (
-              <span class="post-desc"> — {post.data.description}</span>
-            )}
-            {post.data.topics.length > 0 && (
-              <div class="post-topics">
-                <TopicList topics={post.data.topics} />
+            <div class="post-title-row">
+              <a href={jekyllPath(post.data.date, post.id)} class="post-title">
+                {post.data.title}
+              </a>
+              <div class="post-meta">
+                <span class="meta-item">{wordCount.toLocaleString()} words</span>
+                <span class="meta-separator">·</span>
+                <span class="meta-item">{formatReadingTime(readingTime)}</span>
               </div>
+            </div>
+            {post.data.description && (
+              <p class="post-desc">{post.data.description}</p>
             )}
           </div>
         </li>
@@ -78,6 +91,13 @@ posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     white-space: nowrap;
   }
 
+  .post-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
   .post-title {
     font-family: var(--font-serif);
     font-size: var(--text-body);
@@ -91,6 +111,19 @@ posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   .post-desc {
     font-size: var(--text-meta);
     color: var(--color-text-secondary);
+    margin: 0.25rem 0 0 0;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+  }
+
+  .meta-separator {
+    color: var(--color-border);
   }
 
   .post-topics {

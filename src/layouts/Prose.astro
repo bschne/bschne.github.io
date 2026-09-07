@@ -3,24 +3,36 @@ import Base from './Base.astro';
 import TopicList from '../components/TopicList.astro';
 import '../styles/prose.css';
 import { formatDate } from '../lib/dates';
+import { formatReadingTime } from '../lib/reading-time';
 
 interface Props {
   title: string;
   description?: string;
   date?: Date;
   topics?: string[];
+  wordCount?: number;
+  readingTime?: number;
 }
 
-const { title, description, date, topics = [] } = Astro.props;
+const { title, description, date, topics = [], wordCount, readingTime } = Astro.props;
 ---
 
 <Base title={title} description={description}>
   <div class="prose-page">
     <header class="prose-header">
       {date && (
-        <time class="post-date" datetime={date.toISOString()}>
-          {formatDate(date)}
-        </time>
+        <div class="header-meta">
+          <time class="post-date" datetime={date.toISOString()}>
+            {formatDate(date)}
+          </time>
+          {wordCount !== undefined && readingTime !== undefined && (
+            <div class="reading-meta">
+              <span class="meta-item">{wordCount.toLocaleString()} words</span>
+              <span class="meta-separator">·</span>
+              <span class="meta-item">{formatReadingTime(readingTime)}</span>
+            </div>
+          )}
+        </div>
       )}
     </header>
     <main class="prose-wrap">
@@ -56,10 +68,28 @@ const { title, description, date, topics = [] } = Astro.props;
     margin-bottom: var(--space-1-5);
   }
 
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
   .post-date {
-    display: block;
     font-size: var(--text-meta);
     color: var(--color-text-secondary);
+  }
+
+  .reading-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+  }
+
+  .meta-separator {
+    color: var(--color-border);
   }
 
   .prose-wrap {

@@ -1,6 +1,7 @@
 ---
 import Prose from '../../../../layouts/Prose.astro';
 import { getCollection, render } from 'astro:content';
+import { getWordCount, getReadingTime } from '../../../../lib/reading-time';
 
 export async function getStaticPaths() {
   const posts = await getCollection('writing', ({ data }) => !data.draft);
@@ -19,6 +20,9 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const wordCount = getWordCount(post.body);
+const readingTime = getReadingTime(wordCount);
 ---
 
 <Prose
@@ -26,6 +30,8 @@ const { Content } = await render(post);
   description={post.data.description}
   date={post.data.date}
   topics={post.data.topics}
+  wordCount={wordCount}
+  readingTime={readingTime}
 >
   <Content />
 </Prose>
