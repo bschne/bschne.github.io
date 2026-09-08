@@ -1,9 +1,11 @@
 ---
 import Base from './Base.astro';
 import TopicList from '../components/TopicList.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 import '../styles/prose.css';
 import { formatDate } from '../lib/dates';
 import { formatReadingTime } from '../lib/reading-time';
+import type { MarkdownHeading } from 'astro';
 
 interface Props {
   title: string;
@@ -12,9 +14,10 @@ interface Props {
   topics?: string[];
   wordCount?: number;
   readingTime?: number;
+  headings?: MarkdownHeading[];
 }
 
-const { title, description, date, topics = [], wordCount, readingTime } = Astro.props;
+const { title, description, date, topics = [], wordCount, readingTime, headings = [] } = Astro.props;
 ---
 
 <Base title={title} description={description}>
@@ -35,6 +38,7 @@ const { title, description, date, topics = [], wordCount, readingTime } = Astro.
         </div>
       )}
     </header>
+    <TableOfContents headings={headings} />
     <main class="prose-wrap">
       <article>
         <h1>{title}</h1>

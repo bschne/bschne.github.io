@@ -1,0 +1,156 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+// only h2/h3 — deeper levels would be noise in a 200px rail
+const items = headings.filter(h => h.depth === 2 || h.depth === 3);
+const show = items.length >= 3;
+---
+
+{show && (
+  <nav class="toc" data-toc aria-label="Table of contents">
+    <p class="toc-label">Contents</p>
+    <ul class="toc-list">
+      {items.map(item => (
+        <li class={`toc-item depth-${item.depth}`} data-item={item.slug}>
+          <a href={`#${item.slug}`} data-slug={item.slug} set:html={item.text} />
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  const toc = document.querySelector<HTMLElement>('[data-toc]');
+
+  if (toc) {
+    const links = Array.from(toc.querySelectorAll<HTMLAnchorElement>('a[data-slug]'));
+    const entries = links
+      .map(link => ({
+        item: link.closest<HTMLElement>('.toc-item')!,
+        heading: document.getElementById(link.dataset.slug!),
+        link,
+      }))
+      .filter((e): e is { item: HTMLElement; heading: HTMLElement; link: HTMLAnchorElement } =>
+        e.heading !== null
+      );
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    for (const { heading, link } of entries) {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        heading.scrollIntoView({
+          behavior: reduceMotion.matches ? 'auto' : 'smooth',
+          block: 'start',
+        });
+        history.replaceState(null, '', `#${heading.id}`);
+      });
+    }
+
+    // a heading counts as "current" once it has scrolled past this line
+    const ACTIVE_LINE = 140;
+    let current: HTMLElement | null = null;
+
+    function update() {
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+      let active: HTMLElement | null = null;
+      for (const { item, heading } of entries) {
+        if (heading.getBoundingClientRect().top <= ACTIVE_LINE) active = item;
+      }
+      if (atBottom && entries.length) active = entries[entries.length - 1].item;
+
+      if (active === current) return;
+      current?.classList.remove('is-active');
+      active?.classList.add('is-active');
+      current = active;
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        update();
+      });
+    }
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  }
+</script>
+
+<style>
+  .toc {
+    display: none;
+  }
+
+  /* the rail only exists once the viewport is wide enough to hold it beside
+     the prose column. Its left edge lines up with the nav and the header
+     rule; its width stops short of the full-bleed images, which run 10%
+     wider than the 680px column (i.e. to 50% - 408px) on each side */
+  @media (min-width: 1200px) {
+    .toc {
+      display: block;
+      position: fixed;
+      top: 8.5rem;
+      left: max(
+        var(--content-padding),
+        calc(50% - var(--max-width) / 2 + var(--content-padding))
+      );
+      width: 120px;
+      max-height: calc(100vh - 12rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      font-family: var(--font-sans);
+    }
+  }
+
+  .toc-label {
+    font-size: var(--text-label);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0.625rem;
+    padding-left: 0.75rem;
+  }
+
+  .toc-list {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .toc-item a {
+    display: block;
+    padding: 0.3rem 0 0.3rem 0.75rem;
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .toc-item.depth-3 a {
+    padding-left: 1.5rem;
+  }
+
+  .toc-item a:hover {
+    color: var(--color-text-primary);
+  }
+
+  .toc-item.is-active a {
+    color: var(--color-text-primary);
+    border-left-color: var(--color-accent);
+  }
+</style>
