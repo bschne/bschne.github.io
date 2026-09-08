@@ -7,7 +7,7 @@ topics: [economics]
 
 Some common misinterpretations of the sunk cost fallacy.
 
-![](/assets/posts/2023-09-29-sunk-costs/stay-go.png)
+![](../../assets/posts/2023-09-29-sunk-costs/stay-go.png)
 *A punk rock singer grappling with sunk costs, 1982*
 
 I recently came across a [blog post](https://www.truewealth.ch/en/blog/the-sunk-cost-fallacy-is-itself-a-fallacy) criticizing the sunk cost fallacy for often being invoked fallaciously itself. The main argument seems to be this: many people who learn about the fallacy are subsequently tempted to use it as justification to give up on long-running, costly projects, before incurring some huge payoff that would have made it worth it to stick with the project. Unfortunately, this hinges on a misunderstanding of the fallacy. Since I think it is a common/tempting one, I figured it was worth outlining what it got wrong, and how to reason about sunk costs rationally instead.

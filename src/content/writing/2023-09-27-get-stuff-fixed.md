@@ -8,7 +8,7 @@ selected: true
 
 You should probably be less reluctant to provide unsolicited suggestions for improvement.
 
-![](/assets/posts/2023-09-27-get-stuff-fixed/donut-repair.jpg)
+![](../../assets/posts/2023-09-27-get-stuff-fixed/donut-repair.jpg)
 *Sign by David Shrigley, seen in Glasgow*
 
 I noticed a weird thing recently about which kinds of interactions with companies and organizations are normal to have and talk about, and which are less so. If you tell people how you complained vehemently about some supposed wrong you were done or incompetence you suffered, they generally sympathize a lot (the exception being verbal abuse). If you tell people about how you made an unsolicited suggestion for improvement, they react like you're a bit of a weirdo — something about it seems unusual to many.

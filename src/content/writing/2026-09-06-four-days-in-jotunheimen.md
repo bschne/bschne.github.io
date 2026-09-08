@@ -22,8 +22,8 @@ I'm surprised how alpine everything looks given my entire trip stays more or les
 
 <div class="img-pair">
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/gjendesheim-1.jpeg)
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/gjendesheim-2.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/gjendesheim-1.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/gjendesheim-2.jpeg)
 
 </div>
 
@@ -47,7 +47,7 @@ My most surprisingly friendly interaction occurred after arriving in Oslo, waiti
 
 ## III. Besseggen
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/besseggen-0.jpg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/besseggen-0.jpg)
 
 At Gjendesheim, I meet up with a friend from the US who's in Europe for a bit and joining for a day of hiking before heading back to Oslo. Our plan is to do what is apparently Norway's most popular hike: Besseggen.
 
@@ -65,7 +65,7 @@ Back at the cabin, I feel two things at once: My legs, and overwhelmingly alive.
 
 ## IV. Gjendesheim to Glitterheim
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/gjen-glit-0.jpg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/gjen-glit-0.jpg)
 
 The terrain on the second day is not as daunting as Besseggen, but this time around I'm alone, I have eight hours in front of me, and my legs are noticeably tired. After the first climb, I cross a plain that is extremely cold and windy and feels quite desolate. I occasionally trade places with another hiker, but other than her I don't meet anyone going the same direction as me. Afterwards, things get considerably more comfortable (and lush) as I make my way down towards and along Russvatnet. 
 
@@ -75,8 +75,8 @@ And then finally… Well, no, not really. The descent is another deceptively lon
 
 <div class="img-pair">
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/glitterheim-1.jpeg)
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/glitterheim-2.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/glitterheim-1.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/glitterheim-2.jpeg)
 
 </div>
 
@@ -96,7 +96,7 @@ A fact about today's digital environment I usually don't give much thought to is
 
 ## V. Glitterheim to Spiterstulen
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/glit-spit-0.jpg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/glit-spit-0.jpg)
 
 After the struggle of the previous day, I'm a bit worried about this one, but my legs feel alright and it turns out easier than expected except for a very steep descent towards the end.
 
@@ -106,8 +106,8 @@ I join up with them and a Dutch woman who turns out to be the one hiker I met go
 
 <div class="img-pair">
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/spiterstulen-1.jpeg)
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/spiterstulen-2.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/spiterstulen-1.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/spiterstulen-2.jpeg)
 
 </div>
 
@@ -133,7 +133,7 @@ The day after, I'm back at DNT, and me and two Norwegians on the same route talk
 
 ## VI. Spiterstulen to Leirvassbu
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/spit-leir-0.jpg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/spit-leir-0.jpg)
 
 The last hike is an easy one. Along a green valley from Spiterstulen, then up maybe 200–300 meters or so of elevation, then scrambling over some comfortably spaced rocks along a small lake between Kyrkja and Tverbytthornet towards the cabin.
 
@@ -143,8 +143,8 @@ I eat my lunch that day sitting on a small hill, looking across the valley and t
 
 <div class="img-pair">
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/leirvassbu-1.jpeg)
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/leirvassbu-2.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/leirvassbu-1.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/leirvassbu-2.jpeg)
 
 </div>
 
@@ -182,8 +182,8 @@ There's something weirdly zen about this. You get up more or less in time and st
 
 <div class="img-pair">
 
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/cph-1.jpeg)
-![](/assets/posts/2026-09-06-four-days-in-jotunheimen/cph-2.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/cph-1.jpeg)
+![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/cph-2.jpeg)
 
 </div>
 

@@ -16,10 +16,19 @@
     "@astrojs/rss": "^4.0.18",
     "@fontsource-variable/inter": "*",
     "@fontsource-variable/source-serif-4": "*",
-    "astro": "^6.1.10"
+    "astro": "^6.1.10",
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
     "@clack/prompts": "^1.2.0",
-    "tsx": "^4.21.0"
+    "@types/hast": "^3.0.5",
+    "tsx": "^4.21.0",
+    "unist-util-visit": "^5.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   }
 }

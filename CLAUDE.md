@@ -29,7 +29,7 @@ Astro 5 static site (personal blog/portfolio at benjaminschneider.ch). See `docs
 
 **Design tokens** (`src/styles/tokens.css`): warm off-white `#fdfcf9`, dark mode via `prefers-color-scheme`, orange accent `rgb(255, 77, 6)` (slightly softened in dark mode), Source Serif 4 Variable + Inter Variable (both via fontsource npm packages, self-hosted).
 
-**Image assets** from the old Jekyll site live in `public/assets/posts/` — referenced by migrated posts as `/assets/posts/...`.
+**Post images** live in `src/assets/posts/<post-slug>/` and are referenced from markdown with *relative* paths (`../../assets/posts/...`) so Astro's asset pipeline processes them. `src/lib/rehype-prose-images.ts` runs before Astro's internal `rehypeImages` and stamps each markdown `<img>` with the `width`/`widths`/`sizes` implied by the prose layout (816px for a lone image in a paragraph, 332px for the two-up `.img-pair`), so builds emit a webp srcset instead of multi-megabyte originals. Anything left in `public/` is served verbatim and is *not* optimized.
 
 ## Phase status
 

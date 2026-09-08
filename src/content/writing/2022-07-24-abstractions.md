@@ -7,7 +7,7 @@ topics: [engineering, information-design]
 
 Abstraction isn't just a thing you do when programming.
 
-![](/assets/posts/2022-07-24-abstractions/subway-abstract.jpg)
+![](../../assets/posts/2022-07-24-abstractions/subway-abstract.jpg)
 *Berlin subway map vs. actual geography, [via Reddit](https://www.reddit.com/r/dataisbeautiful/comments/6baefh/berlin_subway_map_compared_to_its_real_geography/)*
 
 When you start learning about and programming computers, you usually encounter the concept of an "abstraction" pretty soon — there's [a whole Wikipedia article](https://en.wikipedia.org/wiki/Abstraction_(computer_science)) about the term as used in computer science. Abstractions allow you to focus on what different things have in common, so you can elegantly deal with the commonalities in one place without having to handle all the ways in which they are _not_ the same.

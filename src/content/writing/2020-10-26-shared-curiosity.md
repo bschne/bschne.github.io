@@ -8,7 +8,7 @@ selected: true
 
 Some of the most engaging educational content starts with the author's own curiosity.
 
-![](/assets/posts/2020-10-26-shared-curiosity/powers-of-ten.jpg)
+![](../../assets/posts/2020-10-26-shared-curiosity/powers-of-ten.jpg)
 *From "Powers of Ten" by Charles & Ray Eames (1977)*
 
 I recently watched the 2011 documentary ["Eames: The Architect & The Painter"](https://www.youtube.com/watch?v=sRElKUXH4VU&t=3280s) on the life and work of Charles & Ray Eames.
