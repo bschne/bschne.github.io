@@ -8,6 +8,8 @@ const writing = defineCollection({
     date: z.coerce.date(),
     description: z.string().optional(),
     topics: z.array(z.string()).default([]),
+    // Social-card image; defaults to the first image in the post body.
+    image: z.string().optional(),
     draft: z.boolean().default(false),
     selected: z.boolean().default(false),
   }),

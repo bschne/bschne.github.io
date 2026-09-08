@@ -2,6 +2,7 @@
 import Prose from '../../../../layouts/Prose.astro';
 import { getCollection, render } from 'astro:content';
 import { getWordCount, getReadingTime } from '../../../../lib/reading-time';
+import { getPostOgImage } from '../../../../lib/og-image';
 
 export async function getStaticPaths() {
   const posts = await getCollection('writing', ({ data }) => !data.draft);
@@ -23,11 +24,14 @@ const { Content, headings } = await render(post);
 
 const wordCount = getWordCount(post.body);
 const readingTime = getReadingTime(wordCount);
+const ogImage = await getPostOgImage(post, Astro.site!);
 ---
 
 <Prose
   title={post.data.title}
   description={post.data.description}
+  image={ogImage}
+  type="article"
   date={post.data.date}
   topics={post.data.topics}
   wordCount={wordCount}

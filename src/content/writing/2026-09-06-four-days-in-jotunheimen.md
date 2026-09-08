@@ -3,6 +3,7 @@ title: "Four Days in Jotunheimen"
 date: 2026-09-06
 description: "Norway from cabin to cabin."
 topics: [travel, hiking]
+image: besseggen-0.jpg
 selected: true
 ---
 

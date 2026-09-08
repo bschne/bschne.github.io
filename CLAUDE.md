@@ -31,6 +31,8 @@ Astro 5 static site (personal blog/portfolio at benjaminschneider.ch). See `docs
 
 **Post images** live in `src/assets/posts/<post-slug>/` and are referenced from markdown with *relative* paths (`../../assets/posts/...`) so Astro's asset pipeline processes them. `src/lib/rehype-prose-images.ts` runs before Astro's internal `rehypeImages` and stamps each markdown `<img>` with the `width`/`widths`/`sizes` implied by the prose layout (816px for a lone image in a paragraph, 332px for the two-up `.img-pair`), so builds emit a webp srcset instead of multi-megabyte originals. Anything left in `public/` is served verbatim and is *not* optimized.
 
+**Social cards** — `src/lib/og-image.ts` picks a post's sharing image: the frontmatter `image:` (a bare filename inside that post's asset dir) if set, otherwise the first image in the post body, so posts normally need no frontmatter for it. It's cropped to 1200×630 jpeg via `getImage`, capped at the original's size so the declared `og:image:width/height` never overstate it. `Base.astro` takes `image` + `type` props and emits `og:image`/`twitter:image` plus `twitter:card=summary_large_image`; posts with no image fall back to a `summary` card. `og:title`/`og:description` come from the post's `title` and `description`.
+
 ## Phase status
 
 - **Phase 1** (current): Foundation + content migration — ✅ complete

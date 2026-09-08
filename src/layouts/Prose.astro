@@ -6,10 +6,13 @@ import '../styles/prose.css';
 import { formatDate } from '../lib/dates';
 import { formatReadingTime } from '../lib/reading-time';
 import type { MarkdownHeading } from 'astro';
+import type { OgImage } from '../lib/og-image';
 
 interface Props {
   title: string;
   description?: string;
+  image?: OgImage;
+  type?: 'website' | 'article';
   date?: Date;
   topics?: string[];
   wordCount?: number;
@@ -17,10 +20,10 @@ interface Props {
   headings?: MarkdownHeading[];
 }
 
-const { title, description, date, topics = [], wordCount, readingTime, headings = [] } = Astro.props;
+const { title, description, image, type, date, topics = [], wordCount, readingTime, headings = [] } = Astro.props;
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} image={image} type={type}>
   <div class="prose-page">
     <header class="prose-header">
       {date && (
