@@ -104,17 +104,21 @@
   margin-bottom: 1.5em;
 }
 
+/* a lone image bleeds past the column: never less than the 120% (816px) that
+   the ToC rail is sized around, growing with the viewport up to the cap once
+   the window is wide enough to give it away for free */
 .prose > p > img:only-child {
-  max-width: 120%;
-  margin-left: -10%;
-  margin-right: -10%;
+  --bleed: max(120%, min(var(--prose-bleed-max), calc(100vw - var(--prose-bleed-gutter))));
+  width: var(--bleed);
+  max-width: none;
+  margin-inline: calc((100% - var(--bleed)) / 2);
 }
 
 @media (max-width: 680px) {
   .prose > p > img:only-child {
+    width: auto;
     max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
+    margin-inline: 0;
   }
 }
 

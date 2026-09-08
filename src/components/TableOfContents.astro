@@ -97,8 +97,9 @@ const show = items.length >= 3;
   /* the rail only exists once the viewport is wide enough to hold it beside
      the prose column. It sits in the left gutter of the window, vertically
      centred, and grows with the viewport up to 180px — stopping a
-     content-padding short of the full-bleed images, which run 10% wider than
-     the 680px column (i.e. to 50% - 408px) on each side */
+     content-padding short of the full-bleed images. Those images reserve
+     --prose-bleed-gutter for this rail, so the 144px floor is always safe;
+     past their cap the gutter opens up and the rail takes some of it */
   @media (min-width: 1200px) {
     .toc {
       display: block;
@@ -106,7 +107,11 @@ const show = items.length >= 3;
       top: 50%;
       transform: translateY(-50%);
       left: var(--content-padding);
-      width: min(180px, calc(50% - 408px - var(--content-padding) * 2));
+      width: clamp(
+        144px,
+        calc(50vw - var(--prose-bleed-max) / 2 - var(--content-padding) * 2),
+        180px
+      );
       max-height: calc(100vh - 6rem);
       overflow-y: auto;
       overscroll-behavior: contain;

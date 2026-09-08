@@ -26,6 +26,11 @@
 
   --max-width: 72rem;
   --content-padding: 1.5rem;
+
+  /* full-bleed prose images: how wide they may get, and the horizontal space
+     kept free beside them for the ToC rail (2 x padding + rail + gap) */
+  --prose-bleed-max: 952px;
+  --prose-bleed-gutter: 384px;
 }
 
 /* ─── dark mode tokens ──────────────────────────────────────────── */

@@ -4,7 +4,8 @@ import type { Root, Element } from 'hast';
 /**
  * Markdown images render at known sizes in the prose layout (see prose.css):
  *
- *   - a single image in its own paragraph bleeds to 120% of the 680px column → 816px
+ *   - a single image in its own paragraph bleeds past the 680px column: 816px
+ *     at the narrow end, widening with the viewport to --prose-bleed-max (952px)
  *   - two images in one paragraph (the .img-pair wrapper) sit at 50% each → 332px
  *
  * Astro can't know that, so without help it hands `getImage` the original
@@ -13,9 +14,10 @@ import type { Root, Element } from 'hast';
  */
 
 const SINGLE = {
-  width: 1632,
-  widths: [400, 640, 816, 1224, 1632],
-  sizes: '(min-width: 680px) 816px, 100vw',
+  width: 1904,
+  widths: [400, 640, 816, 952, 1428, 1904],
+  sizes:
+    '(min-width: 1336px) 952px, (min-width: 1200px) calc(100vw - 384px), (min-width: 680px) 816px, 100vw',
 };
 
 const PAIR = {
