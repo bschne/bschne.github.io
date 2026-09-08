@@ -95,20 +95,19 @@ const show = items.length >= 3;
   }
 
   /* the rail only exists once the viewport is wide enough to hold it beside
-     the prose column. Its left edge lines up with the nav and the header
-     rule; its width stops short of the full-bleed images, which run 10%
-     wider than the 680px column (i.e. to 50% - 408px) on each side */
+     the prose column. It sits in the left gutter of the window, vertically
+     centred, and grows with the viewport up to 180px — stopping a
+     content-padding short of the full-bleed images, which run 10% wider than
+     the 680px column (i.e. to 50% - 408px) on each side */
   @media (min-width: 1200px) {
     .toc {
       display: block;
       position: fixed;
-      top: 8.5rem;
-      left: max(
-        var(--content-padding),
-        calc(50% - var(--max-width) / 2 + var(--content-padding))
-      );
-      width: 120px;
-      max-height: calc(100vh - 12rem);
+      top: 50%;
+      transform: translateY(-50%);
+      left: var(--content-padding);
+      width: min(180px, calc(50% - 408px - var(--content-padding) * 2));
+      max-height: calc(100vh - 6rem);
       overflow-y: auto;
       overscroll-behavior: contain;
       scrollbar-width: thin;
