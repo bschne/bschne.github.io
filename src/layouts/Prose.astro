@@ -75,7 +75,12 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
     margin-bottom: var(--space-1-5);
   }
 
+  /* the accent rule spans the full container, but the meta inside it lines
+     up with the 680px prose column so it sits directly above the title */
   .header-meta {
+    width: 100%;
+    max-width: 680px;
+    margin-inline: auto;
     display: flex;
     align-items: center;
     gap: 1rem;
