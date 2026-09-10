@@ -48,11 +48,6 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
         <div class="prose">
           <slot />
         </div>
-        {topics.length > 0 && (
-          <footer class="post-footer">
-            <TopicList topics={topics} />
-          </footer>
-        )}
       </article>
     </main>
   </div>
