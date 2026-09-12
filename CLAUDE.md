@@ -27,7 +27,7 @@ Astro 5 static site (personal blog/portfolio at benjaminschneider.ch). See `docs
 
 **Layouts**: `Base.astro` → html shell + fonts; `Editorial.astro` → two-column home layout (named slots: `header`, `main`, `rail`, `below`); `Prose.astro` → single-column reading layout (~680px).
 
-**Design tokens** (`src/styles/tokens.css`): warm off-white `#fdfcf9`, dark mode via `prefers-color-scheme`, orange accent `rgb(255, 77, 6)` (slightly softened in dark mode), Source Serif 4 Variable + Inter Variable (both via fontsource npm packages, self-hosted).
+**Design tokens** (`src/styles/tokens.css`): white `#ffffff` background, orange accent `rgb(255, 77, 6)`, Inter Variable only (via fontsource npm package, self-hosted). Light mode only — no dark mode, no theme toggle, and `html { color-scheme: light }` keeps browser UI light. Hierarchy is carried by weight (`--weight-normal/medium/semibold`) and a four-step grey ramp (`--color-text-primary/secondary/tertiary/quaternary`), not by mixing typefaces.
 
 **Post images** live in `src/assets/posts/<post-slug>/` and are referenced from markdown with *relative* paths (`../../assets/posts/...`) so Astro's asset pipeline processes them. `src/lib/rehype-prose-images.ts` runs before Astro's internal `rehypeImages` and stamps each markdown `<img>` with the `width`/`widths`/`sizes` implied by the prose layout (816px for a lone image in a paragraph, 332px for the two-up `.img-pair`), so builds emit a webp srcset instead of multi-megabyte originals. Anything left in `public/` is served verbatim and is *not* optimized.
 
@@ -38,4 +38,4 @@ Astro 5 static site (personal blog/portfolio at benjaminschneider.ch). See `docs
 - **Phase 1** (current): Foundation + content migration — ✅ complete
 - **Phase 2**: Library (books, papers, podcasts, films, courses with cover images)
 - **Phase 3**: Photos (masonry grid, lightbox)
-- **Phase 4**: Polish (CLI scripts, RSS, OG images, dark mode review)
+- **Phase 4**: Polish (CLI scripts, RSS, OG images)

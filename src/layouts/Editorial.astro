@@ -27,15 +27,16 @@ const { title, description } = Astro.props;
 </Base>
 
 <style>
+  /* tight above, so the rule sits just under the nav */
   .editorial-wrap {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: var(--space-2) var(--content-padding) var(--space-3);
+    padding: var(--space-1) var(--content-padding) var(--space-3);
   }
 
+  /* symmetric: the same breathing room above the bio and below it */
   .editorial-header {
-    margin-bottom: var(--space-2-5);
-    padding-top: var(--space-1);
+    padding-top: var(--space-2);
     padding-bottom: var(--space-2);
     border-top: 1px solid var(--color-accent);
   }

@@ -12,35 +12,8 @@ const isHome = Astro.url.pathname === '/';
       <a href="/about">about</a>
     </div>
   </div>
-  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle colour theme">
-    <span class="theme-icon" aria-hidden="true">◑</span>
-  </button>
 </nav>
 
-<script>
-  const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
-  const icon = btn.querySelector('.theme-icon') as HTMLElement;
-  const root = document.documentElement;
-
-  function currentTheme(): 'light' | 'dark' {
-    const explicit = root.getAttribute('data-theme') as 'light' | 'dark' | null;
-    if (explicit) return explicit;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
-  function updateIcon() {
-    icon.textContent = currentTheme() === 'dark' ? '○' : '●';
-  }
-
-  updateIcon();
-
-  btn.addEventListener('click', () => {
-    const next = currentTheme() === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    updateIcon();
-  });
-</script>
 
 <style>
   .site-nav {
@@ -62,7 +35,7 @@ const isHome = Astro.url.pathname === '/';
   }
 
   .site-nav-name {
-    font-size: 1.125rem;
+    font-size: var(--text-h2);
     font-weight: 500;
     text-decoration: none;
     color: var(--color-text-primary);
@@ -87,27 +60,4 @@ const isHome = Astro.url.pathname === '/';
     color: var(--color-accent);
   }
 
-  .theme-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.375rem 0.5rem;
-    margin: -0.375rem -0.5rem; /* optical alignment without visual offset */
-    color: var(--color-text-tertiary);
-    transition: color 0.1s;
-    display: flex;
-    align-items: center;
-  }
-
-  .theme-toggle:hover {
-    color: var(--color-text-primary);
-  }
-
-  .theme-icon {
-    font-size: 1rem;
-    line-height: 1;
-    display: block;
-    width: 1rem;
-    text-align: center;
-  }
 </style>

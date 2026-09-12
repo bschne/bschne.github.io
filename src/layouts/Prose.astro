@@ -1,4 +1,6 @@
 ---
+import '@fontsource-variable/source-serif-4';
+import '@fontsource-variable/source-serif-4/wght-italic.css';
 import Base from './Base.astro';
 import TopicList from '../components/TopicList.astro';
 import TableOfContents from '../components/TableOfContents.astro';
@@ -57,7 +59,7 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
   .prose-page {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: var(--space-2) var(--content-padding) var(--space-3);
+    padding: var(--space-1) var(--content-padding) var(--space-3);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,7 +68,7 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
   .prose-header {
     align-self: stretch;
     border-top: 1px solid var(--color-accent);
-    padding-top: var(--space-1);
+    padding-top: var(--space-2);
     margin-bottom: var(--space-1-5);
   }
 
@@ -106,7 +108,7 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
 
   .prose-wrap h1 {
     font-family: var(--font-sans);
-    font-size: var(--text-h1);
+    font-size: var(--text-prose-h1);
     font-weight: 500;
     margin-bottom: var(--space-1-5);
   }

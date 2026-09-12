@@ -23,7 +23,7 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
   <div class="row-body">
     <div class="row-main">
       <span class="row-title">
-        {title}{starred && <span class="row-star" aria-label="recommended"> ★</span>}
+        {title}{starred && <span class="row-star" aria-label="recommended">★</span>}
         <span class="row-creator"> · {creator.split(';')[0]}</span>
       </span>
       <span class="row-right">
@@ -78,13 +78,20 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
   }
 
   .row-title {
+    font-size: var(--text-body);
     color: var(--color-text-primary);
     line-height: 1.4;
   }
 
+  /* smaller than the title it sits in, so baseline alignment would drop it
+     low; centre it on the title's x-height instead */
   .row-star {
     color: var(--color-accent);
-    font-size: 0.65rem;
+    font-size: var(--text-label);
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    margin-left: 0.35em;
   }
 
   .row-creator {
@@ -96,7 +103,7 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
     align-items: baseline;
     gap: 0.625rem;
     flex-shrink: 0;
-    font-size: 0.75rem;
+    font-size: var(--text-label);
     white-space: nowrap;
   }
 
@@ -121,7 +128,7 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
   .row-inline-note {
     margin-top: 0.1rem;
     max-width: 72ch;
-    font-size: 0.8rem;
+    font-size: var(--text-meta);
     color: var(--color-text-secondary);
     line-height: 1.55;
   }
