@@ -21,13 +21,8 @@ Coming out of Oslo, the views are nice enough. The landscapes are extremely lush
 
 I'm surprised how alpine everything looks given my entire trip stays more or less between 1000 and 2000 meters above sea level. This far north, the tree line is about 1000 meters lower than back home, so everything is a lot more barren. But the bigger difference is the sheer expansiveness. It's rare to see off to the horizon without facing another mountain in Switzerland, and most valleys are narrow and steep. Here, there's nothing but the road you're on as far as you can see.
 
-<div class="img-pair">
-
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/gjendesheim-1.jpeg)
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/gjendesheim-2.jpeg)
-
-</div>
-
 *Left: Jo Gjende, namesake of Gjendesheim, and apparently quite the character (and forefather of LessWrong?); Right: Foreshadowing of how my legs feel after the first hike.*
 
 The first thing that catches my eye at the reception counter of the Gjendesheim <abbr title="Den Norske Turistforening, the Norwegian Trekking Association">DNT</abbr> cabin is a Kindle. It dawns on me that I probably left mine on the bus earlier. A bit of frantic shuffling through my backpack confirms my suspicion. But the wear and tear on this one's cover looks eerily familiar, so I ask the receptionist whether it's hers or whether someone dropped it off there by any chance. She smirks and asks, "Well, did you maybe…  leave yours somewhere by accident?"
@@ -74,13 +69,8 @@ Then comes the last and most tedious part: Up towards Vestre Hestlægerhøe, I g
 
 And then finally… Well, no, not really. The descent is another deceptively long stretch of rocky terrain, and it's quite the drag on my tired legs. I try rewarding myself by listening to some music, but I'm too spent to really enjoy even that. Once you reach the plain at the bottom, you're not really at the end at all either, and there's another three kilometers or so that feel like a huge detour at that point, until you can cross the river and finally reach the cabin, which you've seen promisingly appear in the distance more than once by then.
 
-<div class="img-pair">
-
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/glitterheim-1.jpeg)
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/glitterheim-2.jpeg)
-
-</div>
-
 *Left: Alcove in the reception area, maybe the most [A Pattern Language](https://www.iwritewordsgood.com/apl/patterns/apl179.htm) thing I've seen in recent memory; Right: Evening light in my room.*
 
 As far as DNT cabins go, Gjendesheim and Glitterheim are a pretty stark contrast. By virtue of its accessibility, Gjendesheim is big and quite touristy. Multiple Norwegians I meet during my trip seem to dislike that somewhat, pejoratively describing it as "like a hotel". One slightly grumpy guy says there's way too many kids running around (I don't mind those, I say, I love a lively atmosphere even way out in nature).
@@ -105,13 +95,8 @@ I overtake an American family on the first climb, or rather the two parents, as 
 
 I join up with them and a Dutch woman who turns out to be the one hiker I met going the same way the previous day. Eventually I walk ahead alone again (I only manage to overtake the Americans' daughter thanks to a signpost).
 
-<div class="img-pair">
-
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/spiterstulen-1.jpeg)
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/spiterstulen-2.jpeg)
-
-</div>
-
 *Left: Nature trying to make its way back into the rigidly managed domain of Spiterstulen Turisthytte by way of a bathroom window; Right: To fill your thermos, please properly follow proper protocol (language barrier will not be admitted as an excuse for failure to comply).*
 
 The DNT is a bit of a national treasure, and the outdoorsy Norwegians I meet along the way all treat it with a certain reverence. I appreciated it from the first night in Gjendesheim, but the best illustration of how much of a treasure it is arrives by counterexample at the end of my third day of hiking.
@@ -142,13 +127,8 @@ I spend most of the day walking with a German kid I met at dinner the night befo
 
 I eat my lunch that day sitting on a small hill, looking across the valley and the river flowing through it. It occurs to me that I'll have memories and pictures but probably won't be able to fully recall the sheer sense of awe that being surrounded by all this inspires once I'm back in the city.
 
-<div class="img-pair">
-
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/leirvassbu-1.jpeg)
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/leirvassbu-2.jpeg)
-
-</div>
-
 *Left: The extremely cool ceiling in the dining area; Right: The extremely cozy lounge area.*
 
 Back on my first evening at Gjendesheim, me and my roommate were seated with a Danish-Norwegian couple, who summarized the difference between the two countries as follows: "The ideal for a Norwegian is a secluded hut in the middle of nowhere, complete isolation. The Danes on the other hand *\[imagine hand gesture indicating compaction\]*, they all want to bunch together". My impression after four days is that while Norwegians might enjoy a solitary hut in the middle of nowhere, they would probably delight in welcoming strangers passing by rather than picking up their pitchforks ready to defend their property.
@@ -181,13 +161,8 @@ But once you set off, this inverts as you get into a nice routine. Because my ro
 
 There's something weirdly zen about this. You get up more or less in time and start walking. If it's cold you walk in the cold, if it's warm you walk in the warmth, if you're feeling great you walk fast, if you're getting tired you walk slowly. Once you're at the next stop, you have a beer, shower, and hang your clothes to dry. Dinner arrives without you having checked a single review on the internet, and then it's preparing your things and early to bed in order to recover for the next day. You already know what's on the program for tomorrow, so that's taken care of too.
 
-<div class="img-pair">
-
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/cph-1.jpeg)
 ![](../../assets/posts/2026-09-06-four-days-in-jotunheimen/cph-2.jpeg)
-
-</div>
-
 *Left: Grundtvig's Church; Right: The gardens at Noma.*
 
 Arriving in Copenhagen, it takes a day or two for me to switch my decision-making faculties back on and start enjoying all the variety that's on offer. My first night, I reluctantly pick a highly rated restaurant on Google Maps and then go to the cinema to watch _The Odyssey_ for lack of other ideas and wanting some passive entertainment.

@@ -96,26 +96,54 @@
   margin: 2em 0;
 }
 
+/* ── figures ──────────────────────────────────────────────
+   rehype-prose-images.ts turns a paragraph of image(s) plus a trailing italic
+   line into a <figure> and its <figcaption>, so what follows styles elements
+   rather than an adjacency that had to guess at the author's intent. */
+
 .prose img {
   max-width: 100%;
   height: auto;
-  margin: 1.5em 0 0.5em 0;
 }
 
-.prose img + em {
+.prose figure {
+  margin: 1.5em 0;
+}
+
+.prose figure img {
   display: block;
+  width: 100%;
+}
+
+/* a caption stands to its image as a library note does to the title above it:
+   the same step down the type scale (--scale-annotation, off the prose body
+   rather than off a token, since the serif body sits between two of them) and
+   the same step down the grey ramp. Sans and upright: the italic run only ever
+   marked the line as a caption, and being a caption is the figcaption's job. */
+.prose figcaption {
   font-family: var(--font-sans);
+  font-size: calc(var(--text-prose) * var(--scale-annotation));
   font-style: normal;
-  font-size: var(--text-label);
+  font-weight: var(--weight-normal);
+  line-height: 1.5;
   color: var(--color-text-secondary);
-  margin-top: 0.5em;
-  margin-bottom: 1.5em;
+  margin-top: 0.7em;
+  /* a bleed image is centred on the column, so holding the caption to the
+     measure and centring it too lines the caption up with the body text
+     rather than hanging it off the image's left edge */
+  max-width: var(--prose-measure);
+  margin-inline: auto;
+  text-wrap: pretty;
+}
+
+.prose figcaption a {
+  text-decoration-color: var(--color-border);
 }
 
 /* a lone image bleeds past the column: never less than the 120% (816px) that
    the ToC rail is sized around, growing with the viewport up to the cap once
    the window is wide enough to give it away for free */
-.prose > p > img:only-child {
+.prose > figure:not(.figure-pair) {
   --bleed: max(120%, min(var(--prose-bleed-max), calc(100vw - var(--scrollbar-w) - var(--prose-bleed-gutter))));
   width: var(--bleed);
   max-width: none;
@@ -123,10 +151,32 @@
 }
 
 @media (max-width: 680px) {
-  .prose > p > img:only-child {
+  .prose > figure:not(.figure-pair) {
     width: auto;
     max-width: 100%;
     margin-inline: 0;
+  }
+}
+
+/* two images stay inside the column, side by side, with the caption spanning
+   both. The column gap is what makes each half 332px at the measure, which is
+   the width rehype-prose-images.ts renders the pair at */
+.prose figure.figure-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+  row-gap: 0.6rem;
+  align-items: start;
+}
+
+.prose figure.figure-pair figcaption {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .prose figure.figure-pair {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -291,40 +341,5 @@
 @media (min-width: 1140px) {
   .note-inline {
     display: none;
-  }
-}
-
-.prose .img-pair {
-  display: flex;
-  gap: 1rem;
-  margin: 1.5em 0 0.5em 0;
-  align-items: flex-start;
-}
-
-.prose .img-pair p {
-  display: flex;
-  gap: 1rem;
-  margin: 0;
-  width: 100%;
-}
-
-.prose .img-pair img {
-  margin: 0;
-  width: 50%;
-  flex-shrink: 0;
-  height: auto;
-}
-
-.prose .img-pair + p > em {
-  margin-top: 0.5em;
-}
-
-@media (max-width: 640px) {
-  .prose .img-pair p {
-    flex-direction: column;
-  }
-
-  .prose .img-pair img {
-    width: 100%;
   }
 }

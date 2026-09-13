@@ -29,7 +29,16 @@ Astro 5 static site (personal blog/portfolio at benjaminschneider.ch). See `docs
 
 **Design tokens** (`src/styles/tokens.css`): white `#ffffff` background, orange accent `rgb(255, 77, 6)`, Inter Variable only (via fontsource npm package, self-hosted). Light mode only — no dark mode, no theme toggle, and `html { color-scheme: light }` keeps browser UI light. Hierarchy is carried by weight (`--weight-normal/medium/semibold`) and a four-step grey ramp (`--color-text-primary/secondary/tertiary/quaternary`), not by mixing typefaces.
 
-**Post images** live in `src/assets/posts/<post-slug>/` and are referenced from markdown with *relative* paths (`../../assets/posts/...`) so Astro's asset pipeline processes them. `src/lib/rehype-prose-images.ts` runs before Astro's internal `rehypeImages` and stamps each markdown `<img>` with the `width`/`widths`/`sizes` implied by the prose layout (816px for a lone image in a paragraph, 332px for the two-up `.img-pair`), so builds emit a webp srcset instead of multi-megabyte originals. Anything left in `public/` is served verbatim and is *not* optimized.
+**Post images** live in `src/assets/posts/<post-slug>/` and are referenced from markdown with *relative* paths (`../../assets/posts/...`) so Astro's asset pipeline processes them. Anything left in `public/` is served verbatim and is *not* optimized.
+
+**Figures and captions** — a paragraph holding nothing but image(s), optionally closed by an italic line, *is* a figure, and that is the whole authoring format:
+
+```markdown
+![](../../assets/posts/<slug>/photo.jpg)
+*Caption, on the line right under the image*
+```
+
+Two images on consecutive lines make a two-up pair (no wrapper div); the caption, if any, spans both. `src/lib/rehype-prose-images.ts` runs before Astro's internal `rehypeImages` and rewrites that paragraph into `<figure>` + `<figcaption>` (`.figure-pair` for two), then stamps each `<img>` with the `width`/`widths`/`sizes` the prose layout implies — 816px+ for a lone bleeding image, 332px for a pair, 680px for anything left inline — so builds emit a webp srcset instead of multi-megabyte originals. A caption is sized against the body the way a library note is sized against its row title: one step down the scale (`--text-meta`, sans, which is the step below the `--text-body` the prose serif answers to) and one down the grey ramp (`--color-text-secondary`). It is held to `--prose-measure` and centred, so under a bleed image it still lines up with the body text.
 
 **Margin notes** — `src/components/MarginNotes.astro` progressively enhances two things markdown already encodes: footnote markers (which point at an endnote list) and `<abbr title>` (whose expansion only a hover tooltip shows). Above 1140px each becomes a note in the right margin, aligned with its line; below that the marker becomes a disclosure that opens the note inline — a full-width float, so the line the marker sits on finishes as written and the note slots in underneath it rather than cutting the line in half. The endnote list is kept in the DOM as `.sr-only` for assistive tech and as the no-JS fallback, and an enhanced `<abbr>` trades `title` for `aria-label` so the native tooltip stops competing with the note. Only the first mention of a given abbreviation is glossed. Layout is a JS pass that stacks notes in document order and pushes any note clear of a full-bleed image reaching into the column, re-run on resize, font swap and image load.
 

@@ -30,6 +30,13 @@
   --text-meta: 0.8125rem;
   --text-label: 0.6875rem;
 
+  /* the step from a thing to the annotation attached to it. It is the ratio a
+     library row already sets between its title (--text-body) and the note
+     under it (--text-meta); an image caption takes the same step down from
+     the prose body, which is a size the scale has no token for. Paired with
+     one step down the grey ramp: --color-text-primary → -secondary */
+  --scale-annotation: 0.903;
+
   --space-1: 1rem;
   --space-1-5: 1.5rem;
   --space-2: 2rem;

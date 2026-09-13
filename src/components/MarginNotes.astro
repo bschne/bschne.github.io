@@ -136,7 +136,7 @@
        */
       function blockedBands(left: number, origin: number) {
         const bands: { top: number; bottom: number }[] = [];
-        for (const el of prose!.querySelectorAll('img, pre, table')) {
+        for (const el of prose!.querySelectorAll('figure, img, pre, table')) {
           const rect = el.getBoundingClientRect();
           if (rect.right <= left) continue;
           bands.push({ top: rect.top - origin, bottom: rect.bottom - origin });
