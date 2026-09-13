@@ -107,11 +107,7 @@ const show = items.length >= 3;
       top: 50%;
       transform: translateY(-50%);
       left: var(--content-padding);
-      width: clamp(
-        144px,
-        calc(50vw - var(--prose-bleed-max) / 2 - var(--content-padding) * 2),
-        180px
-      );
+      width: var(--rail-width);
       max-height: calc(100vh - 6rem);
       overflow-y: auto;
       overscroll-behavior: contain;

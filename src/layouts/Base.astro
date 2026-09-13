@@ -45,6 +45,21 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
     <link rel="canonical" href={Astro.url} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="alternate" type="application/rss+xml" title="Benjamin Schneider" href="/rss.xml" />
+    {/* The full-bleed images and the marginal rails are sized against 100vw,
+        which counts the scrollbar track the page cannot actually use. Publish
+        the difference so those sums can subtract it; `scrollbar-gutter:
+        stable` keeps it the same number before and after layout. */}
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        function measure() {
+          root.style.setProperty('--scrollbar-w', window.innerWidth - root.clientWidth + 'px');
+        }
+        measure();
+        addEventListener('resize', measure, { passive: true });
+        addEventListener('load', measure);
+      })();
+    </script>
   </head>
   <body>
     <Nav />

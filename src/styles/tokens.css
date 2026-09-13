@@ -43,4 +43,33 @@
      kept free beside them for the ToC rail (2 x padding + rail + gap) */
   --prose-bleed-max: 952px;
   --prose-bleed-gutter: 384px;
+
+  /* width of a scrollbar track, measured in Base.astro. 0 where the platform
+     draws overlay scrollbars; everywhere else it keeps the window-relative
+     maths below from overshooting the document and forcing a sideways scroll */
+  --scrollbar-w: 0px;
+
+  /* the measure of a prose page */
+  --prose-measure: 680px;
+
+  /* the contents rail, in the left gutter: as wide as it can be while
+     stopping one --content-padding short of the widest a bleed image gets */
+  --rail-width: clamp(
+    144px,
+    calc(50vw - var(--scrollbar-w) / 2 - var(--prose-bleed-max) / 2 - var(--content-padding) * 2),
+    180px
+  );
+
+  /* margin notes sit just off the measure rather than out at the window edge,
+     so a note reads as belonging to the line beside it. They take whatever is
+     left between the column and the page's right padding, up to 240px */
+  --sidenote-gap: 2rem;
+  --sidenote-width: clamp(
+    150px,
+    calc(
+      50vw - var(--scrollbar-w) / 2 - var(--prose-measure) / 2 - var(--sidenote-gap) -
+        var(--content-padding)
+    ),
+    240px
+  );
 }

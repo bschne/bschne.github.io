@@ -4,6 +4,7 @@ import '@fontsource-variable/source-serif-4/wght-italic.css';
 import Base from './Base.astro';
 import TopicList from '../components/TopicList.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import MarginNotes from '../components/MarginNotes.astro';
 import '../styles/prose.css';
 import { formatDate } from '../lib/dates';
 import { formatReadingTime } from '../lib/reading-time';
@@ -52,6 +53,7 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
         </div>
       </article>
     </main>
+    <MarginNotes />
   </div>
 </Base>
 
@@ -76,7 +78,7 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
      up with the 680px prose column so it sits directly above the title */
   .header-meta {
     width: 100%;
-    max-width: 680px;
+    max-width: var(--prose-measure);
     margin-inline: auto;
     display: flex;
     align-items: center;
@@ -101,9 +103,12 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
     color: var(--color-border);
   }
 
+  /* the anchor the footnote rail positions against: its centre is the
+     window's, which is what the rail's offset is measured from */
   .prose-wrap {
+    position: relative;
     width: 100%;
-    max-width: 680px;
+    max-width: var(--prose-measure);
   }
 
   .prose-wrap h1 {

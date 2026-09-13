@@ -30,7 +30,7 @@ I'm surprised how alpine everything looks given my entire trip stays more or les
 
 *Left: Jo Gjende, namesake of Gjendesheim, and apparently quite the character (and forefather of LessWrong?); Right: Foreshadowing of how my legs feel after the first hike.*
 
-The first thing that catches my eye at the reception counter of the Gjendesheim <abbr title="*Den Norske Turistforening,* the Norwegian Trekking Association">DNT</abbr> cabin is a Kindle. It dawns on me that I probably left mine on the bus earlier. A bit of frantic shuffling through my backpack confirms my suspicion. But the wear and tear on this one's cover looks eerily familiar, so I ask the receptionist whether it's hers or whether someone dropped it off there by any chance. She smirks and asks, "Well, did you maybe…  leave yours somewhere by accident?"
+The first thing that catches my eye at the reception counter of the Gjendesheim <abbr title="Den Norske Turistforening, the Norwegian Trekking Association">DNT</abbr> cabin is a Kindle. It dawns on me that I probably left mine on the bus earlier. A bit of frantic shuffling through my backpack confirms my suspicion. But the wear and tear on this one's cover looks eerily familiar, so I ask the receptionist whether it's hers or whether someone dropped it off there by any chance. She smirks and asks, "Well, did you maybe…  leave yours somewhere by accident?"
 
 Norway [ranks near the top](https://ourworldindata.org/grapher/self-reported-trust-attitudes?tab=table) on surveys asking people whether they think strangers can be trusted. The interesting thing is that this instantly stands out to me, someone from Switzerland, a country that's famously safe and firmly in the top ten on the same ranking. 
 

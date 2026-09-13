@@ -1,0 +1,248 @@
+---
+/*
+  Progressive enhancement over two asides markdown already encodes: the
+  endnote list a footnote marker points at, and the title a tooltip hides on
+  an abbreviation. Both become a note in the right margin where the window has
+  room for one, and a disclosure that opens under the paragraph where it does
+  not, so neither ever costs the reader their place. The endnote list stays in
+  the DOM, hidden visually but not from assistive tech, and is all a reader
+  without JavaScript ever sees.
+*/
+---
+
+<script>
+  const prose = document.querySelector<HTMLElement>('.prose');
+  const wrap = document.querySelector<HTMLElement>('.prose-wrap');
+
+  if (prose && wrap) {
+    // matches the breakpoint the note column appears at, in prose.css
+    const wide = window.matchMedia('(min-width: 1140px)');
+    // minimum air between a note and whatever was laid out above it
+    const STACK_GAP = 16;
+    // the footnote marker rides above its line, so drop the note to meet the text
+    const ALIGN_NUDGE = 3;
+
+    /**
+     * A footnote's content, minus the back-link that only endnotes need. A
+     * lone paragraph is unwrapped, so that the usual one-paragraph note is
+     * inline content and stays valid inside the paragraph it opens in.
+     */
+    function footnoteBody(ref: HTMLAnchorElement): string | null {
+      const target = document.getElementById(decodeURIComponent(ref.hash.slice(1)));
+      if (!target) return null;
+      const clone = target.cloneNode(true) as HTMLElement;
+      clone.querySelectorAll('a[data-footnote-backref]').forEach(a => a.remove());
+      const only = clone.children.length === 1 ? clone.firstElementChild : null;
+      return only?.tagName === 'P' ? only.innerHTML : clone.innerHTML;
+    }
+
+    function escape(text: string): string {
+      const span = document.createElement('span');
+      span.textContent = text;
+      return span.innerHTML;
+    }
+
+    // in document order, so the column stacks the way the page reads. An
+    // abbreviation is glossed the first time it appears and not again
+    const markers = Array.from(
+      prose.querySelectorAll<HTMLElement>('a[data-footnote-ref], abbr[title]')
+    );
+    const glossed = new Set<string>();
+    const cleared = new WeakSet<HTMLElement>();
+
+    /** Give a block one clearer, so a float opened on its last line fits. */
+    function ensureClearer(marker: HTMLElement) {
+      const block = marker.closest<HTMLElement>('p, li, blockquote');
+      if (!block || !prose!.contains(block) || cleared.has(block)) return;
+      cleared.add(block);
+      const clearer = document.createElement('span');
+      clearer.className = 'note-clear';
+      block.append(clearer);
+    }
+
+    const items = markers.flatMap((marker, index) => {
+      let label: string;
+      let body: string;
+
+      if (marker instanceof HTMLAnchorElement) {
+        const content = footnoteBody(marker);
+        if (content === null) return [];
+        label = marker.textContent?.trim() || String(index + 1);
+        body = content;
+      } else {
+        const abbreviation = marker.textContent?.trim() ?? '';
+        const title = marker.getAttribute('title')?.trim() ?? '';
+        // a second mention of the same abbreviation is left exactly as it was,
+        // tooltip and all: one gloss per abbreviation is the point
+        if (!title || glossed.has(abbreviation)) return [];
+        glossed.add(abbreviation);
+        label = abbreviation;
+        body = escape(title);
+
+        // the note replaces the tooltip, so drop the attribute that draws one.
+        // aria-label keeps the expansion for assistive tech, tabindex makes the
+        // disclosure reachable without a pointer, and data-note is what marks
+        // the word as carrying a gloss
+        marker.setAttribute('aria-label', title);
+        marker.removeAttribute('title');
+        marker.dataset.note = '';
+        marker.tabIndex = 0;
+      }
+
+      const sidenote = document.createElement('aside');
+      sidenote.className = 'sidenote';
+      // a purely visual mirror of asides the markup already carries
+      sidenote.setAttribute('aria-hidden', 'true');
+      sidenote.innerHTML =
+        `<span class="note-label">${escape(label)}</span>` +
+        `<span class="note-body">${body}</span>`;
+
+      // a full-width float, so the line the marker is on finishes as written
+      // and the note slots in underneath it — see .note-inline in prose.css
+      const inline = document.createElement('span');
+      inline.className = 'note-inline';
+      inline.id = `margin-note-${index + 1}`;
+      inline.hidden = true;
+      inline.innerHTML = sidenote.innerHTML;
+      (marker.closest('sup') ?? marker).after(inline);
+      ensureClearer(marker);
+
+      if (marker instanceof HTMLAnchorElement) {
+        marker.setAttribute('aria-controls', inline.id);
+        marker.setAttribute('aria-expanded', 'false');
+      }
+
+      return [{ marker, sidenote, inline }];
+    });
+
+    type Item = (typeof items)[number];
+
+    if (items.length) {
+      const column = document.createElement('div');
+      column.className = 'sidenotes';
+      for (const item of items) column.append(item.sidenote);
+      wrap.append(column);
+
+      const endnotes = prose.querySelector('[data-footnotes]');
+      // the list has a replacement now; keep it for screen readers only
+      if (endnotes && markers.some(m => m instanceof HTMLAnchorElement)) {
+        endnotes.classList.add('sr-only');
+      }
+
+      /**
+       * Vertical bands, relative to the anchor, where something in the prose
+       * reaches into the note column — a full-bleed image, most often. A note
+       * may not start inside one.
+       */
+      function blockedBands(left: number, origin: number) {
+        const bands: { top: number; bottom: number }[] = [];
+        for (const el of prose!.querySelectorAll('img, pre, table')) {
+          const rect = el.getBoundingClientRect();
+          if (rect.right <= left) continue;
+          bands.push({ top: rect.top - origin, bottom: rect.bottom - origin });
+        }
+        return bands.sort((a, b) => a.top - b.top);
+      }
+
+      function layout() {
+        if (!wide.matches) return;
+        const origin = wrap!.getBoundingClientRect().top;
+        const bands = blockedBands(items[0].sidenote.getBoundingClientRect().left, origin);
+        let previousBottom = -Infinity;
+
+        for (const { marker, sidenote } of items) {
+          const height = sidenote.offsetHeight;
+          const wanted = marker.getBoundingClientRect().top - origin + ALIGN_NUDGE;
+          let top = Math.max(wanted, previousBottom + STACK_GAP);
+
+          // bands are sorted, and clearing one only ever moves a note further
+          // down the page, so a single pass settles it
+          for (const band of bands) {
+            if (top < band.bottom + STACK_GAP && top + height > band.top) {
+              top = band.bottom + STACK_GAP;
+            }
+          }
+
+          sidenote.style.top = `${Math.round(top)}px`;
+          previousBottom = top + height;
+        }
+      }
+
+      let queued = false;
+      function schedule() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          layout();
+        });
+      }
+
+      function toggle(item: Item) {
+        const open = !item.inline.hidden;
+        item.inline.hidden = open;
+        if (item.marker instanceof HTMLAnchorElement) {
+          item.marker.setAttribute('aria-expanded', String(!open));
+        }
+      }
+
+      let flashing: ReturnType<typeof setTimeout> | undefined;
+      function flash(item: Item) {
+        clearTimeout(flashing);
+        for (const other of items) other.sidenote.classList.remove('is-active');
+        item.sidenote.classList.add('is-active');
+        flashing = setTimeout(() => {
+          flashing = undefined;
+          item.sidenote.classList.remove('is-active');
+        }, 1400);
+      }
+
+      for (const item of items) {
+        // never send the reader elsewhere: the note is either already beside
+        // them or one tap away, in place
+        item.marker.addEventListener('click', event => {
+          event.preventDefault();
+          if (wide.matches) flash(item);
+          else toggle(item);
+        });
+
+        item.marker.addEventListener('keydown', event => {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          if (wide.matches) return;
+          event.preventDefault();
+          toggle(item);
+        });
+
+        item.marker.addEventListener('pointerenter', () => {
+          if (wide.matches) item.sidenote.classList.add('is-active');
+        });
+        item.marker.addEventListener('pointerleave', () => {
+          if (!flashing) item.sidenote.classList.remove('is-active');
+        });
+      }
+
+      wide.addEventListener('change', () => {
+        if (!wide.matches) return;
+        // the column takes over; leave no half-open disclosures behind it
+        for (const item of items) {
+          item.inline.hidden = true;
+          if (item.marker instanceof HTMLAnchorElement) {
+            item.marker.setAttribute('aria-expanded', 'false');
+          }
+        }
+        schedule();
+      });
+
+      // notes shift whenever the prose above them reflows — late images, a
+      // swapped webfont, a resized window, an expanded disclosure
+      const observer = new ResizeObserver(schedule);
+      observer.observe(prose);
+      for (const item of items) observer.observe(item.sidenote);
+
+      window.addEventListener('resize', schedule, { passive: true });
+      window.addEventListener('load', schedule);
+      document.fonts?.ready.then(schedule);
+      layout();
+    }
+  }
+</script>

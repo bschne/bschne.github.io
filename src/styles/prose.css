@@ -116,7 +116,7 @@
    the ToC rail is sized around, growing with the viewport up to the cap once
    the window is wide enough to give it away for free */
 .prose > p > img:only-child {
-  --bleed: max(120%, min(var(--prose-bleed-max), calc(100vw - var(--prose-bleed-gutter))));
+  --bleed: max(120%, min(var(--prose-bleed-max), calc(100vw - var(--scrollbar-w) - var(--prose-bleed-gutter))));
   width: var(--bleed);
   max-width: none;
   margin-inline: calc((100% - var(--bleed)) / 2);
@@ -134,18 +134,164 @@
   font-weight: 650;
 }
 
+/* ── margin notes ────────────────────────────────────────
+   Two things in the prose ask the reader to look somewhere else: a footnote
+   marker, which sends them to the foot of the page, and an abbreviation,
+   whose expansion lives in a tooltip a touchscreen never shows. MarginNotes
+   .astro answers both the same way - beside the line when there is room in
+   the margin, otherwise in a disclosure that opens under the paragraph. The
+   endnote list markdown emits stays in the DOM as .sr-only, and is what a
+   reader without JavaScript gets. */
+
 .prose sup {
   font-size: 0.75em;
   vertical-align: super;
 }
 
-.prose .footnotes {
+/* a thumb-sized target for the marker, drawn outside the line box so that
+   nothing about how the marker sits in the text changes */
+.prose sup a[data-footnote-ref] {
+  position: relative;
+}
+
+.prose sup a[data-footnote-ref]::after {
+  content: '';
+  position: absolute;
+  inset: -0.85em -0.6em;
+}
+
+/* an abbreviation the script has taken over; without it the title attribute
+   and its tooltip are left alone, so there is nothing to advertise.
+
+   A border, not a dotted text-decoration: the text-decoration version drew
+   nothing at all in Safari 18 while rendering fine in Chrome, and a border
+   has no such disagreement between engines. 2px is also the thinnest dot
+   that survives a high-density screen in a grey this light - at 1px the dots
+   cover half a hairline and the mark vanishes. */
+.prose abbr[data-note] {
+  cursor: help;
+  text-decoration: none;
+  border-bottom: 2px dotted var(--color-text-tertiary);
+}
+
+.prose abbr[data-note]:hover {
+  border-bottom-color: var(--color-accent);
+}
+
+.prose .footnotes:not(.sr-only) {
   font-family: var(--font-sans);
   margin-top: 2em;
   padding-top: 1em;
   border-top: 0.5px solid var(--color-border);
   font-size: var(--text-meta);
   color: var(--color-text-secondary);
+}
+
+/* ── margin notes: the right-hand column ────────────────────────── */
+
+.sidenotes {
+  display: none;
+}
+
+@media (min-width: 1140px) {
+  .sidenotes {
+    display: block;
+  }
+}
+
+/* absolute rather than fixed, because a note travels with the line it belongs
+   to. .prose-wrap is the anchor, so the column simply hangs off the measure;
+   the script pushes any note clear of a bleed image reaching into it */
+.sidenote {
+  position: absolute;
+  left: calc(100% + var(--sidenote-gap));
+  width: var(--sidenote-width);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.45em;
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  line-height: 1.5;
+  color: var(--color-text-tertiary);
+  transition: color 0.15s ease;
+}
+
+.sidenote.is-active {
+  color: var(--color-text-secondary);
+}
+
+.note-label {
+  font-size: var(--text-label);
+  font-weight: var(--weight-medium);
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.note-body {
+  display: block;
+}
+
+.note-body > :last-child {
+  margin-bottom: 0;
+}
+
+.note-body p {
+  margin-bottom: 0.6em;
+}
+
+.note-body a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-color: var(--color-border);
+}
+
+.note-body a:hover {
+  color: var(--color-accent);
+  text-decoration-color: var(--color-accent);
+}
+
+/* ── margin notes: the in-place disclosure ─────────────────────── */
+
+/* a span, so it is valid inside the paragraph it opens in, floated full-width
+   so it cannot fit beside anything. That drops it to the line below the one
+   its marker sits on: the sentence finishes its line as written, and the note
+   slots into the gap rather than cutting the line in half */
+.note-inline {
+  float: left;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.5em;
+  margin: 0.8em 0;
+  padding-left: 0.9em;
+  border-left: 2px solid var(--color-accent);
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+
+/* display:grid above would otherwise beat the UA rule for [hidden] */
+.note-inline[hidden] {
+  display: none;
+}
+
+/* keeps the paragraph tall enough to hold a note opened on its last line,
+   where there is no following text to flow past the float. Collapses to
+   nothing whenever the note is closed */
+.note-clear {
+  display: block;
+  clear: both;
+}
+
+/* above the breakpoint the column carries every note, so a stale open
+   disclosure must not linger underneath it */
+@media (min-width: 1140px) {
+  .note-inline {
+    display: none;
+  }
 }
 
 .prose .img-pair {
