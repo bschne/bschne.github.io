@@ -36,7 +36,7 @@ const postsWithMeta = await Promise.all(
               <a href={jekyllPath(post.data.date, post.id)} class="post-title">
                 {post.data.title}
               </a>
-              <span class="post-meta">{`· ${wordCount.toLocaleString()} words · ${formatReadingTime(readingTime)}`}</span>
+              <span class="post-meta">{`${wordCount.toLocaleString()} words · ${formatReadingTime(readingTime)}`}</span>
             </div>
             {post.data.description && (
               <p class="post-desc">{post.data.description}</p>
@@ -87,10 +87,13 @@ const postsWithMeta = await Promise.all(
     white-space: nowrap;
   }
 
+  /* The meta trails the title on the same line where it fits and drops to
+     its own line where it doesn't, so it carries no leading separator —
+     the gap does that work in both cases. */
   .post-title-row {
     display: flex;
     align-items: baseline;
-    gap: 0.25rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
   }
 

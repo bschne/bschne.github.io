@@ -50,7 +50,7 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
           <li>
             <div class="item-line">
               <a href={jekyllPath(post.data.date, post.id)}>{post.data.title}</a>
-              <span class="item-meta">{`· ${wordCount.toLocaleString()} words · ${formatReadingTime(readingTime)}`}</span>
+              <span class="item-meta">{`${wordCount.toLocaleString()} words · ${formatReadingTime(readingTime)}`}</span>
             </div>
             {post.data.description && (
               <div class="item-desc">{post.data.description}</div>
@@ -200,7 +200,8 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
     line-height: 1.55;
   }
 
-  /* trails the title on the same line; wraps as one unit if it runs out of room */
+  /* trails the title on the same line; wraps as one unit if it runs out of
+     room, so it carries no leading separator that could open a line */
   .item-line {
     line-height: 1.4;
   }
@@ -208,7 +209,7 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
   .item-meta {
     font-size: var(--text-label);
     color: var(--color-text-tertiary);
-    margin-left: 0.25rem;
+    margin-left: 0.5rem;
     white-space: nowrap;
   }
 
