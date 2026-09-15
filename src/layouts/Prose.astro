@@ -24,6 +24,9 @@ interface Props {
 }
 
 const { title, description, image, type, date, topics = [], wordCount, readingTime, headings = [] } = Astro.props;
+
+// only a post passes a footer; about/now share this layout and get no rule
+const hasFooter = Astro.slots.has('footer');
 ---
 
 <Base title={title} description={description} image={image} type={type}>
@@ -52,6 +55,11 @@ const { title, description, image, type, date, topics = [], wordCount, readingTi
           <slot />
         </div>
       </article>
+      {hasFooter && (
+        <footer class="post-footer">
+          <slot name="footer" />
+        </footer>
+      )}
     </main>
     <MarginNotes />
   </div>

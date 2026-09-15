@@ -1,5 +1,6 @@
 ---
 import Prose from '../../../../layouts/Prose.astro';
+import SubscribeNote from '../../../../components/SubscribeNote.astro';
 import { getCollection, render } from 'astro:content';
 import { getWordCount, getReadingTime } from '../../../../lib/reading-time';
 import { getPostOgImage } from '../../../../lib/og-image';
@@ -39,4 +40,5 @@ const ogImage = await getPostOgImage(post, Astro.site!);
   headings={headings}
 >
   <Content />
+  <SubscribeNote slot="footer" />
 </Prose>

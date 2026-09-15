@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import TopicList from '../../components/TopicList.astro';
+import SubscribeNote from '../../components/SubscribeNote.astro';
 import { getCollection, render } from 'astro:content';
 import { jekyllPath, formatDateShort } from '../../lib/dates';
 import { getWordCount, formatReadingTime, getReadingTime } from '../../lib/reading-time';
@@ -23,6 +24,7 @@ const postsWithMeta = await Promise.all(
   <main class="page-wrap">
     <header class="page-header">
       <h1>Writing</h1>
+      <div class="header-note"><SubscribeNote /></div>
     </header>
 
     <ul class="post-list">
@@ -64,6 +66,11 @@ const postsWithMeta = await Promise.all(
   .page-header h1 {
     font-size: var(--text-h1);
     font-weight: 500;
+  }
+
+  /* sits under the title as a subtitle to the list, not part of the rule */
+  .header-note {
+    margin-top: 0.5rem;
   }
 
   .post-list {
