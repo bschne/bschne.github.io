@@ -5,7 +5,6 @@
 }
 
 html {
-  color-scheme: light;
   /* reserve the scrollbar track at all times, so --scrollbar-w (set in
      Base.astro) stays constant and the marginal rails don't shift between
      a short page and a long one */

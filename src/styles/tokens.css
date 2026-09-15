@@ -1,12 +1,29 @@
 :root {
-  --color-bg: #ffffff;
-  --color-bg-secondary: #f4f4f5;
-  --color-text-primary: #111112;
-  --color-text-secondary: #52525b;
-  --color-text-tertiary: #8a8a93;
-  --color-text-quaternary: #a8a8b0;
-  --color-border: rgba(0, 0, 0, 0.09);
+  /* Both themes live here, one line per token: light-dark() resolves against
+     the root's used color-scheme, so switching theme is switching that single
+     property (below) and nothing else in the stylesheet has to know. The dark
+     side is a near-black ground rather than #000, and its greys keep the same
+     four-step ramp — each step a little lighter against the darker ground than
+     its light-mode counterpart is against white, which is what it takes to
+     read the same. The accent is the one token that does not move: it clears
+     4.5:1 on both grounds, and it is the brand. */
+  color-scheme: light dark;
+
+  --color-bg: light-dark(#ffffff, #101011);
+  --color-bg-secondary: light-dark(#f4f4f5, #1b1b1e);
+  --color-text-primary: light-dark(#111112, #e8e8ea);
+  --color-text-secondary: light-dark(#52525b, #a1a1aa);
+  --color-text-tertiary: light-dark(#8a8a93, #85858e);
+  --color-text-quaternary: light-dark(#a8a8b0, #5b5b63);
+  --color-border: light-dark(rgba(0, 0, 0, 0.09), rgba(255, 255, 255, 0.12));
   --color-accent: rgb(255, 77, 6);
+  /* the accent thinned to a ground tint; it takes more of it on the near-black
+     to register at all than it does on white, so this pair is not one alpha */
+  --color-accent-wash: light-dark(rgba(255, 77, 6, 0.07), rgba(255, 77, 6, 0.14));
+
+  /* the toggle's icon pair — see the theme rules at the foot of this file */
+  --icon-moon: block;
+  --icon-sun: none;
 
   --font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
   --font-serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, serif;
@@ -79,4 +96,34 @@
     ),
     240px
   );
+}
+
+/* The theme toggle pins a choice by overriding color-scheme on the root;
+   with no choice stored, `light dark` above leaves the system setting to
+   decide. The icon pair is the one thing a colour token cannot carry, so it
+   rides along as a display switch: the button shows the theme you would get
+   by pressing it. */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --icon-moon: none;
+    --icon-sun: block;
+  }
+}
+
+:root[data-theme='dark'] {
+  --icon-moon: none;
+  --icon-sun: block;
+}
+
+:root[data-theme='light'] {
+  --icon-moon: block;
+  --icon-sun: none;
 }

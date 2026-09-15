@@ -18,13 +18,14 @@ const dateLabel = status === 'ongoing' ? 'ongoing' : date ? formatDateShort(date
 const { Content } = inline && item.body ? await render(item) : { Content: null };
 ---
 
-<li class="row">
+<li class="row" id={slug}>
   <span class="row-type">{type === 'podcast' ? 'pod' : type}</span>
   <div class="row-body">
     <div class="row-main">
       <span class="row-title">
         {title}{starred && <span class="row-star" aria-label="recommended">★</span>}
         <span class="row-creator"> · {creator.split(';')[0]}</span>
+        <a href={`#${slug}`} class="row-anchor" aria-label={`Link to ${title}`}>#</a>
       </span>
       <span class="row-right">
         {sourceHostname && (
@@ -47,6 +48,7 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
 
 <style>
   .row {
+    position: relative;
     display: grid;
     grid-template-columns: 4.5rem 1fr;
     gap: 0.75rem;
@@ -54,6 +56,23 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
     border-bottom: 0.5px solid var(--color-border);
     align-items: baseline;
     font-size: var(--text-meta);
+    scroll-margin-top: 2rem;
+  }
+
+  /* the same accent bar the Now section wears, over a wash of the same colour;
+     both drawn outside the box, so linking to a row marks it without nudging
+     the list sideways */
+  .row:target::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: -1rem;
+    right: -0.5rem;
+    top: 0;
+    bottom: 0;
+    border-left: 2px solid var(--color-accent);
+    background: var(--color-accent-wash);
+    border-radius: 0 2px 2px 0;
   }
 
   .row:has(.row-inline-note) {
@@ -85,6 +104,28 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
 
   /* smaller than the title it sits in, so baseline alignment would drop it
      low; centre it on the title's x-height instead */
+  /* present at all times so revealing it shifts nothing; the row has to be
+     hovered, focused or linked to before it is worth reading */
+  .row-anchor {
+    margin-left: 0.4em;
+    font-size: var(--text-label);
+    color: var(--color-text-quaternary);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+  .row:hover .row-anchor,
+  .row:target .row-anchor,
+  .row-anchor:focus-visible {
+    opacity: 1;
+  }
+  .row-anchor:hover { color: var(--color-accent); }
+
+  /* nothing to hover on a touch screen, so the marker just stays */
+  @media (hover: none) {
+    .row-anchor { opacity: 1; }
+  }
+
   .row-star {
     color: var(--color-accent);
     font-size: var(--text-label);
