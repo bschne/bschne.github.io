@@ -28,7 +28,7 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
       Swiss guy with a background in computer science and economics.
       Currently working as a solution architect at vivenu, a ticket sales software company, in Zurich.
     </p>
-    <p class="bio bio-secondary">
+    <p class="bio">
       I like cooking curry from scratch,
       adding new layers to my mental map of the world,
       and walking in nature taking pictures of the same views over and over again.
@@ -118,18 +118,13 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
   }
 
   /* ── Header ──────────────────────────────────────────────────────
-     The lead bio sits at full contrast, the personal aside a step
-     back, so the eye lands on the first line. */
+     Both bio paragraphs read as one block, at full contrast. */
   .bio {
     font-weight: var(--weight-normal);
     color: var(--color-text-primary);
     max-width: 52ch;
     margin-bottom: 0.875rem;
     line-height: 1.65;
-  }
-
-  .bio-secondary {
-    color: var(--color-text-secondary);
   }
 
   .contact-links {
