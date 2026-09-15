@@ -19,6 +19,7 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { type, title, creator, status, date, url, topics } = item.data;
+const sourceHostname = url ? new URL(url).hostname.replace(/^www\./, '') : null;
 const { Content, headings } = await render(item);
 const hasBody = item.body && item.body.trim().length > 0;
 
@@ -36,9 +37,9 @@ const description = `Notes on ${title} by ${creator}.`;
       <p class="item-type">{typeLabel[type]}</p>
       <h1>{title}</h1>
       <p class="item-creator">{creator}</p>
-      {url && (
+      {sourceHostname && (
         <p class="item-link">
-          <a href={url} target="_blank" rel="noopener">source ↗</a>
+          <a href={url} target="_blank" rel="noopener">↗ {sourceHostname}</a>
         </p>
       )}
       {status !== 'done' && (
