@@ -3,7 +3,7 @@ type: essay
 title: "The Tyranny of Structurelessness"
 creator: "Freeman, Jo"
 status: done
-topics: []
+topics: [management, institutions]
 url: "https://www.jofreeman.com/joreen/tyranny.htm"
 inline: true
 ---

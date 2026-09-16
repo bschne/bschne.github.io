@@ -6,7 +6,7 @@ title: "An Elegant Puzzle: Systems of Engineering Management"
 creator: "Larson, Will"
 status: done
 url: "https://www.goodreads.com/book/show/45303387-an-elegant-puzzle"
-topics: [engineering, teaching]
+topics: [management, software]
 image: /covers/an-elegant-puzzle.jpg
 inline: true
 ---

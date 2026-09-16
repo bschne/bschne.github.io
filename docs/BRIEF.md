@@ -66,7 +66,7 @@ Redirect `/bookshelf/` → `/library/` (301).
 
 ### Topics (tags)
 
-Start with: `information-design`, `engineering`, `teaching`, `tools`, `reading`, `civic-infrastructure`, `biology`. Resist adding more until a post demands one. Tags are shared across writing and library so a tag page like `/writing/tag/biology/` can optionally include related library items.
+The library's shelf was the test of this vocabulary, and the first set failed it — `engineering` had grown to a quarter of the shelf while a third of it stayed untagged. The set now: `software`, `management`, `biology`, `biography`, `history`, `design`, `systems`, `learning`, `institutions`, `uncertainty`, `economics`, `writing`, `art`. Writing carries a few of its own besides (`agency`, `reading`, `self-improvement`, `travel`, `hiking`). Fiction is not tagged — `genre` is its axis. Resist adding more until a post demands one. Tags are shared across writing and library so a tag page like `/writing/tag/biology/` can optionally include related library items.
 
 ---
 

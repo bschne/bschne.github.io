@@ -2,7 +2,7 @@
 title: "Abstractions Rule Everything Around Me"
 date: 2022-07-24
 description: "Abstraction isn't just a thing you do when programming."
-topics: [engineering, information-design]
+topics: [software, design]
 ---
 
 Abstraction isn't just a thing you do when programming.

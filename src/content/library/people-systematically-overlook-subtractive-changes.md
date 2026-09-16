@@ -3,7 +3,7 @@ type: paper
 title: "People systematically overlook subtractive changes"
 creator: "Adams, Gabrielle S.; Converse, Benjamin A.; Hales, Andrew H.; Klotz, Leidy E."
 status: done
-topics: []
+topics: [design]
 url: "https://www.nature.com/articles/s41586-021-03380-y"
 inline: true
 ---

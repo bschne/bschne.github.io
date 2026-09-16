@@ -3,7 +3,7 @@ type: paper
 title: "Four Ways to Scale Up: Smart, Dumb, Forced, and Fumbled"
 creator: "Flyvbjerg, Bent"
 status: done
-topics: [civic-infrastructure, engineering]
+topics: [institutions, management]
 url: "https://www.ssrn.com/abstract=3760631"
 inline: true
 ---

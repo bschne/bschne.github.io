@@ -5,6 +5,6 @@ title: "Henri Cartier-Bresson: Interviews and Conversations"
 creator: "Cartier-Bresson, Henri"
 status: done
 url: "https://www.goodreads.com/book/show/33275382-henri-cartier-bresson"
-topics: [information-design]
+topics: [art]
 image: /covers/henri-cartier-bresson.jpg
 ---

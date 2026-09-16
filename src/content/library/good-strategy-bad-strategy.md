@@ -4,7 +4,7 @@ genre: non-fiction
 title: "Good Strategy / Bad Strategy"
 creator: "Rumelt, Richard"
 status: done
-topics: []
+topics: [management]
 image: /covers/good-strategy-bad-strategy.jpg
 url: "https://www.goodreads.com/book/show/11721966-good-strategy-bad-strategy"
 blurb: "Rare refreshingly bs-free business book. Rumelt says good strategy needs a \"Kernel\" of three things: 1. Accurate diagnosis of where you are and what you're trying to solve, 2. guiding policy for dealing with the situation, 3. a set of coherent actions to take to implement the policy. Bad strategy, by contrast, refuses to face and engage with reality, is indecisive about actions and tries to do everything at once, and sets arbitrary goals instead of figuring out how to achieve them. A bit snarky in tone, a bit long-winded in the last third, but really insightful."

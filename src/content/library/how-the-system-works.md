@@ -3,7 +3,7 @@ type: essay
 title: "How the System Works"
 creator: "Mann, Charles C."
 status: done
-topics: []
+topics: [institutions]
 url: "https://www.thenewatlantis.com/collections/how-the-system-works"
 inline: true
 ---

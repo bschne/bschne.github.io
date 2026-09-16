@@ -5,6 +5,6 @@ title: "Fooled by Randomness: The Hidden Role of Chance in Life and in the Marke
 creator: "Taleb, Nassim Nicholas"
 status: done
 url: "https://www.goodreads.com/book/show/38315.Fooled_by_Randomness"
-topics: []
+topics: [uncertainty]
 image: /covers/fooled-by-randomness.jpg
 ---

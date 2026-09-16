@@ -4,7 +4,7 @@ genre: textbook
 title: "Systems Medicine: Physiological Circuits and the Dynamics of Disease"
 creator: "Alon, Uri"
 status: done
-topics: []
+topics: [biology, systems]
 url: "https://www.goodreads.com/book/show/125381501-systems-medicine"
 inline: true
 starred: true

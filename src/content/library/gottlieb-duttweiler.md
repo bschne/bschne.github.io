@@ -5,7 +5,7 @@ title: "Gottlieb Duttweiler"
 creator: "Riess, Curt"
 status: done
 url: "https://www.goodreads.com/book/show/22359734-gottlieb-duttweiler"
-topics: [civic-infrastructure]
+topics: [management, history, biography]
 inline: true
 ---
 

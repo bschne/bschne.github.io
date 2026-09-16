@@ -3,7 +3,7 @@ type: essay
 title: "What Colour Are Your Bits?"
 creator: "Skala, Matthew"
 status: done
-topics: [engineering, information-design]
+topics: [software]
 url: "https://ansuz.sooke.bc.ca/entry/23"
 inline: true
 ---

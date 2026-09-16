@@ -220,7 +220,7 @@ const label = (t: string) => t.replace(/-/g, '\u00a0');
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0 1.25rem;
+    gap: 0.35rem 1.25rem;
     font-size: var(--text-meta);
     color: var(--color-text-secondary);
   }
@@ -278,17 +278,37 @@ const label = (t: string) => t.replace(/-/g, '\u00a0');
   }
 
   @media (max-width: 560px) {
+    /* the gutter costs more than the alignment buys at this width, so the
+       label stops sharing a line with the chips and becomes a heading over
+       them — set in the label size, which is how the rest of the site marks
+       a group rather than a row */
     .filter-row {
       grid-template-columns: 1fr;
-      gap: 0.15rem;
+      gap: 0.35rem;
+      padding: 0.625rem 0;
     }
+
+    /* stacked, the facets need saying apart; the hairline is the one the
+       rows below already use */
+    .filter-row + .filter-row {
+      border-top: 0.5px solid var(--color-border);
+    }
+
     .filter-label {
       font-size: var(--text-label);
       text-transform: uppercase;
       letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
     }
-    .filter-row-last .filter-label {
-      display: none;
+
+    /* thirteen topics wrap to three lines here, and wrapped lines of links
+       need both leading and somewhere for a thumb to land */
+    .chips {
+      gap: 0.5rem 1.125rem;
+    }
+
+    .chip {
+      padding: 0.15rem 0;
     }
   }
 </style>

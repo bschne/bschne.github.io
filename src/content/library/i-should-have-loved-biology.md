@@ -3,7 +3,7 @@ type: essay
 title: "I Should Have Loved Biology"
 creator: "Somers, James"
 status: done
-topics: [biology, teaching]
+topics: [biology, learning]
 url: "https://jsomers.net/i-should-have-loved-biology/"
 inline: true
 ---

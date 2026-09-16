@@ -2,7 +2,7 @@
 title: "Paper: Algorithmic Nuggets in Content Delivery"
 date: 2024-02-18
 description: "A brief review of a paper outlining the algorithmic problems encountered in building a CDN."
-topics: [engineering, reading]
+topics: [software, reading]
 ---
 
 I might do a better write-up of this at some point, but for now here's a quick note about a fun paper I came across recently. It's by Bruce Maggs & Ramesh Sitaraman and titled [Algorithmic Nuggets in Content Delivery (2016)](https://sci-hub.se/https://doi.org/10.1145/2805789.2805800).

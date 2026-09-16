@@ -5,6 +5,6 @@ title: "The Periodic Table"
 creator: "Levi, Primo"
 status: done
 url: "https://www.goodreads.com/book/show/427282.The_Periodic_Table"
-topics: [biology]
+topics: [history, biography]
 image: /covers/periodic-table.jpg
 ---

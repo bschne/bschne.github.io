@@ -6,7 +6,7 @@ title: "Working"
 creator: "Caro, Robert"
 status: done
 url: "https://www.goodreads.com/en/book/show/43205240-working"
-topics: [writing]
+topics: [writing, biography]
 inline: false
 blurb: "A sort of placeholder semi-memoir while Caro is focused on finishing the fifth volume of his biography of Lyndon B. Johnson before his time runs out. Part memoir, part details of his famously meticulous writing process. One gets the impression of a writer absolutely driven by the compulsion to figure things out, and then driven again to make sure what he found out lands with readers. But the biggest standout, which doesn't seem to occur to Caro himself as anything special, is his immense empathy for his subjects in all their complexity. A great short read, made me finally want to read his (considerably longer) biographies."
 ---

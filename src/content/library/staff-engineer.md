@@ -6,7 +6,7 @@ title: "Staff Engineer: Leadership Beyond the Management Track"
 creator: "Larson, Will"
 status: done
 url: "https://www.goodreads.com/book/show/56481725-staff-engineer"
-topics: [engineering, teaching]
+topics: [management, software]
 inline: true
 ---
 

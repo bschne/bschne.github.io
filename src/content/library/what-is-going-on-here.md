@@ -4,6 +4,7 @@ title: "What's going on here, with this human?"
 creator: "Duncan, Graham"
 status: done
 url: "https://grahamduncan.blog/whats-going-on-here/"
+topics: [management]
 inline: true
 ---
 

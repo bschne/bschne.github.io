@@ -5,7 +5,7 @@ title: "The Laws of Trading: A Trader's Guide to Better Decision-Making for Ever
 creator: "Lebron, Agustin"
 status: done
 url: "https://www.goodreads.com/book/show/42818098-the-laws-of-trading"
-topics: []
+topics: [economics, uncertainty]
 inline: true
 ---
 

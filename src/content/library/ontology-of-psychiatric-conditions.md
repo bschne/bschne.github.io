@@ -4,6 +4,7 @@ title: "Ontology of Psychiatric Conditions"
 creator: "Siskind, Scott Alexander"
 status: done
 url: "https://www.astralcodexten.com/p/ontology-of-psychiatric-conditions-653?utm_source=publication-search"
+topics: [biology]
 inline: true
 ---
 

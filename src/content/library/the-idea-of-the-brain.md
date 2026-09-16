@@ -5,6 +5,7 @@ title: "The Idea of the Brain: A History"
 creator: "Cobb, Matthew"
 status: done
 url: "https://www.goodreads.com/book/show/125979642-the-idea-of-the-brain"
+topics: [biology, history]
 blurb: "The first part, on the history of neuroscience, was great. The middle part, on contemporary research, lacks an overarching framework and turns into a string of disconnected findings. Pleasantly surprised by the outlook at the end, which does a good job summing up larger theoretical questions again."
 ---
 

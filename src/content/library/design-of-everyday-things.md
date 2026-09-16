@@ -5,7 +5,7 @@ title: "The Design of Everyday Things"
 creator: "Norman, Don"
 status: done
 url: "https://www.goodreads.com/book/show/840.The_Design_of_Everyday_Things"
-topics: [information-design, tools]
+topics: [design]
 image: /covers/design-of-everyday-things.jpg
 inline: true
 ---

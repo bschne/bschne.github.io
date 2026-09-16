@@ -5,7 +5,7 @@ title: "Living With Complexity"
 creator: "Norman, Don"
 status: done
 url: "https://www.goodreads.com/book/show/8295595-living-with-complexity"
-topics: [information-design]
+topics: [design, systems]
 image: /covers/living-with-complexity.jpg
 inline: true
 ---
