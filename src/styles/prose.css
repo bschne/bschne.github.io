@@ -217,19 +217,40 @@
 /* an abbreviation the script has taken over; without it the title attribute
    and its tooltip are left alone, so there is nothing to advertise.
 
-   A border, not a dotted text-decoration: the text-decoration version drew
-   nothing at all in Safari 18 while rendering fine in Chrome, and a border
-   has no such disagreement between engines. 2px is also the thinnest dot
-   that survives a high-density screen in a grey this light - at 1px the dots
-   cover half a hairline and the mark vanishes. */
+   Dots drawn as a background, not a dotted text-decoration and not a border:
+   the text-decoration version drew nothing at all in Safari 18 while
+   rendering fine in Chrome, and a border can only sit at the foot of the
+   inline box, which for a serif with a 0.4em descent hangs the mark a long
+   way under a word of capitals and reads as a rule rather than a hint. A
+   background can be placed at a chosen height, so the dots ride just clear
+   of the baseline the way an underline offset would put them, and 1px of
+   them is enough once they are that close.
+
+   The offset is measured from the *top* of the inline box, which is the
+   ascent above the baseline, because that is the metric that moves least
+   between the serif and its fallbacks: 1.14em lands 0.12em under the
+   baseline in Source Serif and 0.22em under it in Georgia, both clear of
+   the descenders. Measured from the bottom the same tuning would strike
+   through the text as soon as the font fell back. */
 .prose abbr[data-note] {
   cursor: help;
   text-decoration: none;
-  border-bottom: 2px dotted var(--color-text-tertiary);
+  background-image: linear-gradient(
+    to right,
+    var(--color-text-tertiary) 0 1px,
+    transparent 1px 3px
+  );
+  background-size: 3px 1px;
+  background-position: 0 1.14em;
+  background-repeat: repeat-x;
 }
 
 .prose abbr[data-note]:hover {
-  border-bottom-color: var(--color-accent);
+  background-image: linear-gradient(
+    to right,
+    var(--color-accent) 0 1px,
+    transparent 1px 3px
+  );
 }
 
 .prose .footnotes:not(.sr-only) {
