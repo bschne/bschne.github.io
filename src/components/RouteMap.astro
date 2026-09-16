@@ -332,14 +332,32 @@ const aspect = Math.min(2.2, Math.max(1.2, span.y > 0 ? span.x / span.y : 1.6));
   /* On a narrow column the numbers, the name and the cue stop fitting on one
      line. The numbers keep the first row on their own; the name drops under
      them with the cue at its end. */
+  /* On a narrow column the numbers, the name and the cue stop fitting on one
+     line, so the left of the bar becomes two rows — numbers over name — and
+     the cue takes a column of its own, centred against both. A column rather
+     than a wrapped flex item because the cue must not be what wraps: it is
+     the thing being reached for, and it should sit in the same place on every
+     one of these bars regardless of how long a route's name is. */
   @media (max-width: 640px) {
     .route-map-summary {
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: 1rem;
       row-gap: 0.3rem;
     }
 
     .route-map-stats {
-      flex-basis: 100%;
+      grid-area: 1 / 1;
+    }
+
+    .route-map-name {
+      grid-area: 2 / 1;
+    }
+
+    .route-map-cue {
+      grid-area: 1 / 2 / 3 / 3;
+      margin-left: 0;
     }
   }
 
@@ -348,12 +366,25 @@ const aspect = Math.min(2.2, Math.max(1.2, span.y > 0 ? span.x / span.y : 1.6));
      controls are set in — has to be said here rather than on that class. */
   .route-map-canvas {
     aspect-ratio: var(--map-aspect, 1.6);
-    /* on a phone the aspect ratio alone would leave a letterbox too short to
-       read a route in */
-    min-height: 16rem;
     background: var(--color-bg-secondary);
     font-family: var(--font-sans);
     font-size: var(--text-label);
+  }
+
+  /* The letterbox a long route asks for is unreadable at phone width. A
+     min-height cannot be the answer: with an aspect-ratio set, a minimum in
+     one axis transfers back through the ratio into a minimum in the other, so
+     `min-height: 16rem` on a 2.2 ratio quietly means `min-width: 35.2rem` and
+     pushes the map out past the right edge of a narrow column. Squaring the
+     box up says the same thing in the axis that is actually free.
+
+     It has to sit after the rule above rather than with the rest of the
+     narrow-column layout: same specificity, so source order is the only thing
+     deciding which of the two aspect ratios wins. */
+  @media (max-width: 640px) {
+    .route-map-canvas {
+      aspect-ratio: min(var(--map-aspect, 1.6), 1.35);
+    }
   }
 
   /* a caption to the map, sized to the summary above it rather than to the
