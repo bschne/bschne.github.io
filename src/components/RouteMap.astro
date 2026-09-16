@@ -1,0 +1,456 @@
+---
+/*
+  A walk, folded up.
+
+  Collapsed — which is how it always starts — the component is one line: where
+  the route goes and the three numbers that say what it costs. That is what a
+  reader mid-paragraph actually wants, and it costs the page nothing: the GPX
+  is read at build time, so what ships is the numbers, a few kilobytes of
+  polyline and no map library at all until someone opens it.
+
+  Opened, the polyline is drawn in the accent over a tile basemap. Which
+  basemap is a name from lib/basemaps.ts and nothing here knows more about it
+  than that, so putting the route on a different service is changing one prop.
+
+  It renders as a <figure> — self-contained content the paragraphs point at —
+  but not one that bleeds: prose.css hands the extra width to photographs,
+  which are looked at, and this is read, so it stays on the measure.
+*/
+import { parseGpx } from '../lib/gpx';
+import { basemaps, defaultBasemap, type BasemapId } from '../lib/basemaps';
+
+interface Props {
+  /** file name, without extension, under src/data/routes */
+  route: string;
+  basemap?: BasemapId;
+  /**
+   * Overrides the name in the GPX metadata. Worth giving whenever `reverse`
+   * is set, since that name will be stating the other direction.
+   */
+  label?: string;
+  /** the track is published the opposite way round to the way it was walked */
+  reverse?: boolean;
+  /** where the track came from — a licence usually asks for this */
+  source?: string;
+}
+
+const { route, basemap: basemapId = defaultBasemap, label, source, reverse } = Astro.props;
+
+// eager and build-time: the GPX never reaches the browser
+const files = import.meta.glob<string>('../data/routes/*.gpx', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+const xml = files[`../data/routes/${route}.gpx`];
+if (!xml) throw new Error(`No GPX file at src/data/routes/${route}.gpx`);
+
+const parsed = parseGpx(xml, { reverse });
+const basemap = basemaps[basemapId];
+const name = label ?? parsed.name ?? route;
+// named by host and marked with the arrow, the way LibraryRow.astro names an
+// external source — one convention for off-site links across the site
+const sourceHost = source ? new URL(source).hostname.replace(/^www\./, '') : null;
+
+const number = new Intl.NumberFormat('en-GB');
+const km = (parsed.distance / 1000).toFixed(1);
+// the climb figures come out of a threshold, not a survey; a metre of
+// precision on them would be a claim the number cannot support
+const metres = (m: number) => number.format(Math.round(m / 10) * 10);
+
+/* Everything the client script needs, and nothing it can derive. */
+const data = {
+  segments: parsed.segments,
+  bounds: parsed.bounds,
+  tiles: { url: basemap.url, attribution: basemap.attribution, maxZoom: basemap.maxZoom,
+           subdomains: basemap.subdomains },
+};
+
+/* `<` escaped, so that an attribution string holding markup can never close
+   the script tag it is sitting inside. Still valid JSON. */
+const payload = JSON.stringify(data).replace(/</g, '\\u003c');
+
+/* How wide the route is against how tall, so the map opens at roughly the
+   shape of the walk rather than at some fixed letterbox. Clamped: a there-and
+   -back along one valley would otherwise ask for a map twelve times as wide
+   as it is high, and a summit day for a square one. */
+const [[south, west], [north, east]] = parsed.bounds;
+const mercator = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
+const span = {
+  x: (east - west) * (Math.PI / 180),
+  y: mercator(north) - mercator(south),
+};
+const aspect = Math.min(2.2, Math.max(1.2, span.y > 0 ? span.x / span.y : 1.6));
+---
+
+<figure class="route-map">
+  <details class="route-map-fold">
+    <summary class="route-map-summary">
+      <span class="route-map-stats">
+        <span class="route-map-stat">
+          <span class="route-map-value">{km}</span> km
+        </span>
+        <span class="route-map-stat">
+          <span aria-hidden="true">&uarr;</span><span class="sr-only">Ascent</span>
+          <span class="route-map-value">{metres(parsed.ascent)}</span> m
+        </span>
+        <span class="route-map-stat">
+          <span aria-hidden="true">&darr;</span><span class="sr-only">Descent</span>
+          <span class="route-map-value">{metres(parsed.descent)}</span> m
+        </span>
+      </span>
+      <span class="route-map-name">{name}</span>
+      {/* both labels ship; which one shows is the fold's own state, so nothing
+          has to run for the cue to be right. They are stacked in one grid cell
+          rather than swapped in and out, so the cue is always as wide as the
+          longer of the two and opening the fold moves nothing on the line. */}
+      <span class="route-map-cue">
+        <span class="route-map-cue-label">
+          <span class="route-map-cue-closed">Show map</span>
+          <span class="route-map-cue-open">Hide map</span>
+        </span>
+        <svg class="route-map-chevron" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 9l7 7 7-7" />
+        </svg>
+      </span>
+    </summary>
+
+    {/* --tile-dark: the basemap's own answer to a dark page, inherited from
+        here down into the tile pane; see the theme rules in the style block */}
+    <div
+      class="route-map-canvas"
+      style={`--map-aspect:${aspect.toFixed(2)};${basemap.dark ? `--tile-dark:${basemap.dark};` : ''}`}
+    >
+      <p class="route-map-nojs">The map needs JavaScript.</p>
+    </div>
+
+    {/* under the map and inside the fold, next to the basemap's own credit in
+        the corner of the map: both are claims about what is on screen, so
+        neither is made while there is nothing on screen to claim it for. A <p>
+        rather than a <figcaption>, which may only be the figure's own child. */}
+    {source && (
+      <p class="route-map-credit">
+        Route from <a href={source} target="_blank" rel="noopener">&#8599; {sourceHost}</a>
+      </p>
+    )}
+
+    <script type="application/json" set:html={payload} />
+  </details>
+</figure>
+
+<script>
+  import 'leaflet/dist/leaflet.css';
+  import type { Map as LeafletMap } from 'leaflet';
+
+  interface RouteData {
+    segments: [number, number][][];
+    bounds: [[number, number], [number, number]];
+    tiles: { url: string; attribution: string; maxZoom: number; subdomains?: string };
+  }
+
+  async function draw(fold: HTMLDetailsElement) {
+    const canvas = fold.querySelector<HTMLElement>('.route-map-canvas');
+    const json = fold.querySelector<HTMLScriptElement>('script[type="application/json"]');
+    if (!canvas || !json) return;
+    const route = JSON.parse(json.textContent!) as RouteData;
+
+    const L = (await import('leaflet')).default;
+    canvas.querySelector('.route-map-nojs')?.remove();
+
+    const map: LeafletMap = L.map(canvas, {
+      // a map in the middle of an essay must not eat the page's scroll; the
+      // zoom buttons, a double click and a pinch all still work
+      scrollWheelZoom: false,
+      zoomControl: true,
+      attributionControl: true,
+    });
+    map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+
+    L.tileLayer(route.tiles.url, {
+      attribution: route.tiles.attribution,
+      maxZoom: route.tiles.maxZoom,
+      maxNativeZoom: route.tiles.maxZoom,
+      subdomains: route.tiles.subdomains ?? 'abc',
+      // on a dense screen, ask for one zoom level further in than is being
+      // shown and draw it at half size — the service has no @2x tiles, and a
+      // 256px raster otherwise looks soft. It costs a zoom level at the far
+      // end, which is metres-per-pixel on a walk and no loss at all.
+      detectRetina: true,
+    }).addTo(map);
+
+    // the line is drawn twice: a casing in the page's own background colour
+    // so the route stays legible where it crosses a mess of contour lines,
+    // then the accent over it. Both take their colour from the stylesheet
+    // rather than from an option here, so they follow a change of theme.
+    for (const segment of route.segments) {
+      L.polyline(segment, { className: 'route-line-casing', weight: 6, interactive: false }).addTo(map);
+      L.polyline(segment, {
+        className: 'route-line',
+        weight: 2.5,
+        lineJoin: 'round',
+        lineCap: 'round',
+        interactive: false,
+      }).addTo(map);
+    }
+
+    const first = route.segments[0][0];
+    const last = route.segments.at(-1)!.at(-1)!;
+    // the summary says the walk runs Memurubu to Gjendesheim; these say which
+    // end of the line is which
+    const dot = (at: [number, number], className: string, title: string) =>
+      L.circleMarker(at, { className, radius: 4, weight: 2 }).addTo(map).bindTooltip(title);
+    dot(first, 'route-dot route-dot-start', 'Start');
+    dot(last, 'route-dot route-dot-end', 'Finish');
+
+    map.fitBounds(route.bounds, { padding: [20, 20] });
+
+    // the container only got its size when the fold opened, and it changes
+    // again with the window
+    map.invalidateSize();
+    new ResizeObserver(() => map.invalidateSize()).observe(canvas);
+  }
+
+  for (const fold of document.querySelectorAll<HTMLDetailsElement>('.route-map-fold')) {
+    let drawn = false;
+    const once = () => {
+      if (drawn || !fold.open) return;
+      drawn = true;
+      // one frame, so the fold's box exists before Leaflet measures it
+      requestAnimationFrame(() => draw(fold));
+    };
+    fold.addEventListener('toggle', once);
+    once();
+  }
+</script>
+
+<style>
+  /* the width and the caption come from .prose > figure in prose.css */
+  .route-map-fold {
+    border-top: 0.5px solid var(--color-border);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  /* only once there is something under the summary to keep off the rule */
+  .route-map-fold[open] {
+    padding-bottom: 0.6rem;
+  }
+
+  .route-map-summary {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding: 0.6rem 0;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    list-style: none;
+  }
+
+  .route-map-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* The numbers lead the line, because they are what the fold is standing in
+     for. Each takes a column wide enough for any figure a day's walk produces,
+     so they line up down a page of them and — the reason for the fixed width —
+     so nothing on the line shifts when a digit or a label changes. */
+  .route-map-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .route-map-stat {
+    min-width: 4rem;
+    white-space: nowrap;
+  }
+
+  /* the name is a label on the numbers, not a heading: caption grey, and the
+     same weight as everything else on the line */
+  .route-map-name {
+    min-width: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .route-map-value {
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* the affordance, a tier quieter than the numbers until you reach for it,
+     held at the far end of the line */
+  .route-map-cue {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-left: auto;
+    color: var(--color-text-tertiary);
+  }
+
+  /* one cell, both labels: the span is as wide as the longer of the two
+     whichever is showing, so the caret does not walk left and right */
+  .route-map-cue-label {
+    display: grid;
+  }
+
+  .route-map-cue-label > span {
+    grid-area: 1 / 1;
+  }
+
+  .route-map-summary:hover .route-map-cue {
+    color: var(--color-accent);
+  }
+
+  .route-map-cue-open,
+  .route-map-fold[open] .route-map-cue-closed {
+    visibility: hidden;
+  }
+
+  .route-map-fold[open] .route-map-cue-open {
+    visibility: visible;
+  }
+
+  .route-map-chevron {
+    flex: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.15s ease;
+  }
+
+  .route-map-fold[open] .route-map-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* On a narrow column the numbers, the name and the cue stop fitting on one
+     line. The numbers keep the first row on their own; the name drops under
+     them with the cue at its end. */
+  @media (max-width: 640px) {
+    .route-map-summary {
+      flex-wrap: wrap;
+      row-gap: 0.3rem;
+    }
+
+    .route-map-stats {
+      flex-basis: 100%;
+    }
+  }
+
+  /* Leaflet takes this element over and adds .leaflet-container to it, so
+     everything it needs from the page — its size, its ground, the type its
+     controls are set in — has to be said here rather than on that class. */
+  .route-map-canvas {
+    aspect-ratio: var(--map-aspect, 1.6);
+    /* on a phone the aspect ratio alone would leave a letterbox too short to
+       read a route in */
+    min-height: 16rem;
+    background: var(--color-bg-secondary);
+    font-family: var(--font-sans);
+    font-size: var(--text-label);
+  }
+
+  /* a caption to the map, sized to the summary above it rather than to the
+     prose figcaptions elsewhere on the page — inside the fold, --text-meta is
+     the register — and a step quieter, the way a credit should be */
+  .route-map-credit {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-meta);
+    color: var(--color-text-tertiary);
+  }
+
+  /* the arrow is what says the link leaves the site, so it does the work an
+     underline would — as on a library row */
+  .route-map-credit a {
+    text-decoration: none;
+  }
+
+  .route-map-nojs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-meta);
+    color: var(--color-text-tertiary);
+  }
+
+  /* ── the map itself ──────────────────────────────────────
+     Leaflet builds these nodes at runtime, so they are out of reach of the
+     scoping and have to be named global. */
+
+  .route-map-canvas :global(.route-line) {
+    stroke: var(--color-accent);
+  }
+
+  .route-map-canvas :global(.route-line-casing) {
+    stroke: var(--color-bg);
+    stroke-opacity: 0.6;
+  }
+
+  .route-map-canvas :global(.route-dot) {
+    stroke: var(--color-accent);
+  }
+
+  .route-map-canvas :global(.route-dot-start) {
+    fill: var(--color-bg);
+    fill-opacity: 1;
+  }
+
+  .route-map-canvas :global(.route-dot-end) {
+    fill: var(--color-accent);
+    fill-opacity: 1;
+  }
+
+  .route-map-canvas :global(.leaflet-bar a),
+  .route-map-canvas :global(.leaflet-control-attribution) {
+    background: var(--color-bg);
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+  }
+
+  .route-map-canvas :global(.leaflet-bar a:hover) {
+    background: var(--color-bg-secondary);
+    color: var(--color-accent);
+  }
+
+  .route-map-canvas :global(.leaflet-control-attribution a) {
+    color: var(--color-text-secondary);
+  }
+
+  /* left to itself this is a white box, which on a dark page is a flare */
+  .route-map-canvas :global(.leaflet-tooltip) {
+    background: var(--color-bg);
+    border-color: var(--color-border);
+    color: var(--color-text-secondary);
+    box-shadow: none;
+  }
+
+  .route-map-canvas :global(.leaflet-tooltip-top::before) {
+    border-top-color: var(--color-border);
+  }
+
+  /* A tile service ships one set of tiles, drawn for white paper. A greyscale
+     map inverts into a credible night version of itself; one with colour in it
+     does not, so whether there is anything to apply here is the basemap's call
+     (--tile-dark, set on the canvas) and not this rule's. The two selectors
+     are the same pair tokens.css uses: the system setting unless a theme has
+     been pinned, and then the pinned one. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .route-map-canvas :global(.leaflet-tile-pane) {
+      filter: var(--tile-dark, none);
+    }
+  }
+
+  :root[data-theme='dark'] .route-map-canvas :global(.leaflet-tile-pane) {
+    filter: var(--tile-dark, none);
+  }
+</style>

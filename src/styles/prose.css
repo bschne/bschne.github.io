@@ -142,8 +142,12 @@
 
 /* a lone image bleeds past the column: never less than the 120% (816px) that
    the ToC rail is sized around, growing with the viewport up to the cap once
-   the window is wide enough to give it away for free */
-.prose > figure:not(.figure-pair) {
+   the window is wide enough to give it away for free.
+
+   Only an image, though. A figure the reader has to read rather than look at —
+   the route map — is held to the measure like the prose it interrupts, so
+   .route-map is out of both the bleed and the reset below it. */
+.prose > figure:not(.figure-pair):not(.route-map) {
   --bleed: max(120%, min(var(--prose-bleed-max), calc(100vw - var(--scrollbar-w) - var(--prose-bleed-gutter))));
   width: var(--bleed);
   max-width: none;
@@ -151,7 +155,7 @@
 }
 
 @media (max-width: 680px) {
-  .prose > figure:not(.figure-pair) {
+  .prose > figure:not(.figure-pair):not(.route-map) {
     width: auto;
     max-width: 100%;
     margin-inline: 0;
