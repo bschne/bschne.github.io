@@ -1,16 +1,16 @@
+// en-GB abbreviates September as "Sept" and every other month with three
+// letters, so the list is spelled out here rather than left to the runtime.
+const MONTHS = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+];
+
 export function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-GB', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+  return `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
 
 export function formatDateShort(date: Date): string {
-  return date.toLocaleDateString('en-GB', {
-    year: 'numeric',
-    month: 'short',
-  });
+  return `${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
 
 export function jekyllPath(date: Date, id: string): string {
