@@ -8,7 +8,7 @@ url: "https://www.ssrn.com/abstract=3760631"
 inline: true
 ---
 
-How do you succesfully achieve large-scale ventures? According to Flyvbjerg, you make them modular (instead of turning each part into a bespoke subproject) and you go fast.
+How do you successfully achieve large-scale ventures? According to Flyvbjerg, you make them modular (instead of turning each part into a bespoke subproject) and you go fast.
 Modularity enables learning curves (each module you roll out makes you better at rolling out the next),
 allows you to experiment cheaply on some of the modules (which in turn feeds back as learning),
 and delivers value incrementally.
