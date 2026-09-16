@@ -441,6 +441,14 @@ const aspect = Math.min(2.2, Math.max(1.2, span.y > 0 ? span.x / span.y : 1.6));
     fill-opacity: 1;
   }
 
+  /* The zoom buttons are <a>s, so prose.css underlines them, and an underline
+     under a `+` at that size reads as a second glyph. Leaflet says
+     `text-decoration: none` for them itself, but at the same specificity, and
+     the page's stylesheet comes later. */
+  .route-map-canvas :global(.leaflet-bar a) {
+    text-decoration: none;
+  }
+
   .route-map-canvas :global(.leaflet-bar a),
   .route-map-canvas :global(.leaflet-control-attribution) {
     background: var(--color-bg);
