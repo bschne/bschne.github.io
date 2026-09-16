@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "Schleps, Puzzles, and Packages: Solving Complex Problems the Iron Man Way"
 creator: "Rao, Venkatesh"
 status: done

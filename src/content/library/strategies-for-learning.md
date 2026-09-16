@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "Strategies for learning"
 creator: "Masley, Andy"
 status: done

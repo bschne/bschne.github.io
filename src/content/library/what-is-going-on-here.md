@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "What's going on here, with this human?"
 creator: "Duncan, Graham"
 status: done

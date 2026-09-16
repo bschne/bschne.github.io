@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "How the System Works"
 creator: "Mann, Charles C."
 status: done

@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "What Is Code?"
 creator: "Ford, Paul"
 status: done

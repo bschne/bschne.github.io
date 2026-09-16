@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "Reality Has a Surprising Amount of Detail"
 creator: "Salvatier, John"
 status: done

@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "The Tyranny of Structurelessness"
 creator: "Freeman, Jo"
 status: done

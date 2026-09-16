@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "I Should Have Loved Biology"
 creator: "Somers, James"
 status: done

@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "Ontology of Psychiatric Conditions"
 creator: "Siskind, Scott Alexander"
 status: done

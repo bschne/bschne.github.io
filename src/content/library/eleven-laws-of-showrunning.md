@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "The Eleven Laws of Showrunning"
 creator: "Grillo-Marxuach, Javier"
 status: done

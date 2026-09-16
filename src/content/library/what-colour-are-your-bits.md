@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "What Colour Are Your Bits?"
 creator: "Skala, Matthew"
 status: done

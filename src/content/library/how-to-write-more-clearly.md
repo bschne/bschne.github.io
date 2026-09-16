@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "How to Write More Clearly, Think More Clearly, and Learn Complex Material More Easily"
 creator: "Covington, Michael A."
 status: done

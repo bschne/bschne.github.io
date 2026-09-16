@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "Stop Aggregating Away the Signal in Your Data"
 creator: "Armstrong, Zan"
 status: done

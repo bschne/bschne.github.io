@@ -2,9 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import '../../styles/prose.css';
+import { creatorShort } from '../../lib/creators';
 
 export async function getStaticPaths() {
-  const RESERVED = new Set(['list', 'books', 'papers', 'podcasts', 'films', 'courses']);
+  const RESERVED = new Set(['list', 'books', 'papers', 'essays', 'podcasts', 'films', 'courses']);
   const items = await getCollection('library');
   return items
     .filter(item => {
@@ -24,10 +25,10 @@ const { Content, headings } = await render(item);
 const hasBody = item.body && item.body.trim().length > 0;
 
 const typeLabel: Record<string, string> = {
-  book: 'book', paper: 'paper', podcast: 'podcast', film: 'film', course: 'course',
+  book: 'book', paper: 'paper', essay: 'essay', podcast: 'podcast', film: 'film', course: 'course',
 };
 
-const description = `Notes on ${title} by ${creator}.`;
+const description = `Notes on ${title} by ${creatorShort(creator)}.`;
 ---
 
 <Base title={title} description={description}>

@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import { formatDateShort } from '../lib/dates';
+import { creatorShort } from '../lib/creators';
 
 interface Props {
   item: CollectionEntry<'library'>;
@@ -24,7 +25,7 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
     <div class="row-main">
       <span class="row-title">
         {title}{starred && <span class="row-star" aria-label="recommended">★</span>}
-        <span class="row-creator"> · {creator.split(';')[0]}</span>
+        <span class="row-creator"> · {creatorShort(creator)}</span>
         <a href={`#${slug}`} class="row-anchor" aria-label={`Link to ${title}`}>#</a>
       </span>
       <span class="row-right">

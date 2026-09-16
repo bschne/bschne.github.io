@@ -1,5 +1,5 @@
 ---
-type: paper
+type: essay
 title: "The Bitter Lesson"
 creator: "Sutton, Rich"
 status: done

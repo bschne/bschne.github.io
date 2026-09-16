@@ -18,7 +18,7 @@ const writing = defineCollection({
 const library = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/library' }),
   schema: z.object({
-    type: z.enum(['book', 'paper', 'podcast', 'film', 'course']),
+    type: z.enum(['book', 'paper', 'essay', 'podcast', 'film', 'course']),
     title: z.string(),
     creator: z.string(),
     date: z.coerce.date().optional(),

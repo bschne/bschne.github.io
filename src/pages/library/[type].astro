@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import LibraryRow from '../../components/LibraryRow.astro';
 import { getCollection } from 'astro:content';
 
-const ALL_ROUTES = ['books', 'fiction', 'non-fiction', 'textbooks', 'papers', 'podcasts', 'films', 'courses'] as const;
+const ALL_ROUTES = ['books', 'fiction', 'non-fiction', 'textbooks', 'papers', 'essays', 'podcasts', 'films', 'courses'] as const;
 type TypeRoute = typeof ALL_ROUTES[number];
 
 type RouteConfig = { type: string; genre?: string };
@@ -13,13 +13,14 @@ const routeMap: Record<TypeRoute, RouteConfig> = {
   'non-fiction': { type: 'book', genre: 'non-fiction' },
   textbooks:    { type: 'book', genre: 'textbook' },
   papers:       { type: 'paper' },
+  essays:       { type: 'essay' },
   podcasts:     { type: 'podcast' },
   films:        { type: 'film' },
   courses:      { type: 'course' },
 };
 
 export async function getStaticPaths() {
-  return ['books', 'fiction', 'non-fiction', 'textbooks', 'papers', 'podcasts', 'films', 'courses'].map(type => ({ params: { type } }));
+  return ['books', 'fiction', 'non-fiction', 'textbooks', 'papers', 'essays', 'podcasts', 'films', 'courses'].map(type => ({ params: { type } }));
 }
 
 const { type } = Astro.params as { type: TypeRoute };
@@ -48,7 +49,7 @@ const nowItems = items.filter(i => i.data.status === 'now');
 const restItems = items.filter(i => i.data.status !== 'now');
 
 const isBookRoute = type === 'books' || type === 'fiction' || type === 'non-fiction' || type === 'textbooks';
-const mainTypes = ['books', 'papers', 'podcasts', 'films', 'courses'] as const;
+const mainTypes = ['books', 'papers', 'essays', 'podcasts', 'films', 'courses'] as const;
 const bookGenres = ['fiction', 'non-fiction', 'textbooks'] as const;
 ---
 
