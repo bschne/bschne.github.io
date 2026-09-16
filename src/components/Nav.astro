@@ -148,4 +148,37 @@ const isHome = Astro.url.pathname === '/';
   .icon-sun {
     display: var(--icon-sun);
   }
+
+  /* Narrow enough that name and links can no longer share a line: rather than
+     let the name wrap mid-word, give each its own row and keep the toggle in
+     the top-right corner, level with the first line of the name. */
+  @media (max-width: 32.5rem) {
+    .site-nav {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      row-gap: 0.375rem;
+    }
+
+    .site-nav-left {
+      display: contents;
+    }
+
+    .site-nav-name {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .site-nav-links {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .theme-toggle {
+      grid-column: 2;
+      grid-row: 1;
+      /* centre the icon on the name's cap height rather than on the row */
+      margin-top: -0.125rem;
+    }
+  }
 </style>
