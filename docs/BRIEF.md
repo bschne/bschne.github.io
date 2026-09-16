@@ -45,7 +45,9 @@ A design and implementation brief for rebuilding the personal site at [benjamins
 /writing/tag/[tag]/     tag page (e.g. /writing/tag/information-design/)
 /library/               all items, default grid view
 /library/list/          list view
-/library/[type]/        filtered by type (books, papers, podcasts, films, courses)
+/library/[type]/        filtered by type (books, papers, essays, podcasts, films, courses)
+/library/topic/[topic]/ filtered by topic
+/library/starred/       the starred items
 /library/[slug]/        individual note page
 /projects/              all projects
 /projects/[slug]/       individual project page
@@ -256,7 +258,9 @@ Per-type tile rendering:
 
 **List view.** Three columns: `type-label | title (linked if notes) · creator | date/status`. Useful for ctrl-F and scanning.
 
-**Filter nav.** `all · books · papers · podcasts · films · courses`. Filters by route (`/library/books/` etc.), not client-side — keeps things simple and bookmarkable.
+**Filter nav.** Three facets — type (`all · books · papers · essays · podcasts · films · courses`, with a genre row under books), topic, and a starred toggle. Each facet has its own route (`/library/books`, `/library/topic/biology`, `/library/starred`) and each route renders server-side, so a single facet is bookmarkable and works without JS. Combinations of facets have no route to live in, so the bar is also a set of client-side toggles over the full list, with the combination kept in the query string (`/library?type=book&topic=biology&starred=1`) — still bookmarkable, which was the point of preferring routes in the first place.
+
+**The star.** `starred: true` marks the far end of the range the library covers — the handful that changed how I view the world rather than merely being worth reading. That is not inferable from a `★` next to a title, so the library page says it in the line under the heading.
 
 **No ratings.** Explicit decision. Ratings flatten; notes convey what's worth knowing.
 

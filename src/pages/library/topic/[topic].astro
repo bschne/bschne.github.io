@@ -1,0 +1,17 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LibraryList from '../../../components/LibraryList.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('library');
+  const topics = [...new Set(items.flatMap(i => i.data.topics))];
+  return topics.map(topic => ({ params: { topic }, props: { topic } }));
+}
+
+const { topic } = Astro.props;
+---
+
+<Base title={`Library — ${topic.replace(/-/g, ' ')}`}>
+  <LibraryList filter={{ topic }} />
+</Base>

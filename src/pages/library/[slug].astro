@@ -3,9 +3,11 @@ import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import '../../styles/prose.css';
 import { creatorShort } from '../../lib/creators';
+import { FILTER_ROUTES } from '../../lib/library';
 
 export async function getStaticPaths() {
-  const RESERVED = new Set(['list', 'books', 'papers', 'essays', 'podcasts', 'films', 'courses']);
+  /* the filter routes share this path segment; they win it */
+  const RESERVED = new Set(['list', 'topic', ...Object.keys(FILTER_ROUTES)]);
   const items = await getCollection('library');
   return items
     .filter(item => {

@@ -7,10 +7,12 @@ import { creatorShort } from '../lib/creators';
 interface Props {
   item: CollectionEntry<'library'>;
   hasNote: boolean;
+  /* filtered out by the server render; the filter script toggles it after */
+  hidden?: boolean;
 }
 
-const { item, hasNote } = Astro.props;
-const { type, title, creator, status, starred, date, url, blurb, inline } = item.data;
+const { item, hasNote, hidden = false } = Astro.props;
+const { type, title, creator, status, starred, date, url, blurb, inline, genre, topics } = item.data;
 const slug = item.id.replace(/\.mdx?$/, '');
 const sourceHostname = url ? new URL(url).hostname.replace(/^www\./, '') : null;
 const noteHref = hasNote ? `/library/${slug}` : null;
@@ -19,7 +21,16 @@ const dateLabel = status === 'ongoing' ? 'ongoing' : date ? formatDateShort(date
 const { Content } = inline && item.body ? await render(item) : { Content: null };
 ---
 
-<li class="row" id={slug}>
+<li
+  class="row"
+  id={slug}
+  hidden={hidden}
+  data-lib-row
+  data-type={type}
+  data-genre={genre}
+  data-topics={topics.join(' ')}
+  data-starred={String(starred)}
+>
   <span class="row-type">{type === 'podcast' ? 'pod' : type}</span>
   <div class="row-body">
     <div class="row-main">
@@ -58,6 +69,11 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
     align-items: baseline;
     font-size: var(--text-meta);
     scroll-margin-top: 2rem;
+  }
+
+  /* the UA's [hidden] rule loses to the display above, so say it here */
+  .row[hidden] {
+    display: none;
   }
 
   /* the same accent bar the Now section wears, over a wash of the same colour;

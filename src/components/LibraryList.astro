@@ -1,0 +1,412 @@
+---
+import LibraryRow from './LibraryRow.astro';
+import { getCollection } from 'astro:content';
+import type { LibraryFilter } from '../lib/library';
+
+interface Props {
+  /* applied server-side, so a filter route renders correct without JS;
+     the script takes over from here and makes the three facets combinable */
+  filter?: LibraryFilter;
+}
+
+const { filter = {} } = Astro.props;
+
+const allItems = await getCollection('library');
+allItems.sort((a, b) => {
+  if (a.data.status === 'ongoing' && b.data.status !== 'ongoing') return -1;
+  if (b.data.status === 'ongoing' && a.data.status !== 'ongoing') return 1;
+  return a.data.creator.localeCompare(b.data.creator);
+});
+
+const itemsWithNotes = new Set(
+  allItems.filter(i => i.body && i.body.trim().length > 0 && !i.data.inline).map(i => i.id)
+);
+
+const matches = (d: (typeof allItems)[number]['data']) =>
+  (!filter.type || d.type === filter.type) &&
+  (!filter.genre || d.genre === filter.genre) &&
+  (!filter.topic || d.topics.includes(filter.topic)) &&
+  (!filter.starred || d.starred);
+
+const nowItems = allItems.filter(i => i.data.status === 'now');
+const restItems = allItems.filter(i => i.data.status !== 'now');
+
+const total = allItems.length;
+const shown = allItems.filter(i => matches(i.data)).length;
+const anyFilter = Boolean(filter.type || filter.genre || filter.topic || filter.starred);
+
+const TYPES = [
+  { value: '', label: 'all', href: '/library' },
+  { value: 'book', label: 'books', href: '/library/books' },
+  { value: 'paper', label: 'papers', href: '/library/papers' },
+  { value: 'essay', label: 'essays', href: '/library/essays' },
+  { value: 'podcast', label: 'podcasts', href: '/library/podcasts' },
+  { value: 'film', label: 'films', href: '/library/films' },
+  { value: 'course', label: 'courses', href: '/library/courses' },
+];
+
+const GENRES = [
+  { value: '', label: 'all', href: '/library/books' },
+  { value: 'fiction', label: 'fiction', href: '/library/fiction' },
+  { value: 'non-fiction', label: 'non-fiction', href: '/library/non-fiction' },
+  { value: 'textbook', label: 'textbooks', href: '/library/textbooks' },
+];
+
+/* the topics the shelf actually uses, rather than the ones the brief planned */
+const topics = [...new Set(allItems.flatMap(i => i.data.topics))].sort();
+/* a two-word topic is one chip, so it breaks nowhere */
+const label = (t: string) => t.replace(/-/g, '\u00a0');
+---
+
+<main class="page-wrap" data-library>
+  <header class="library-header">
+    <h1>Library</h1>
+    <p class="library-desc">
+      Books and other pieces I enjoyed. Inclusion can mean anything from "this is worth checking out" to "this completely
+      changed how I view the world".
+    </p>
+    <p class="library-desc">
+      Particularly great ones are marked with an <span class="desc-star">★</span>.
+    </p>
+
+    <nav class="filters" aria-label="Filter the library">
+      <div class="filter-row">
+        <span class="filter-label">type</span>
+        <div class="chips">
+          {TYPES.map(t => (
+            <a
+              href={t.href}
+              class:list={['chip', { 'is-active': (filter.type ?? '') === t.value }]}
+              aria-current={(filter.type ?? '') === t.value ? 'true' : undefined}
+              data-facet="type"
+              data-value={t.value}
+            >{t.label}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-row" data-genre-row hidden={filter.type !== 'book'}>
+        <span class="filter-label">genre</span>
+        <div class="chips">
+          {GENRES.map(g => (
+            <a
+              href={g.href}
+              class:list={['chip', { 'is-active': (filter.genre ?? '') === g.value }]}
+              aria-current={(filter.genre ?? '') === g.value ? 'true' : undefined}
+              data-facet="genre"
+              data-value={g.value}
+            >{g.label}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">topic</span>
+        <div class="chips">
+          <a
+            href="/library"
+            class:list={['chip', { 'is-active': !filter.topic }]}
+            aria-current={!filter.topic ? 'true' : undefined}
+            data-facet="topic"
+            data-value=""
+          >all</a>
+          {topics.map(t => (
+            <a
+              href={`/library/topic/${t}`}
+              class:list={['chip', { 'is-active': filter.topic === t }]}
+              aria-current={filter.topic === t ? 'true' : undefined}
+              data-facet="topic"
+              data-value={t}
+            >{label(t)}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-row filter-row-last">
+        <span class="filter-label">starred</span>
+        <div class="chips">
+          <a
+            href={filter.starred ? '/library' : '/library/starred'}
+            class:list={['chip', 'chip-star', { 'is-active': filter.starred }]}
+            aria-current={filter.starred ? 'true' : undefined}
+            data-facet="starred"
+            data-value="1"
+          >★ starred only</a>
+          <span class="filter-count" data-filter-count>
+            {anyFilter ? `${shown} of ${total}` : `${total} items`}
+          </span>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <p class="empty" data-empty hidden={shown > 0}>Nothing matches those filters.</p>
+
+  {nowItems.length > 0 && (
+    <section class="now-section">
+      <h2 class="now-heading">Now</h2>
+      <ul class="row-list">
+        {nowItems.map(item => (
+          <LibraryRow item={item} hasNote={itemsWithNotes.has(item.id)} hidden={!matches(item.data)} />
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <ul class="row-list">
+    {restItems.map(item => (
+      <LibraryRow item={item} hasNote={itemsWithNotes.has(item.id)} hidden={!matches(item.data)} />
+    ))}
+  </ul>
+</main>
+
+<style>
+  .page-wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-1) var(--content-padding) var(--space-3);
+  }
+
+  .library-header {
+    border-top: 1px solid var(--color-accent);
+    padding-top: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: var(--weight-medium);
+    margin-bottom: 0.5rem;
+  }
+
+  .library-desc {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    max-width: 62ch;
+    margin-bottom: var(--space-1-5);
+  }
+
+  .desc-star {
+    color: var(--color-accent);
+  }
+
+  /* the label sits in the same gutter the rows give their type, so the
+     filters read as a header to the columns underneath rather than a
+     separate block of navigation */
+  .filter-row {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+    padding: 0.3rem 0;
+  }
+
+  /* same trap as .row[hidden]: the UA's rule loses to the display above */
+  .filter-row[hidden] {
+    display: none;
+  }
+
+  .filter-row-last {
+    padding-bottom: var(--space-1);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .filter-label {
+    font-size: var(--text-meta);
+    color: var(--color-text-quaternary);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 1.25rem;
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+  }
+
+  .chip {
+    text-decoration: none;
+  }
+  .chip:hover { color: var(--color-accent); }
+
+  .is-active {
+    color: var(--color-text-primary);
+    font-weight: var(--weight-medium);
+  }
+
+  /* "all" is the resting state of a facet rather than a filter on it, so only
+     a chip that actually narrows the list is worth the accent */
+  .chip.is-active:not([data-value='']) {
+    color: var(--color-accent);
+  }
+
+  /* pushed to the far end of the row, the way a row's date is */
+  .filter-count {
+    margin-left: auto;
+    font-size: var(--text-label);
+    color: var(--color-text-tertiary);
+  }
+
+  .now-section {
+    border-left: 2px solid var(--color-accent);
+    margin-left: -1rem;
+    padding-left: 1rem;
+    margin-bottom: var(--space-2);
+  }
+
+  /* a section with nothing left in it after filtering is not a section */
+  .now-section:not(:has(li:not([hidden]))) {
+    display: none;
+  }
+
+  .now-heading {
+    font-size: var(--text-meta);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .row-list { list-style: none; }
+
+  .empty {
+    font-size: var(--text-meta);
+    color: var(--color-text-secondary);
+    padding: var(--space-1) 0;
+  }
+
+  @media (max-width: 560px) {
+    .filter-row {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+    .filter-label {
+      font-size: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .filter-row-last .filter-label {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  /* The three facets are independent, so there is no route that can hold every
+     combination of them; a filter route renders its own facet server-side and
+     this turns the whole bar into toggles over the list already in the page,
+     keeping the combination in the query string so it stays linkable. */
+  const root = document.querySelector<HTMLElement>('[data-library]');
+
+  if (root) {
+    const rows = [...root.querySelectorAll<HTMLElement>('[data-lib-row]')];
+    const chips = [...root.querySelectorAll<HTMLAnchorElement>('.chip')];
+    const genreRow = root.querySelector<HTMLElement>('[data-genre-row]');
+    const countEl = root.querySelector<HTMLElement>('[data-filter-count]');
+    const emptyEl = root.querySelector<HTMLElement>('[data-empty]');
+    const total = rows.length;
+
+    const state = { type: '', genre: '', topic: '', starred: false };
+
+    /* the server already said what this page is filtered to, in the markup */
+    for (const chip of chips) {
+      if (!chip.classList.contains('is-active')) continue;
+      const facet = chip.dataset.facet;
+      const value = chip.dataset.value ?? '';
+      if (facet === 'starred') state.starred = true;
+      else if (facet === 'type') state.type = value;
+      else if (facet === 'genre') state.genre = value;
+      else if (facet === 'topic') state.topic = value;
+    }
+
+    function readQuery() {
+      const q = new URLSearchParams(location.search);
+      if (![...q.keys()].length) return false;
+      state.type = q.get('type') ?? '';
+      state.genre = q.get('genre') ?? '';
+      state.topic = q.get('topic') ?? '';
+      state.starred = q.get('starred') === '1';
+      return true;
+    }
+
+    function url() {
+      const q = new URLSearchParams();
+      if (state.type) q.set('type', state.type);
+      if (state.genre) q.set('genre', state.genre);
+      if (state.topic) q.set('topic', state.topic);
+      if (state.starred) q.set('starred', '1');
+      const qs = q.toString();
+      return '/library' + (qs ? `?${qs}` : '');
+    }
+
+    function apply() {
+      let shown = 0;
+      for (const row of rows) {
+        const topics = (row.dataset.topics ?? '').split(' ');
+        const ok =
+          (!state.type || row.dataset.type === state.type) &&
+          (!state.genre || row.dataset.genre === state.genre) &&
+          (!state.topic || topics.includes(state.topic)) &&
+          (!state.starred || row.dataset.starred === 'true');
+        row.hidden = !ok;
+        if (ok) shown++;
+      }
+
+      for (const chip of chips) {
+        const facet = chip.dataset.facet;
+        const value = chip.dataset.value ?? '';
+        const on =
+          facet === 'starred' ? state.starred :
+          facet === 'type' ? state.type === value :
+          facet === 'genre' ? state.genre === value :
+          state.topic === value;
+        chip.classList.toggle('is-active', on);
+        if (on) chip.setAttribute('aria-current', 'true');
+        else chip.removeAttribute('aria-current');
+      }
+
+      /* genre is a question you can only ask of books */
+      if (genreRow) genreRow.hidden = state.type !== 'book';
+      const filtered = Boolean(state.type || state.genre || state.topic || state.starred);
+      if (countEl) countEl.textContent = filtered ? `${shown} of ${total}` : `${total} items`;
+      if (emptyEl) emptyEl.hidden = shown > 0;
+    }
+
+    root.addEventListener('click', (event) => {
+      const chip = (event.target as HTMLElement).closest<HTMLAnchorElement>('.chip');
+      if (!chip || !root.contains(chip)) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+      event.preventDefault();
+
+      const facet = chip.dataset.facet;
+      const value = chip.dataset.value ?? '';
+      if (facet === 'starred') {
+        state.starred = !state.starred;
+      } else if (facet === 'type') {
+        state.type = value;
+        if (value !== 'book') state.genre = '';
+      } else if (facet === 'genre') {
+        /* a genre is a kind of book, so asking for one answers the type too */
+        state.genre = value;
+        state.type = 'book';
+      } else if (facet === 'topic') {
+        state.topic = state.topic === value ? '' : value;
+      }
+
+      apply();
+      history.pushState(null, '', url());
+    });
+
+    window.addEventListener('popstate', () => {
+      if (!readQuery()) {
+        state.type = state.genre = state.topic = '';
+        state.starred = false;
+      }
+      apply();
+    });
+
+    if (readQuery()) apply();
+  }
+</script>
