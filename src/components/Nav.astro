@@ -1,5 +1,9 @@
 ---
-const isHome = Astro.url.pathname === '/';
+/* `build.format: 'file'` makes Astro.url.pathname the *output file* path, so
+   at build time the home page is '/index.html' and never '/' — the dev server
+   serves it as '/'. Accept both, or the header dims on every page. */
+const path = Astro.url.pathname;
+const isHome = path === '/' || path === '/index.html';
 ---
 
 <nav class:list={['site-nav', !isHome && 'is-quiet']}>
