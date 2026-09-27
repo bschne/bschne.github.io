@@ -2,7 +2,7 @@
 const isHome = Astro.url.pathname === '/';
 ---
 
-<nav class="site-nav">
+<nav class:list={['site-nav', !isHome && 'is-quiet']}>
   <div class="site-nav-left">
     <a href="/" class="site-nav-name">Benjamin Schneider</a>
     <div class="site-nav-links">
@@ -63,6 +63,12 @@ const isHome = Astro.url.pathname === '/';
 
 <style>
   .site-nav {
+    /* Every colour in the bar hangs off these three, so the quiet state
+       below is a re-pointing of them and nothing else. */
+    --nav-name: var(--color-text-primary);
+    --nav-link: var(--color-text-secondary);
+    --nav-icon: var(--color-text-tertiary);
+
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0.875rem var(--content-padding) 0;
@@ -74,6 +80,32 @@ const isHome = Astro.url.pathname === '/';
   }
 
 
+  /* Off the home page the header is a way back, not the page's own title:
+     drop all three a step or two down the grey ramp until the reader reaches
+     for it, at which point the bar comes back to full strength as a unit. */
+  .site-nav.is-quiet {
+    --nav-name: var(--color-text-tertiary);
+    --nav-link: var(--color-text-quaternary);
+    --nav-icon: var(--color-text-quaternary);
+  }
+
+  .site-nav.is-quiet:hover,
+  .site-nav.is-quiet:focus-within {
+    --nav-name: var(--color-text-primary);
+    --nav-link: var(--color-text-secondary);
+    --nav-icon: var(--color-text-tertiary);
+  }
+
+  /* Nothing on a touch device ever hovers, so there the bar would simply stay
+     dimmed with no way back: leave it at full strength. */
+  @media (hover: none) {
+    .site-nav.is-quiet {
+      --nav-name: var(--color-text-primary);
+      --nav-link: var(--color-text-secondary);
+      --nav-icon: var(--color-text-tertiary);
+    }
+  }
+
   .site-nav-left {
     display: flex;
     align-items: baseline;
@@ -84,7 +116,8 @@ const isHome = Astro.url.pathname === '/';
     font-size: var(--text-h2);
     font-weight: 500;
     text-decoration: none;
-    color: var(--color-text-primary);
+    color: var(--nav-name);
+    transition: color 0.15s ease;
   }
 
   .site-nav-name:hover {
@@ -99,7 +132,8 @@ const isHome = Astro.url.pathname === '/';
 
   .site-nav-links a {
     text-decoration: none;
-    color: var(--color-text-secondary);
+    color: var(--nav-link);
+    transition: color 0.15s ease;
   }
 
   .site-nav-links a:hover {
@@ -118,7 +152,8 @@ const isHome = Astro.url.pathname === '/';
     padding: 0;
     border: 0;
     background: none;
-    color: var(--color-text-tertiary);
+    color: var(--nav-icon);
+    transition: color 0.15s ease;
     cursor: pointer;
   }
 

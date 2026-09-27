@@ -25,13 +25,17 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
 <Editorial title="Benjamin Schneider" description="Personal website of Benjamin Schneider — writing, reading, and work.">
   <div slot="header" class="site-header">
     <p class="bio">
-      Swiss guy with a background in computer science and economics.
-      Currently working as a solution architect at vivenu, a ticket sales software company, in Zurich.
+      I like adding new layers to my mental map of the world,
+      cooking curry from scratch,
+      and walking in nature taking pictures of the same views over and over again.
     </p>
     <p class="bio">
-      I like cooking curry from scratch,
-      adding new layers to my mental map of the world,
-      and walking in nature taking pictures of the same views over and over again.
+      I (enventually) studied computer science and economics
+      and currently work as a solution architect at vivenu,
+      a ticketing software company, in Zurich.
+    </p>
+    <p class="bio">
+      Find me around the internet or reach out if you'd like to say hi!
     </p>
     <nav class="contact-links">
       <a href="mailto:mail@benjaminschneider.ch">mail</a>
@@ -90,7 +94,7 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
     </section>
 
     <section class="rail-section">
-      <h3>Reading</h3>
+      <h3>Library</h3>
       {nowReading.length > 0 && (
         <ul class="reading-list">
           {nowReading.map(item => (
@@ -101,7 +105,7 @@ const nowReading = library.filter(i => i.data.status === 'now' || i.data.status 
           ))}
         </ul>
       )}
-      <p class="rail-text">A list of books, papers, and other pieces I enjoyed with occasional reading notes.</p>
+      <p class="rail-text">A list of books, papers, and other pieces I enjoyed with occasional notes.</p>
       <a href="/library" class="rail-link">library →</a>
     </section>
 
