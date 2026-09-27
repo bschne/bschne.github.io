@@ -24,6 +24,8 @@ const library = defineCollection({
     date: z.coerce.date().optional(),
     status: z.enum(['now', 'ongoing', 'done']).default('done'),
     starred: z.boolean().default(false),
+    /* the other end of the star: kept on the shelf, but greyed out */
+    nope: z.boolean().default(false),
     genre: z.enum(['fiction', 'non-fiction', 'textbook']).optional(),
     topics: z.array(z.string()).default([]),
     isbn: z.string().optional(),

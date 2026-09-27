@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { item, hasNote, hidden = false } = Astro.props;
-const { type, title, creator, status, starred, date, url, blurb, inline, genre, topics } = item.data;
+const { type, title, creator, status, starred, nope, date, url, blurb, inline, genre, topics } = item.data;
 const slug = item.id.replace(/\.mdx?$/, '');
 const sourceHostname = url ? new URL(url).hostname.replace(/^www\./, '') : null;
 const noteHref = hasNote ? `/library/${slug}` : null;
@@ -22,7 +22,7 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
 ---
 
 <li
-  class="row"
+  class:list={['row', { 'is-nope': nope }]}
   id={slug}
   hidden={hidden}
   data-lib-row
@@ -30,12 +30,15 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
   data-genre={genre}
   data-topics={topics.join(' ')}
   data-starred={String(starred)}
+  data-nope={String(nope)}
 >
   <span class="row-type">{type === 'podcast' ? 'pod' : type}</span>
   <div class="row-body">
     <div class="row-main">
       <span class="row-title">
-        {title}{starred && <span class="row-star" aria-label="recommended">★</span>}
+        {title}{starred && <span class="row-star" aria-label="recommended">★</span>}{nope && (
+          <span class="row-nope" aria-label="did not like it">✗</span>
+        )}
         <span class="row-creator"> · {creatorShort(creator)}</span>
         <a href={`#${slug}`} class="row-anchor" aria-label={`Link to ${title}`}>#</a>
       </span>
@@ -143,13 +146,48 @@ const { Content } = inline && item.body ? await render(item) : { Content: null }
     .row-anchor { opacity: 1; }
   }
 
-  .row-star {
-    color: var(--color-accent);
+  /* the two verdicts are one mark in two colours, so they sit identically on
+     the line whichever one a row carries */
+  .row-star,
+  .row-nope {
     font-size: var(--text-label);
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
     margin-left: 0.35em;
+  }
+
+  .row-star {
+    color: var(--color-accent);
+  }
+
+  /* grey rather than accent: the row is being played down, not pointed at */
+  .row-nope {
+    color: var(--color-text-tertiary);
+  }
+
+  /* dimmed as a whole — title, creator, date and marker together — so the row
+     reads as set aside rather than as a line with a grey word in it, and comes
+     back up to full strength when it is actually being read */
+  .row.is-nope {
+    opacity: 0.45;
+    transition: opacity 0.12s ease;
+  }
+  .row.is-nope:hover,
+  .row.is-nope:focus-within,
+  .row.is-nope:target {
+    opacity: 1;
+  }
+
+  /* nothing to hover on a touch screen, and a row nobody can undim has to stay
+     legible on its own, so there the marker carries it and the dimming is only
+     a shade */
+  @media (hover: none) {
+    .row.is-nope { opacity: 0.7; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row.is-nope { transition: none; }
   }
 
   .row-creator {

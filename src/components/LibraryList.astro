@@ -66,7 +66,8 @@ const label = (t: string) => t.replace(/-/g, '\u00a0');
       changed how I view the world".
     </p>
     <p class="library-desc">
-      Particularly great ones are marked with an <span class="desc-star">★</span>.
+      Particularly great ones are marked with an <span class="desc-star">★</span>; the few I'd steer you away from are
+      greyed out and marked <span class="desc-nope">✗</span>.
     </p>
 
     <nav class="filters" aria-label="Filter the library">
@@ -188,6 +189,10 @@ const label = (t: string) => t.replace(/-/g, '\u00a0');
 
   .desc-star {
     color: var(--color-accent);
+  }
+
+  .desc-nope {
+    color: var(--color-text-tertiary);
   }
 
   /* the label sits in the same gutter the rows give their type, so the
