@@ -1,0 +1,33 @@
+{
+  "seed": "curiosity",
+  "variants": {
+    "A": 1,
+    "C": 2,
+    "E": 2,
+    "Q": 5
+  },
+  "count": "mixed",
+  "motifs": {
+    "arc": true,
+    "triangle": true,
+    "contours": true,
+    "path": true,
+    "reference": true,
+    "dimension": true
+  },
+  "axes": {
+    "wght": 600
+  },
+  "umlauts": false,
+  "stroke": 0.85,
+  "knockWidth": 0.55,
+  "overshoot": 18,
+  "ink": "#000000",
+  "accent": "#ff4d06",
+  "paper": "#fbfaf7",
+  "knockout": "mask",
+  "frame": "fixed",
+  "cssVars": false,
+  "lines": 3,
+  "font": "Playfair Display"
+}

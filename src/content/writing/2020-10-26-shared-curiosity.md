@@ -6,13 +6,12 @@ topics: [learning]
 selected: true
 ---
 
-Some of the most engaging educational content starts with the author's own curiosity.
+**Some of the most engaging educational content starts with the author's own curiosity.**
 
 ![](../../assets/posts/2020-10-26-shared-curiosity/powers-of-ten.jpg)
 *From "Powers of Ten" by Charles & Ray Eames (1977)*
 
 I recently watched the 2011 documentary ["Eames: The Architect & The Painter"](https://www.youtube.com/watch?v=sRElKUXH4VU&t=3280s) on the life and work of Charles & Ray Eames.
-
 About two thirds in, there is a section on the duo's educational short films. This quote from Richard Saul Wurman really stood out:
 
 > "You sell your expertise — you have a limited repertoire. You sell your ignorance — it's an unlimited repertoire! He was selling his ignorance and his desire to learn about a subject. And the journey of him not knowing to knowing was his work."

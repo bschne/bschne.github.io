@@ -5,7 +5,7 @@ description: "Some common misinterpretations of the sunk cost fallacy."
 topics: [economics]
 ---
 
-Some common misinterpretations of the sunk cost fallacy.
+**Some common misinterpretations of the sunk cost fallacy.**
 
 ![](../../assets/posts/2023-09-29-sunk-costs/stay-go.png)
 *A punk rock singer grappling with sunk costs, 1982*

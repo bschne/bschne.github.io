@@ -73,8 +73,16 @@
      maths below from overshooting the document and forcing a sideways scroll */
   --scrollbar-w: 0px;
 
-  /* the measure of a prose page */
+  /* the measure of a prose page, and the line set on it. The line height is
+     a token because the drop cap is sized in lines: a cap three lines tall
+     has to know what a line is, and getting it from anywhere but the rule
+     that sets it would leave two numbers to keep in step. (It is not `1lh`
+     for the same reason the rest of this file is explicit: Safari only
+     learned that unit in 18, and an unsupported unit inside the cap's calc
+     invalidates the whole of it — a broken cap rather than a slightly
+     misaligned one.) */
   --prose-measure: 680px;
+  --prose-line-height: 1.65;
 
   /* the contents rail, in the left gutter: as wide as it can be while
      stopping one --content-padding short of the widest a bleed image gets */

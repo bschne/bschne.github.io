@@ -1,7 +1,7 @@
 .prose {
   font-family: var(--font-serif);
   font-size: var(--text-prose);
-  line-height: 1.65;
+  line-height: var(--prose-line-height);
   color: var(--color-text-primary);
 }
 
@@ -186,6 +186,71 @@
 
 .prose strong {
   font-weight: 650;
+}
+
+/* ── drop cap ───────────────────────────────────────
+   rehype-dropcap.ts puts a drawn capital at the head of a post's first
+   paragraph. Every number below is one of the two the SVGs are drawn to: a
+   cap height of exactly 100 units, in a frame that clears it by 19.98 above
+   the cap line and 44.55 below the baseline, and 18 either side of the
+   glyph. So the cap is sized by its cap height — the only measure that lets
+   it sit on N lines of text — and the frame is then taken back out with
+   negative margins, which is what lands the drawing on the text rather than
+   near it.
+
+   --dropcap-lines is the knob: the number of lines of body text the capital
+   stands as tall as. Everything else follows from it. */
+.prose .dropcap {
+  --dropcap-lines: 3;
+  /* the cap line of line 1 to the baseline of line N, plus the body's own
+     cap height (0.67em in Source Serif 4) for that last line */
+  --dropcap-cap: calc(
+    (var(--dropcap-lines) - 1) * var(--prose-line-height) * 1em + 0.67em
+  );
+  /* the gutter between cap and text, taken off the cap rather than off the
+     body: a taller cap wants a wider one */
+  --dropcap-gap: calc(var(--dropcap-cap) * 0.09);
+
+  float: left;
+  height: calc(var(--dropcap-cap) * 1.6453);
+  width: auto;
+
+  /* line 1's cap height: past the half-leading, down the gap between the
+     font's ascent and its cap line, then back up by the frame's own 19.98 */
+  margin-top: calc(
+    (var(--prose-line-height) * 1em - 1.371em) / 2 + 0.366em - var(--dropcap-cap) * 0.1998
+  );
+  /* the frame below the baseline, so line N + 1 runs the full measure */
+  margin-bottom: calc(var(--dropcap-cap) * -0.4455);
+  /* the glyph's own edge on the column's edge. The apparatus is allowed to
+     hang past it into the margin, which is the point of it: left of the
+     column there is nothing for it to run into */
+  margin-left: calc(var(--dropcap-cap) * -0.18);
+
+  /* right of the column there is the text, so the gutter is measured from
+     whichever of the two reaches furthest — dropcaps.ts measures the
+     apparatus and publishes how far past the glyph it hangs, in the same
+     units as the frame. On a W, which has nothing in its right margin, this
+     is the frame's whole 18 units back and the text sits a gutter off the
+     glyph; on an I, whose arc fills all but four of them, the gutter is
+     measured off the arc instead. A cap with no measurement — one the
+     geometry in dropcaps.ts could not read — keeps the whole frame, which
+     is the loose answer rather than the overlapping one. */
+  margin-right: calc(
+    var(--dropcap-gap) - (18 - var(--dropcap-hang, 18)) * var(--dropcap-cap) / 100
+  );
+}
+
+/* a float is only as contained as its paragraph is tall, and a post may open
+   on a single short sentence — two lines under a three-line cap. Clearing at
+   the end of the paragraph holds the cap inside it either way, so whatever
+   comes next (a bleed figure, in most of these posts) starts below the cap
+   instead of being pushed sideways by it. On a paragraph that runs longer
+   than the cap this changes nothing. */
+.prose p.has-dropcap::after {
+  content: '';
+  display: block;
+  clear: left;
 }
 
 /* ── margin notes ────────────────────────────────────────

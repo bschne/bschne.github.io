@@ -5,7 +5,7 @@ description: "Abstraction isn't just a thing you do when programming."
 topics: [software, design]
 ---
 
-Abstraction isn't just a thing you do when programming.
+**Abstraction isn't just a thing you do when programming.**
 
 ![](../../assets/posts/2022-07-24-abstractions/subway-abstract.jpg)
 *Berlin subway map vs. actual geography, [via Reddit](https://www.reddit.com/r/dataisbeautiful/comments/6baefh/berlin_subway_map_compared_to_its_real_geography/)*

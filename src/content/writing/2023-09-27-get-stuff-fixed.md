@@ -6,7 +6,7 @@ topics: [agency]
 selected: true
 ---
 
-You should probably be less reluctant to provide unsolicited suggestions for improvement.
+**You should probably be less reluctant to provide unsolicited suggestions for improvement.**
 
 ![](../../assets/posts/2023-09-27-get-stuff-fixed/donut-repair.jpg)
 *Sign by David Shrigley, seen in Glasgow*
