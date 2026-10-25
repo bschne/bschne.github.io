@@ -9,6 +9,10 @@ export default defineConfig({
   integrations: [mdx()],
   build: {
     format: 'file',
+    /* GitHub Pages serves everything with a ten-minute max-age, so a shared
+       stylesheet is barely cached across visits anyway; inlined, it stops
+       being a render-blocking request of its own. */
+    inlineStylesheets: 'always',
   },
   markdown: {
     /* rehypeDropcap runs second: the opening paragraph it looks for is the

@@ -139,13 +139,26 @@ const aspect = Math.min(2.2, Math.max(1.2, span.y > 0 ? span.x / span.y : 1.6));
 </figure>
 
 <script>
-  import 'leaflet/dist/leaflet.css';
   import type { Map as LeafletMap } from 'leaflet';
+  import leafletCss from 'leaflet/dist/leaflet.css?url';
 
   interface RouteData {
     segments: [number, number][][];
     bounds: [[number, number], [number, number]];
     tiles: { url: string; attribution: string; maxZoom: number; subdomains?: string };
+  }
+
+  /* Leaflet's stylesheet arrives with Leaflet, not with the page. Imported as a
+     stylesheet — even dynamically — Astro hoists it into every page that
+     touches the writing collection, home page included, as a render-blocking
+     link; `?url` hands over only its address, so it is fetched on first open. */
+  function loadStylesheet(href: string) {
+    return new Promise<void>((resolve) => {
+      if (document.querySelector(`link[href="${href}"]`)) return resolve();
+      const link = Object.assign(document.createElement('link'), { rel: 'stylesheet', href });
+      link.onload = link.onerror = () => resolve();
+      document.head.append(link);
+    });
   }
 
   async function draw(fold: HTMLDetailsElement) {
@@ -154,7 +167,7 @@ const aspect = Math.min(2.2, Math.max(1.2, span.y > 0 ? span.x / span.y : 1.6));
     if (!canvas || !json) return;
     const route = JSON.parse(json.textContent!) as RouteData;
 
-    const L = (await import('leaflet')).default;
+    const [{ default: L }] = await Promise.all([import('leaflet'), loadStylesheet(leafletCss)]);
     canvas.querySelector('.route-map-nojs')?.remove();
 
     const map: LeafletMap = L.map(canvas, {

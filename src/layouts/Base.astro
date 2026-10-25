@@ -1,5 +1,6 @@
 ---
 import '@fontsource-variable/inter';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import Nav from '../components/Nav.astro';
@@ -35,6 +36,10 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
         } catch (e) {}
       })();
     </script>
+    {/* Every page sets type in Inter, but the browser only learns that once
+        it has parsed the stylesheet that declares it. Asking for the latin
+        subset up front takes it off the end of that chain. */}
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
     <meta property="og:title" content={fullTitle} />
