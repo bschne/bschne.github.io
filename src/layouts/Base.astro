@@ -40,6 +40,7 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
         it has parsed the stylesheet that declares it. Asking for the latin
         subset up front takes it off the end of that chain. */}
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
     <meta property="og:title" content={fullTitle} />

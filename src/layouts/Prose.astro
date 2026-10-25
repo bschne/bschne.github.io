@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/source-serif-4';
 import '@fontsource-variable/source-serif-4/wght-italic.css';
+import serifLatin from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
 import Base from './Base.astro';
 import TopicList from '../components/TopicList.astro';
 import TableOfContents from '../components/TableOfContents.astro';
@@ -30,6 +31,8 @@ const hasFooter = Astro.slots.has('footer');
 ---
 
 <Base title={title} description={description} image={image} type={type}>
+  {/* the body face, so it is in flight alongside Inter rather than after it */}
+  <link slot="head" rel="preload" href={serifLatin} as="font" type="font/woff2" crossorigin />
   <div class="prose-page">
     <header class="prose-header">
       {date && (
